@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 export class Main extends Component {
   render () {
     return (
-      <div>
-        Hello
+      <div className="container">
+        This is the main page
       </div>
     );
   }
