@@ -1,0 +1,11 @@
+body {
+   background: #333;
+   color: white;
+}
+
+#content {
+   margin: 0 auto;
+   text-align: center;
+   width: 90%;
+   max-width: 760px;
+}
