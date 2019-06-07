@@ -38,14 +38,9 @@ class Application extends Component {
     }
 
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col col-12">
-            {/* {header} */}
-
-            {this.props.children}
-          </div>
-        </div>
+      <div>
+        {/* {header} */}
+        {this.props.children}
       </div>
     );
   }

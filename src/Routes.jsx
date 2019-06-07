@@ -14,9 +14,9 @@ const routes = () => (
     {
     (function runFunction () {
       if (getTestValue !== undefined) {
-        return <IndexRedirect to="/welcome" />
+        return <IndexRedirect to="/dashboard" />
       } else {
-        return <IndexRedirect to="/login" />
+        return <IndexRedirect to="/welcome" />
       }
     })()
     }

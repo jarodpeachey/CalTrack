@@ -1,5 +1,9 @@
 /* LAYOUT AND GRID SYSTEM
 --------------------------------------------------------------- */
+body {
+  margin: 0;
+}
+
 .container {
   margin: 0 auto;
   width: 95%;
