@@ -1,35 +1,55 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import Header from './components/Header';
-import mainDataControl from './data';
 
 class Application extends Component {
   static propTypes = {
-
+    children: PropTypes.element,
   };
 
   constructor (props) {
     super(props);
     this.state = {
-      user: null,
+      
     };
   }
 
-  componentDidMount () {
+  // componentDidMount () {
     
-  }
+  // }
 
-  shouldComponentUpdate () {
+  // shouldComponentUpdate () {
 
-  }
+  // }
 
   render () {
-    console.log(mainDataControl.getCurrentUser);
-    
+    let header;
+    const { pathname } = window.location;
+
+    if (
+      pathname === '/meals' ||
+      pathname === '/workouts' ||
+      pathname === '/dashboard'
+    ) {
+      header = <Header />;
+    } else {
+      header = <Header welcomePageActive />;
+    }
+
     return (
-      <div>Stuff</div>
+      <div className="container">
+        <div className="row">
+          <div className="col col-12">
+            {/* {header} */}
+
+            {this.props.children}
+          </div>
+        </div>
+      </div>
     );
   }
 }
+
+export default Application;
 
