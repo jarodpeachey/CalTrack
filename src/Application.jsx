@@ -33,13 +33,15 @@ class Application extends Component {
       pathname === '/dashboard'
     ) {
       header = <Header />;
+    } else if (pathname === '/login' || pathname === '/signup') {
+      header = null;
     } else {
       header = <Header welcomePageActive />;
     }
 
     return (
       <div>
-        {/* {header} */}
+        {header}
         {this.props.children}
       </div>
     );

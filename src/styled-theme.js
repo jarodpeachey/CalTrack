@@ -6,7 +6,8 @@ const theme = {
     xl: '1220px',
   },
   colors: {
-    main: '#1dc798',
+    accent: 'orange',
+    main: '#1dc798'
   },
   spacing: {
     xs: '4px',
