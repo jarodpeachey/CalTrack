@@ -10,7 +10,7 @@
     "build": "webpack --mode production",
     "start": "webpack --mode development && webpack-dev-server --mode development --open",
     "heroku-postbuild": "webpack -p",
-    "test": "./node_modules/.bin/eslint **/*.js"
+    "test": "npm run eslint"
   },
   "keywords": [],
   "author": "",
