@@ -49,6 +49,10 @@ function setCurrentUser (userToSet) {
   localStorage.setItem('currentUser', JSON.stringify(userToSet));
 }
 
+function getCurrentUser () {
+  return JSON.parse(localStorage.getItem('currentUser'));
+}
+
 function getUsers () {
   let users = [];
   if (JSON.parse(localStorage.getItem('users'))) {
@@ -70,5 +74,6 @@ export {
   createNewUser,
   addUserToLocalStorage,
   setCurrentUser,
+  getCurrentUser,
   getTestValue,
 };

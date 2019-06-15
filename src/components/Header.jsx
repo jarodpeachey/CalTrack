@@ -31,24 +31,23 @@ class Header extends Component {
           <Wrapper>
             <Row>
               <ColumnOne>
-              <Link to="/">
-                <BrandName>
-                  CalTrack
-                </BrandName>   
-              </Link>
-
+                <Link to="/">
+                  <BrandName>
+                    CalTrack
+                  </BrandName>
+                </Link>
               </ColumnOne>
               <ColumnTwo>
-              <Link to="/signup">
-                <Button size="small" color="secondary">
-                  Sign Up
-                </Button>
-              </Link>
-              <Link to="/login">
-                <Button size="small" color="secondary" variant="outlined">
-                  Log In
-                </Button>
-              </Link>
+                <Link to="/signup">
+                  <Button size="small" color="secondary">
+                    Sign Up
+                  </Button>
+                </Link>
+                <Link to="/login">
+                  <Button size="small" color="secondary" variant="outlined">
+                    Log In
+                  </Button>
+                </Link>
               </ColumnTwo>
             </Row>
           </Wrapper>
