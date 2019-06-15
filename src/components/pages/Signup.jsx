@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
-import { createNewUser } from '../../data';
+import { createNewUser, addUserToLocalStorage, setCurrentUser } from '../../data';
 
 
 class Signup extends Component {
@@ -64,10 +64,11 @@ class Signup extends Component {
 
     if (this.state.nameValue && this.state.userNameValue && (this.state.passwordValue === this.state.confirmValue)) {
       const newUser = createNewUser(this.state.nameValue, this.state.userNameValue, this.state.passwordValue);
-
-      if (newUser) {
-        console.log(newUser, ': Signup.jsx - Line 69');
-      }
+      addUserToLocalStorage(newUser);
+      setCurrentUser(newUser);
+      window.location.href = '/dashboard';
+    } else {
+      /* Error message component */
     }
   }
 

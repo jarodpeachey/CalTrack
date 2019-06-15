@@ -31,6 +31,24 @@ function createNewUser (name, username, password) {
   return newUser;
 }
 
+function addUserToLocalStorage (user) {
+  let usersArray;
+
+  if (localStorage.getItem('users') === null) {
+    usersArray = [];
+  } else {
+    usersArray = JSON.parse(localStorage.getItem('users'));
+  }
+
+  usersArray.push(user);
+
+  localStorage.setItem('users', JSON.stringify(usersArray));
+}
+
+function setCurrentUser (userToSet) {
+  localStorage.setItem('currentUser', JSON.stringify(userToSet));
+}
+
 function getUsers () {
   let users = [];
   if (JSON.parse(localStorage.getItem('users'))) {
@@ -45,10 +63,12 @@ function getUsers () {
 }
 
 function getTestValue () {
-  return undefined;
+  return 'notTest';
 }
 
 export {
   createNewUser,
+  addUserToLocalStorage,
+  setCurrentUser,
   getTestValue,
 };

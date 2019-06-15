@@ -7,13 +7,13 @@ import Signup from './components/pages/Signup';
 import Dashboard from './components/pages/Dashboard';
 import Meals from './components/pages/Meals';
 import Workouts from './components/pages/Workouts';
-import getTestValue from './data';
+import { getTestValue } from './data';
 
 const routes = () => (
   <Route path="/" component={Application}>
     {
     (function runFunction () {
-      if (getTestValue !== undefined) {
+      if (getTestValue() === 'test') {
         return <IndexRedirect to="/dashboard" />;
       } else {
         return <IndexRedirect to="/welcome" />;
