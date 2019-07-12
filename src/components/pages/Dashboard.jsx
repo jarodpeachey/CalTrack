@@ -31,9 +31,12 @@ class Dashboard extends Component {
   render () {
     console.log(this.state.user);
     return (
-      <div>
-        Hello!
-      </div>
+      <>
+        <br />
+        <div>
+          Hello!
+        </div>
+      </>
     );
   }
 }
