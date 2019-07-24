@@ -32,48 +32,52 @@ class Header extends Component {
       <span>
         {this.props.welcomePageActive ? (
           <Wrapper>
-            <Row>
-              <ColumnOne>
-                <Link to="/">
-                  <BrandName>
-                    CalTrack
-                  </BrandName>
-                </Link>
-              </ColumnOne>
-              <ColumnTwo>
-                <Link to="/signup">
-                  <Button size="small" color="secondary">
-                    Sign Up
-                  </Button>
-                </Link>
-                <Link to="/login">
-                  <Button size="small" color="secondary" variant="outlined">
-                    Log In
-                  </Button>
-                </Link>
-              </ColumnTwo>
-            </Row>
+            <div className="container">
+              <Row>
+                <ColumnOne>
+                  <Link to="/">
+                    <BrandName>
+                      CalTrack
+                    </BrandName>
+                  </Link>
+                </ColumnOne>
+                <ColumnTwo>
+                  <Link to="/signup">
+                    <Button size="small" color="secondary">
+                      Sign Up
+                    </Button>
+                  </Link>
+                  <Link to="/login">
+                    <Button size="small" color="secondary" variant="outlined">
+                      Log In
+                    </Button>
+                  </Link>
+                </ColumnTwo>
+              </Row>
+            </div>
           </Wrapper>
         ) : (
           <Wrapper>
-            <Row>
-              <ColumnOne>
-                <Link to="/">
-                  <BrandName>
-                    CalTrack
-                  </BrandName>
-                </Link>
-              </ColumnOne>
-              <ColumnTwo>
-                <Menu>
-                  <MenuItem>
-                    <Link to="/meals">
-                      1
-                    </Link>
-                  </MenuItem>
-                </Menu>
-              </ColumnTwo>
-            </Row>
+            <div className="container">
+              <Row>
+                <ColumnOne>
+                  <Link to="/">
+                    <BrandName>
+                      CalTrack
+                    </BrandName>
+                  </Link>
+                </ColumnOne>
+                <ColumnTwo>
+                  <Menu>
+                    <MenuItem>
+                      <Link to="/meals">
+                        1
+                      </Link>
+                    </MenuItem>
+                  </Menu>
+                </ColumnTwo>
+              </Row>
+            </div>
           </Wrapper>
         )}
       </span>
