@@ -32,7 +32,7 @@ class Header extends Component {
       <span>
         {this.props.welcomePageActive ? (
           <Wrapper>
-            <div className="container">
+            <div className="container py-none">
               <Row>
                 <ColumnOne>
                   <Link to="/">
@@ -58,7 +58,7 @@ class Header extends Component {
           </Wrapper>
         ) : (
           <Wrapper>
-            <div className="container">
+            <div className="container py-none">
               <Row>
                 <ColumnOne>
                   <Link to="/">
