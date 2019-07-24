@@ -43,12 +43,12 @@ class Header extends Component {
                 </ColumnOne>
                 <ColumnTwo>
                   <Link to="/signup">
-                    <Button size="small" color="secondary">
+                    <Button color="secondary">
                       Sign Up
                     </Button>
                   </Link>
                   <Link to="/login">
-                    <Button size="small" color="secondary" variant="outlined">
+                    <Button color="secondary" variant="outlined">
                       Log In
                     </Button>
                   </Link>
