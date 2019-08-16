@@ -29,11 +29,11 @@ class Header extends Component {
       <span>
         {this.props.welcomePageActive ? (
           <Wrapper>
-            <div className="container py-none">
+            <div className="container py-xs">
               <Row>
                 <ColumnOne>
                   <Link to="/">
-                    <BrandName>
+                    <BrandName className="m-none">
                       CalTrack
                     </BrandName>
                   </Link>

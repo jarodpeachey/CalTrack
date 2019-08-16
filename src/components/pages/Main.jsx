@@ -7,9 +7,9 @@ class Main extends Component {
   render () {
     return (
       <Wrapper>
-        <div className="container">
+        <div className="container py-none">
           <Title>CalTrack App</Title>
-          <SubTitle>CalTrack is the number one fitness and calorie tracking app on the market. Over 1,000,000 people don\'t lie.</SubTitle>
+          <SubTitle>CalTrack is the number one fitness and calorie tracking app on the market. Over 1,000,000 people don't lie.</SubTitle>
         </div>
         <ButtonContainer>
           <Button
@@ -50,7 +50,7 @@ const Title = styled.h1`
   letter-spacing: 4px;
 `;
 
-const SubTitle = styled.h3`
+const SubTitle = styled.h4`
   color: #333;
   text-align: center;
   line-height: 2rem;
