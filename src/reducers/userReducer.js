@@ -1,35 +1,47 @@
-import { GET_USERS, ADD_USER, DELETE_USER } from '../actions/types';
+import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER } from '../actions/types';
 
-const initialState = [
-  {
+const initialState = {
+  users: [
+    {
+      id: 1,
+      name: 'Jarod Peachey',
+      username: 'jwpeachey',
+      password: 'ilovechickens',
+    },
+    {
+      id: 2,
+      name: 'Makenna Peachey',
+      username: 'mmpeachey',
+      password: 'ilovedogs',
+    },
+  ],
+  currentUser: {
     id: 1,
     name: 'Jarod Peachey',
     username: 'jwpeachey',
     password: 'ilovechickens',
   },
-  {
-    id: 2,
-    name: 'Makenna Peachey',
-    username: 'mmpeachey',
-    password: 'ilovedogs',
-  },
-];
+};
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS:
       return {
-        ...state,
+        ...state.users,
       };
     case ADD_USER:
       return {
         ...state,
-        state: [...state, action.payload],
+        users: [...state.users, action.payload],
       };
     case DELETE_USER:
       return {
         ...state,
-        state: state.filter(users => users.id !== action.payload),
+        users: state.filter(users => users.id !== action.payload),
+      };
+    case GET_CURRENT_USER:
+      return {
+        ...state.currentUser,
       };
     default:
       return state;

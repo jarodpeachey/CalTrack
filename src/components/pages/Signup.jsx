@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
-import { createNewUser, addUserToLocalStorage, setCurrentUser } from '../../data';
-
+import { connect } from 'react-redux';
+import { addUser } from '../../actions/userActions';
+import { sortByUserId } from '../../utils/arrayFormat';
 
 class Signup extends Component {
   static propTypes = {
@@ -29,6 +30,9 @@ class Signup extends Component {
 
   componentDidMount () {
     this.setState({ nameValue: 'Name', userNameValue: 'Username', passwordValue: 'Password', confirmValue: 'Confirm' });
+
+    console.log('Users: ', this.props.users);
+    console.log('Current user: ', this.props.currentUser);
   }
 
   // shouldComponentUpdate (state, nextState) {
@@ -63,9 +67,13 @@ class Signup extends Component {
     e.preventDefault();
 
     if (this.state.nameValue && this.state.userNameValue && (this.state.passwordValue === this.state.confirmValue)) {
-      const newUser = createNewUser(this.state.nameValue, this.state.userNameValue, this.state.passwordValue);
-      addUserToLocalStorage(newUser);
-      setCurrentUser(newUser);
+      let id = 1;
+      if (this.props.users) {
+        const sortedUsers = sortByUserId(this.props.users);
+
+        id = sortedUsers[sortedUsers.length - 1].id + 1;
+      }
+      addUser(id, this.state.nameValue, this.state.userNameValue, this.state.passwordValue);
       window.location.href = '/dashboard';
     } else {
       /* Error message component */
@@ -157,5 +165,5 @@ const Heading = styled.h1`
   color: ${({ theme }) => theme.colors.main};
 `;
 
-export default withStyles(styles)(Signup);
+export default connect(null, { addUser })(withStyles(styles)(Signup));
 
