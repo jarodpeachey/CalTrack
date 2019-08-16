@@ -1,10 +1,39 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import { getUsers } from '../../actions/userActions';
 
 class Main extends Component {
+  static propTypes = {
+    users: PropTypes.array,
+    getUsers: PropTypes.func,
+  };
+
+  constructor (props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
+  async componentDidMount () {
+    this.props.getUsers();
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    if (this.props.users !== nextProps.users) {
+      return true;
+    }
+    return false;
+  }
+
   render () {
+    const { users } = this.props;
+
+    console.log(users);
+
     return (
       <Wrapper>
         <div className="container py-none">
@@ -65,5 +94,10 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-export default Main;
+const mapStateToProps = state => ({
+  users: state.users.users,
+  connectionStatus: state.connectionStatus,
+});
+
+export default connect(mapStateToProps, { getUsers })(Main);
 

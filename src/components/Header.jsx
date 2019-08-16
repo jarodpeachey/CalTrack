@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   static propTypes = {
