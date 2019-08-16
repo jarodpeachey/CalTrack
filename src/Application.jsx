@@ -51,13 +51,20 @@ class Application extends Component {
 
   render () {
     const { users, currentUser } = this.props;
+    let header;
+
+    if (window.location.pathname === '/welcome' || window.location.pathname === '/') {
+      header = <Header welcomePageActive />;
+    } else {
+      header = <Header />;
+    }
 
     return (
       <MuiThemeProvider theme={muiTheme}>
         <ThemeProvider theme={styledTheme}>
           <Router>
             <>
-              <Header />
+              {header}
               <Switch>
                 <Route
                   exact

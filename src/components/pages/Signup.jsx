@@ -84,7 +84,7 @@ class Signup extends Component {
       this.props.setCurrentUser(user);
 
       // this.setState({ redirect: true });
-      this.props.history.push('/dashboard');
+      window.location.href = '/dashboard';
     } else {
       /* Error message component */
     }
