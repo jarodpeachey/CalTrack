@@ -40,31 +40,17 @@ class Application extends Component {
   }
 
   shouldComponentUpdate (nextProps) {
-    if (this.props.users !== nextProps.users) {
+    if (this.props.getUsers() !== nextProps.getUsers()) {
       return true;
     }
-    if (this.props.currentUser !== nextProps.currentUser) {
+    if (this.props.getCurrentUser() !== nextProps.getCurrentUser()) {
       return true;
     }
     return false;
   }
 
   render () {
-    let header;
-    const { pathname } = window.location;
     const { users, currentUser } = this.props;
-
-    if (
-      pathname === '/meals' ||
-      pathname === '/workouts' ||
-      pathname === '/dashboard'
-    ) {
-      header = <Header />;
-    } else if (pathname === '/login' || pathname === '/signup') {
-      header = null;
-    } else {
-      header = <Header welcomePageActive />;
-    }
 
     return (
       <ConnectedRouter history={this.props.history}>
@@ -72,7 +58,7 @@ class Application extends Component {
           <ThemeProvider theme={styledTheme}>
             <Router>
               <>
-                {header}
+                <Header />
                 <Switch>
                   <Route
                     exact

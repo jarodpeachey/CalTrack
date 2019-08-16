@@ -17,17 +17,19 @@ class Header extends Component {
   }
 
   componentDidMount () {
-
+    window.onpopstate = () => {
+      console.log('WINDOW WAS CHANGED');
+    };
   }
 
   shouldComponentUpdate () {
-
+    
   }
 
   render () {
     return (
       <span>
-        {this.props.welcomePageActive ? (
+        {window.location !== '/dashboard' ? (
           <Wrapper>
             <div className="container py-xs">
               <Row>

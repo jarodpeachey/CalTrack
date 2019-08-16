@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { addUser } from '../../actions/userActions';
+import { addUser, setCurrentUser } from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
 
 class Signup extends Component {
@@ -14,6 +14,7 @@ class Signup extends Component {
     users: PropTypes.array,
     currentUser: PropTypes.object,
     addUser: PropTypes.func,
+    setCurrentUser: PropTypes.func,
   };
 
   constructor (props) {
@@ -72,7 +73,15 @@ class Signup extends Component {
 
         id = sortedUsers[sortedUsers.length - 1].id + 1;
       }
-      this.props.addUser(id, this.state.nameValue, this.state.userNameValue, this.state.passwordValue);
+
+      const user = {
+        id,
+        name: this.state.nameValue,
+        username: this.state.userNameValue,
+        password: this.state.passwordValue,
+      };
+      this.props.addUser(user);
+      this.props.setCurrentUser(user);
 
       // this.setState({ redirect: true });
       this.props.history.push('/dashboard');
@@ -166,5 +175,5 @@ const Heading = styled.h1`
   color: ${({ theme }) => theme.colors.main};
 `;
 
-export default connect(null, { addUser })(withStyles(styles)(Signup));
+export default connect(null, { addUser, setCurrentUser })(withStyles(styles)(Signup));
 

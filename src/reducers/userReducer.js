@@ -1,4 +1,4 @@
-import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER } from '../actions/types';
+import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER, SET_CURRENT_USER } from '../actions/types';
 
 const initialState = {
   users: [
@@ -16,10 +16,7 @@ const initialState = {
     },
   ],
   currentUser: {
-    id: 1,
-    name: 'Jarod Peachey',
-    username: 'jwpeachey',
-    password: 'ilovechickens',
+
   },
 };
 
@@ -44,6 +41,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: state.currentUser,
+      };
+    case SET_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: action.payload,
       };
     default:
       return state;

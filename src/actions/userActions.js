@@ -1,6 +1,6 @@
 import axios from 'axios';
 import 'babel-polyfill';
-import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER } from './types';
+import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER, SET_CURRENT_USER } from './types';
 
 export const getUsers = () => (dispatch) => {
   dispatch({
@@ -11,6 +11,13 @@ export const getUsers = () => (dispatch) => {
 export const getCurrentUser = () => (dispatch) => {
   dispatch({
     type: GET_CURRENT_USER,
+  });
+};
+
+export const setCurrentUser = user => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_USER,
+    payload: user,
   });
 };
 
