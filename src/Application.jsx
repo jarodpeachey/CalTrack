@@ -21,6 +21,7 @@ class Application extends Component {
     users: PropTypes.array,
     getUsers: PropTypes.func,
     currentUser: PropTypes.object,
+    getCurrentUser: PropTypes.func,
   };
 
   constructor (props) {
@@ -36,8 +37,11 @@ class Application extends Component {
     console.log('Current user: ', this.props.currentUser);
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
+  shouldComponentUpdate (nextProps) {
     if (this.props.users !== nextProps.users) {
+      return true;
+    }
+    if (this.props.currentUser !== nextProps.currentUser) {
       return true;
     }
     return false;

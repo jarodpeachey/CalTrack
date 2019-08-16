@@ -11,6 +11,9 @@ import { sortByUserId } from '../../utils/arrayFormat';
 class Signup extends Component {
   static propTypes = {
     classes: PropTypes.object,
+    users: PropTypes.array,
+    currentUser: PropTypes.object,
+    addUser: PropTypes.func,
   };
 
   constructor (props) {
@@ -73,8 +76,7 @@ class Signup extends Component {
 
         id = sortedUsers[sortedUsers.length - 1].id + 1;
       }
-      addUser(id, this.state.nameValue, this.state.userNameValue, this.state.passwordValue);
-      window.location.href = '/dashboard';
+      this.props.addUser(id, this.state.nameValue, this.state.userNameValue, this.state.passwordValue);
     } else {
       /* Error message component */
     }

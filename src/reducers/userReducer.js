@@ -27,7 +27,8 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS:
       return {
-        ...state.users,
+        ...state,
+        users: state.users,
       };
     case ADD_USER:
       return {
@@ -41,7 +42,8 @@ const userReducer = (state = initialState, action) => {
       };
     case GET_CURRENT_USER:
       return {
-        ...state.currentUser,
+        ...state,
+        currentUser: state.currentUser,
       };
     default:
       return state;

@@ -1,35 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { getCurrentUser } from '../../data';
+// import styled from 'styled-components';
 
 class Dashboard extends Component {
   static propTypes = {
-
+    users: PropTypes.array,
+    currentUser: PropTypes.object,
   };
 
   constructor (props) {
     super(props);
     this.state = {
-      user: null,
+
     };
   }
 
   componentDidMount () {
-    const currentUser = getCurrentUser();
 
-    this.setState({ user: currentUser });
   }
 
-  shouldComponentUpdate (nextState) {
-    if (this.state.user !== nextState.user) {
-      return true;
-    }
-    return false;
+  shouldComponentUpdate () {
+
   }
 
   render () {
-    console.log(this.state.user);
+    console.log('Users: ', this.props.users);
+    console.log('Current user: ', this.props.currentUser);
+
     return (
       <>
         <br />
