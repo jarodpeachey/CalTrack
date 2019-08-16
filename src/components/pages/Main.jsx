@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 
-export class Main extends Component {
+class Main extends Component {
   render () {
     return (
       <Wrapper>

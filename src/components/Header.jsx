@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router';
-import { getCurrentUser } from '../data';
 
 class Header extends Component {
   static propTypes = {
@@ -13,14 +12,12 @@ class Header extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      user: null,
+      // user: null,
     };
   }
 
   componentDidMount () {
-    const currentUser = getCurrentUser();
 
-    this.setState({ user: currentUser });
   }
 
   shouldComponentUpdate () {
