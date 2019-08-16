@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 import muiTheme from './mui-theme';
@@ -22,6 +23,7 @@ class Application extends Component {
     getUsers: PropTypes.func,
     currentUser: PropTypes.object,
     getCurrentUser: PropTypes.func,
+    history: PropTypes.object,
   };
 
   constructor (props) {
@@ -65,52 +67,54 @@ class Application extends Component {
     }
 
     return (
-      <MuiThemeProvider theme={muiTheme}>
-        <ThemeProvider theme={styledTheme}>
-          <Router>
-            <>
-              {header}
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={props => <Main {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/welcome"
-                  render={props => <Main {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/login"
-                  render={props => <Login {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/signup"
-                  render={props => <Signup {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/dashboard"
-                  render={props => <Dashboard {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/meals"
-                  render={props => <Meals {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/workouts"
-                  render={props => <Workouts {...props} users={users} currentUser={currentUser} />}
-                />
-              </Switch>
-            </>
-          </Router>
-        </ThemeProvider>
-      </MuiThemeProvider>
+      <ConnectedRouter history={this.props.history}>
+        <MuiThemeProvider theme={muiTheme}>
+          <ThemeProvider theme={styledTheme}>
+            <Router>
+              <>
+                {header}
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={props => <Main {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/welcome"
+                    render={props => <Main {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/login"
+                    render={props => <Login {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/signup"
+                    render={props => <Signup {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/dashboard"
+                    render={props => <Dashboard {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/meals"
+                    render={props => <Meals {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/workouts"
+                    render={props => <Workouts {...props} users={users} currentUser={currentUser} />}
+                  />
+                </Switch>
+              </>
+            </Router>
+          </ThemeProvider>
+        </MuiThemeProvider>
+      </ConnectedRouter>
     );
   }
 }

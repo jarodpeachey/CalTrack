@@ -38,6 +38,8 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "connected-react-router": "^6.0.0",
+    "history": "^4.7.2",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "express": "^4.16.4",
@@ -46,6 +48,7 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
     "react-redux": "^7.1.0",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",

@@ -3,12 +3,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import Application from './Application';
-import store from './Store';
+import configureStore, { history } from './configureStore';
+
+const store = configureStore();
 
 render(
   <>
     <Provider store={store}>
-      <Application />
+      <Application history={history} />
     </Provider>
   </>, document.getElementById('app'),
 );

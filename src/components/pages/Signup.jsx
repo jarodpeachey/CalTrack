@@ -38,13 +38,9 @@ class Signup extends Component {
     console.log('Current user: ', this.props.currentUser);
   }
 
-  // shouldComponentUpdate (state, nextState) {
-  //   // if ((state.nameValue !== nextState.nameValue) || (state.userNameValue !== nextState.userNameValue) || (state.passwordValue !== nextState.passwordValue) || (state.confirmValue !== nextState.confirmValue)) {
-  //   //   return true;
-  //   // } else {
-  //   //   return false;
-  //   // }
-  // }
+  shouldComponentUpdate () {
+    // return false;
+  }
 
   onNameInputChange (e) {
     console.log('Name Input Change');
@@ -77,6 +73,9 @@ class Signup extends Component {
         id = sortedUsers[sortedUsers.length - 1].id + 1;
       }
       this.props.addUser(id, this.state.nameValue, this.state.userNameValue, this.state.passwordValue);
+
+      // this.setState({ redirect: true });
+      this.props.history.push('/dashboard');
     } else {
       /* Error message component */
     }

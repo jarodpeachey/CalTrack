@@ -55,11 +55,11 @@ class Header extends Component {
           </Wrapper>
         ) : (
           <Wrapper>
-            <div className="container py-none">
+            <div className="container py-xs">
               <Row>
                 <ColumnOne>
                   <Link to="/">
-                    <BrandName>
+                    <BrandName className="m-none">
                       CalTrack
                     </BrandName>
                   </Link>
@@ -68,7 +68,12 @@ class Header extends Component {
                   <Menu>
                     <MenuItem>
                       <Link to="/meals">
-                        1
+                        Meals
+                      </Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <Link to="/workouts">
+                        Workouts
                       </Link>
                     </MenuItem>
                   </Menu>
