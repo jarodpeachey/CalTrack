@@ -53,54 +53,52 @@ class Application extends Component {
     const { users, currentUser } = this.props;
 
     return (
-      <ConnectedRouter history={this.props.history}>
-        <MuiThemeProvider theme={muiTheme}>
-          <ThemeProvider theme={styledTheme}>
-            <Router>
-              <>
-                <Header />
-                <Switch>
-                  <Route
-                    exact
-                    path="/"
-                    render={props => <Main {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/welcome"
-                    render={props => <Main {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/login"
-                    render={props => <Login {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/signup"
-                    render={props => <Signup {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/dashboard"
-                    render={props => <Dashboard {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/meals"
-                    render={props => <Meals {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/workouts"
-                    render={props => <Workouts {...props} users={users} currentUser={currentUser} />}
-                  />
-                </Switch>
-              </>
-            </Router>
-          </ThemeProvider>
-        </MuiThemeProvider>
-      </ConnectedRouter>
+      <MuiThemeProvider theme={muiTheme}>
+        <ThemeProvider theme={styledTheme}>
+          <Router>
+            <>
+              <Header />
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={props => <Main {...props} users={users} currentUser={currentUser} />}
+                />
+                <Route
+                  exact
+                  path="/welcome"
+                  render={props => <Main {...props} users={users} currentUser={currentUser} />}
+                />
+                <Route
+                  exact
+                  path="/login"
+                  render={props => <Login {...props} users={users} currentUser={currentUser} />}
+                />
+                <Route
+                  exact
+                  path="/signup"
+                  render={props => <Signup {...props} users={users} currentUser={currentUser} />}
+                />
+                <Route
+                  exact
+                  path="/dashboard"
+                  render={props => <Dashboard {...props} users={users} currentUser={currentUser} />}
+                />
+                <Route
+                  exact
+                  path="/meals"
+                  render={props => <Meals {...props} users={users} currentUser={currentUser} />}
+                />
+                <Route
+                  exact
+                  path="/workouts"
+                  render={props => <Workouts {...props} users={users} currentUser={currentUser} />}
+                />
+              </Switch>
+            </>
+          </Router>
+        </ThemeProvider>
+      </MuiThemeProvider>
     );
   }
 }
