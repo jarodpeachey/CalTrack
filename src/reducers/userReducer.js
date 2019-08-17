@@ -2,18 +2,7 @@ import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER, SET_CURRENT_USER } 
 
 const initialState = {
   users: [
-    {
-      id: 1,
-      name: 'Jarod Peachey',
-      username: 'jwpeachey',
-      password: 'ilovechickens',
-    },
-    {
-      id: 2,
-      name: 'Makenna Peachey',
-      username: 'mmpeachey',
-      password: 'ilovedogs',
-    },
+
   ],
   currentUser: {
 

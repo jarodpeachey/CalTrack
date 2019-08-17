@@ -68,7 +68,7 @@ class Signup extends Component {
 
     if (this.state.nameValue && this.state.userNameValue && (this.state.passwordValue === this.state.confirmValue)) {
       let id = 1;
-      if (this.props.users) {
+      if (this.props.users.length) {
         const sortedUsers = sortByUserId(this.props.users);
 
         id = sortedUsers[sortedUsers.length - 1].id + 1;
@@ -80,6 +80,9 @@ class Signup extends Component {
         username: this.state.userNameValue,
         password: this.state.passwordValue,
       };
+
+      console.log('Adding user: ', user);
+
       this.props.addUser(user);
       this.props.setCurrentUser(user);
 

@@ -21,14 +21,7 @@ export const setCurrentUser = user => (dispatch) => {
   });
 };
 
-export const addUser = (id, name, username, password) => (dispatch) => {
-  const user = {
-    id,
-    name,
-    username,
-    password,
-  };
-
+export const addUser = user => (dispatch) => {
   dispatch({
     type: ADD_USER,
     payload: user,
