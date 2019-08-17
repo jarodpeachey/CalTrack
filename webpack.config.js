@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
@@ -21,7 +22,17 @@ module.exports = {
       },
       {
         test: /\.css/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+        ],
       },
     ],
   },
@@ -32,6 +43,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.join(__dirname, 'src', 'index.html'),
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
     }),
   ],
   resolve: {

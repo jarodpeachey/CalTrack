@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+// import { ConnectedRouter } from 'connected-react-router';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import muiTheme from './mui-theme';
 import styledTheme from './styled-theme';
 import Header from './components/Header';
@@ -62,53 +61,60 @@ class Application extends Component {
     return (
       <MuiThemeProvider theme={muiTheme}>
         <ThemeProvider theme={styledTheme}>
-          <Router>
-            <>
-              {header}
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={props => <Main {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/welcome"
-                  render={props => <Main {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/login"
-                  render={props => <Login {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/signup"
-                  render={props => <Signup {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/dashboard"
-                  render={props => <Dashboard {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/meals"
-                  render={props => <Meals {...props} users={users} currentUser={currentUser} />}
-                />
-                <Route
-                  exact
-                  path="/workouts"
-                  render={props => <Workouts {...props} users={users} currentUser={currentUser} />}
-                />
-              </Switch>
-            </>
-          </Router>
+          <Wrapper>
+            <Router>
+              <>
+                {header}
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={props => <Main {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/welcome"
+                    render={props => <Main {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/login"
+                    render={props => <Login {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/signup"
+                    render={props => <Signup {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/dashboard"
+                    render={props => <Dashboard {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/meals"
+                    render={props => <Meals {...props} users={users} currentUser={currentUser} />}
+                  />
+                  <Route
+                    exact
+                    path="/workouts"
+                    render={props => <Workouts {...props} users={users} currentUser={currentUser} />}
+                  />
+                </Switch>
+              </>
+            </Router>
+          </Wrapper>
         </ThemeProvider>
       </MuiThemeProvider>
     );
   }
 }
+
+const Wrapper = styled.div`
+  background: ${({ theme }) => theme.colors.gray1};
+  height: 100vh;
+`;
 
 const mapStateToProps = state => ({
   users: state.userReducer.users,

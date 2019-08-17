@@ -87,12 +87,13 @@ class Header extends Component {
 }
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   background: ${({ theme }) => theme.colors.main};
   color: white;
   width: 100%;
   padding: 0 ${({ theme }) => theme.spacing.md};
+  box-shadow: 0 20px 40px -25px #666;
 `;
 
 const Row = styled.div`

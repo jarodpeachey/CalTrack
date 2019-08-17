@@ -31,7 +31,7 @@ const theme = createMuiTheme({
       main: '#ffffff',
       dark: '#f1f1f1',
       contrastText: '#333',
-    }
+    },
   },
   breakpoints,
   overrides,
