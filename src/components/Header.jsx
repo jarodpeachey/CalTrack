@@ -89,10 +89,10 @@ class Header extends Component {
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
-  background: ${({ theme }) => theme.colors.main};
+  background: ${({ theme }) => theme.colors.main} !important;
   color: white;
   width: 100%;
-  padding: 0 ${({ theme }) => theme.spacing.md};
+  padding: 0;
   box-shadow: 0 20px 40px -25px #666;
 `;
 
