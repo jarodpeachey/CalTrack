@@ -5,13 +5,6 @@
 
 /* Base Styling 
 -----------------------------------------------------------------*/
-.demo {
-  color: #fff;
-  background: var(--primary);
-  text-align: center;
-  border-radius: 4px;
-  padding: 18px 0px;
-}
 
 *::before,
 *::after,
@@ -57,11 +50,13 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  height: 100% !important;
 }
 
 html {
   box-sizing: border-box;
   overflow: auto;
+  height: 100% !important;
 }
 
 :root {

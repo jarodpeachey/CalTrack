@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+
 
 class Dashboard extends Component {
   static propTypes = {
@@ -26,95 +28,114 @@ class Dashboard extends Component {
     return (
       <Wrapper>
         <div className="container py-sm">
-          <Card className="card border no-shadow px-sm py-sm mb-sm">
-            <h4 className="m-none mb-xs">
-              Welcome,
-              {` ${currentUser.name}!`}
-            </h4>
-            <p className="m-none">
-              Get started with CalTrack by adding a meal or a workout!
-            </p>
-            <div className="row mobile">
-              <div className="col col-6">
-                <Button fullWidth variant="contained" color="primary" className="m-none">
-                  Add Meal
-                </Button>
+          {!currentUser.meals && !currentUser.workouts ? (
+            <Card className="card border no-shadow px-sm py-sm mb-sm">
+              <h4 className="m-none mb-xs">
+                Welcome,
+                {` ${currentUser.name}!`}
+              </h4>
+              <p className="m-none">
+                Get started with CalTrack by adding a meal or a workout!
+              </p>
+              <div className="row mobile">
+                <div className="col col-6">
+                  <Link to="/meals">
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className="m-none"
+                    >
+                      Add Meal
+                    </Button>
+                  </Link>
+                </div>
+                <div className="col col-6">
+                  <Link to="/workouts">
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className="m-none"
+                    >
+                      Add Workout
+                    </Button>
+                  </Link>
+                </div>
               </div>
-              <div className="col col-6">
-                <Button fullWidth variant="contained" color="primary" className="m-none">
-                  Add Workout
-                </Button>
-              </div>
+            </Card>
+          ) : (
+            <div className="row">
+              {currentUser.meals ? (
+                <div className={currentUser.workouts ? 'col col-6 py-none' : 'col col-12'}>
+                  <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
+                    <MealsTitle className="title mb-none">Meals</MealsTitle>
+                    <ul className="collection mb-md">
+                      <div className="collection-item">
+                        <strong>Chicken and Rice</strong>
+                        <CaloriesCount className="right">
+                          300 calories
+                        </CaloriesCount>
+                      </div>
+                      <div className="collection-item">
+                        <strong>Smoothie</strong>
+                        <CaloriesCount className="right">
+                          215 calories
+                        </CaloriesCount>
+                      </div>
+                      <div className="collection-item">
+                        <strong>Cookie</strong>
+                        <CaloriesCount className="right">
+                          100 calories
+                        </CaloriesCount>
+                      </div>
+                    </ul>
+                    <Button
+                      classes={{ root: classes.button }}
+                      color="primary"
+                      className="m-none"
+                    >
+                      See More Meals
+                    </Button>
+                  </Card>
+                </div>
+              ) : null}
+              {currentUser.workouts ? (
+                <div className={currentUser.meals ? 'col col-6 py-none' : 'col col-12'}>
+                  <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
+                    <MealsTitle className="title mb-none">Workouts</MealsTitle>
+                    <ul className="collection mb-md">
+                      <div className="collection-item">
+                        <strong>Pushups</strong>
+                        <CaloriesCount className="right">
+                          -150 calories
+                        </CaloriesCount>
+                      </div>
+                      <div className="collection-item">
+                        <strong>Situps</strong>
+                        <CaloriesCount className="right">
+                          -325 calories
+                        </CaloriesCount>
+                      </div>
+                      <div className="collection-item">
+                        <strong>Mile Run</strong>
+                        <CaloriesCount className="right">
+                          -765 calories
+                        </CaloriesCount>
+                      </div>
+                    </ul>
+                    <Button
+                      classes={{ root: classes.button }}
+                      color="primary"
+                      className="m-none"
+                    >
+                      See More Workouts
+                    </Button>
+                  </Card>
+                </div>
+              ) : null}
             </div>
-          </Card>
-          <div className="row">
-            <div className="col col-6 py-none">
-              <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                <MealsTitle className="title mb-none">Meals</MealsTitle>
-                <ul className="collection mb-md">
-                  <div className="collection-item">
-                    <strong>Chicken and Rice</strong>
-                    <CaloriesCount className="right">
-                      300 calories
-                    </CaloriesCount>
-                  </div>
-                  <div className="collection-item">
-                    <strong>Smoothie</strong>
-                    <CaloriesCount className="right">
-                      215 calories
-                    </CaloriesCount>
-                  </div>
-                  <div className="collection-item">
-                    <strong>Cookie</strong>
-                    <CaloriesCount className="right">
-                      100 calories
-                    </CaloriesCount>
-                  </div>
-                </ul>
-                <Button
-                  classes={{ root: classes.button }}
-                  color="primary"
-                  className="m-none"
-                >
-                  See More Meals
-                </Button>
-              </Card>
-            </div>
-            <div className="col col-6 py-none">
-              <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                <WorkoutsTitle className="title mb-none">
-                  Workouts
-                </WorkoutsTitle>
-                <ul className="collection mb-md">
-                  <div className="collection-item">
-                    <strong>Pushups</strong>
-                    <CaloriesCount className="right">
-                      -250 calories
-                    </CaloriesCount>
-                  </div>
-                  <div className="collection-item">
-                    <strong>Sit-ups</strong>
-                    <CaloriesCount className="right">
-                      -120 calories
-                    </CaloriesCount>
-                  </div>
-                  <div className="collection-item">
-                    <strong>Mile Run</strong>
-                    <CaloriesCount className="right">
-                      -650 calories
-                    </CaloriesCount>
-                  </div>
-                </ul>
-                <Button
-                  classes={{ root: classes.button }}
-                  color="primary"
-                  className="m-none"
-                >
-                  See More Workouts
-                </Button>
-              </Card>
-            </div>
-          </div>
+          )}
         </div>
       </Wrapper>
     );

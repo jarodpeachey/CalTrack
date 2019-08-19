@@ -79,6 +79,11 @@ class Signup extends Component {
         name: this.state.nameValue,
         username: this.state.userNameValue,
         password: this.state.passwordValue,
+        meals: null,
+        workouts: null,
+        caloriesBurned: null,
+        caloriesGained: null,
+        netCalories: null,
       };
 
       console.log('Adding user: ', user);
