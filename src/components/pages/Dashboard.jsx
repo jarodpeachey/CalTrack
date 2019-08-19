@@ -36,12 +36,12 @@ class Dashboard extends Component {
             </p>
             <div className="row mobile">
               <div className="col col-6">
-                <Button fullWidth variant="outlined" color="primary" className="m-none">
+                <Button fullWidth variant="contained" color="primary" className="m-none">
                   Add Meal
                 </Button>
               </div>
               <div className="col col-6">
-                <Button fullWidth variant="outlined" color="primary" className="m-none">
+                <Button fullWidth variant="contained" color="primary" className="m-none">
                   Add Workout
                 </Button>
               </div>
@@ -49,9 +49,9 @@ class Dashboard extends Component {
           </Card>
           <div className="row">
             <div className="col col-6 py-none">
-              <Card className="card border px-sm py-sm pt-lg mb-sm no-shadow">
+              <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
                 <MealsTitle className="title mb-none">Meals</MealsTitle>
-                <ul className="collection">
+                <ul className="collection mb-md">
                   <div className="collection-item">
                     <strong>Chicken and Rice</strong>
                     <CaloriesCount className="right">
@@ -73,7 +73,7 @@ class Dashboard extends Component {
                 </ul>
                 <Button
                   classes={{ root: classes.button }}
-                  color="secondary"
+                  color="primary"
                   className="m-none"
                 >
                   See More Meals
@@ -81,11 +81,11 @@ class Dashboard extends Component {
               </Card>
             </div>
             <div className="col col-6 py-none">
-              <Card className="card border px-sm py-sm pt-lg mb-sm no-shadow">
+              <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
                 <WorkoutsTitle className="title mb-none">
                   Workouts
                 </WorkoutsTitle>
-                <ul className="collection">
+                <ul className="collection mb-md">
                   <div className="collection-item">
                     <strong>Pushups</strong>
                     <CaloriesCount className="right">
@@ -107,7 +107,7 @@ class Dashboard extends Component {
                 </ul>
                 <Button
                   classes={{ root: classes.button }}
-                  color="secondary"
+                  color="primary"
                   className="m-none"
                 >
                   See More Workouts
@@ -123,7 +123,14 @@ class Dashboard extends Component {
 
 const styles = () => ({
   button: {
-    fontWeight: 'bold',
+    width: 'calc(100% + 1px)',
+    position: 'absolute',
+    left: -0.5,
+    bottom: 0,
+    borderRadius: 2,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTop: '1px solid #ddd',
   },
 });
 
@@ -148,7 +155,7 @@ const MealsTitle = styled.h3`
   padding: 8px 16px;
   border-top-right-radius: 2px;
   border-top-left-radius: 2px;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
 `;
 
 const WorkoutsTitle = styled.h3`
@@ -159,7 +166,7 @@ const WorkoutsTitle = styled.h3`
   padding: 8px 16px;
   border-top-right-radius: 2px;
   border-top-left-radius: 2px;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
 `;
 
 export default withStyles(styles)(Dashboard);

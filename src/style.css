@@ -53,10 +53,10 @@
 
 body {
   width: 100%;
-  overflow-x: auto;
+  overflow-y: auto;
   margin: 0;
   padding: 0;
-  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 html {
@@ -2727,7 +2727,7 @@ nav.transparent .menu > .menu-item.with-menu:hover::before {
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 539px) {
   .hidden-below-mobile-lg {
     display: none;
   }
