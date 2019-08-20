@@ -41,7 +41,7 @@ class Signup extends Component {
   }
 
   shouldComponentUpdate () {
-    // return false;
+    return false;
   }
 
   onNameInputChange (e) {
