@@ -5,13 +5,14 @@ import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addMeal } from '../../actions/userActions';
+import { addMeal, addWorkout } from '../../actions/userActions';
 
 class Dashboard extends Component {
   static propTypes = {
-    users: PropTypes.array,
     currentUser: PropTypes.object,
     classes: PropTypes.object,
+    addMeal: PropTypes.func,
+    addWorkout: PropTypes.func,
   };
 
   constructor (props) {
@@ -19,6 +20,7 @@ class Dashboard extends Component {
     this.state = {};
 
     this.addMeal = this.addMeal.bind(this);
+    this.addWorkout = this.addWorkout.bind(this);
   }
 
   componentDidMount () {}
@@ -33,6 +35,16 @@ class Dashboard extends Component {
     };
 
     this.props.addMeal(meal);
+  }
+
+  addWorkout () {
+    const workout = {
+      id: 1,
+      name: 'Pushups',
+      calories: -500,
+    };
+
+    this.props.addWorkout(workout);
   }
 
   render () {
@@ -53,35 +65,42 @@ class Dashboard extends Component {
               <div className="row mobile">
                 <div className="col col-6">
                   {/* <Link to="/meals"> */}
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className="m-none"
-                      onClick={this.addMeal}
-                    >
-                      Add Meal
-                    </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="m-none"
+                    onClick={this.addMeal}
+                  >
+                    Add Meal
+                  </Button>
                   {/* </Link> */}
                 </div>
                 <div className="col col-6">
-                  <Link to="/workouts">
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className="m-none"
-                    >
-                      Add Workout
-                    </Button>
-                  </Link>
+                  {/* <Link to="/workouts"> */}
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="m-none"
+                    onClick={this.addWorkout}
+                  >
+                    Add Workout
+                  </Button>
+                  {/* </Link> */}
                 </div>
               </div>
             </Card>
           ) : (
             <div className="row">
               {currentUser.meals.length ? (
-                <div className={currentUser.workouts.length ? 'col col-6 py-none' : 'col col-12'}>
+                <div
+                  className={
+                    currentUser.workouts.length ?
+                      'col col-6 py-none' :
+                      'col col-12'
+                  }
+                >
                   <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
                     <Title className="title mb-none">Meals</Title>
                     <ul className="collection mb-md">
@@ -115,7 +134,13 @@ class Dashboard extends Component {
                 </div>
               ) : null}
               {currentUser.workouts.length ? (
-                <div className={currentUser.meals.length ? 'col col-6 py-none' : 'col col-12'}>
+                <div
+                  className={
+                    currentUser.meals.length ?
+                      'col col-6 py-none' :
+                      'col col-12'
+                  }
+                >
                   <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
                     <Title className="title mb-none">Workouts</Title>
                     <ul className="collection mb-md">
@@ -193,4 +218,7 @@ const Title = styled.h3`
   border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
 `;
 
-export default connect(null, { addMeal })(withStyles(styles)(Dashboard));
+export default connect(
+  null,
+  { addMeal },
+)(withStyles(styles)(Dashboard));

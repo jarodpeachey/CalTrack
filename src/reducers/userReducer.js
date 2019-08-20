@@ -1,12 +1,18 @@
-import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER, SET_CURRENT_USER, ADD_MEAL, GET_MEALS, DELETE_MEAL } from '../actions/types';
+import {
+  GET_USERS,
+  ADD_USER,
+  DELETE_USER,
+  GET_CURRENT_USER,
+  SET_CURRENT_USER,
+  ADD_MEAL,
+  DELETE_MEAL,
+  ADD_WORKOUT,
+  DELETE_WORKOUT,
+} from '../actions/types';
 
 const initialState = {
-  users: [
-
-  ],
-  currentUser: {
-
-  },
+  users: [],
+  currentUser: {},
 };
 
 const userReducer = (state = initialState, action) => {
@@ -53,6 +59,32 @@ const userReducer = (state = initialState, action) => {
       state.users.forEach((user) => {
         if (user.id === state.currentUser.id) {
           user.meals.filter(meals => meals.id !== action.payload.id);
+        }
+      });
+      return {
+        ...state,
+        users: state.users,
+        currentUser: state.currentUser,
+      };
+    case ADD_WORKOUT:
+      state.currentUser.workouts.push(action.payload);
+      state.users.forEach((user) => {
+        if (user.id === state.currentUser.id) {
+          user.workouts.push(action.payload);
+        }
+      });
+      return {
+        ...state,
+        currentUser: state.currentUser,
+        users: state.users,
+      };
+    case DELETE_WORKOUT:
+      state.currentUser.workouts.filter(
+        workouts => workouts.id !== action.payload.id,
+      );
+      state.users.forEach((user) => {
+        if (user.id === state.currentUser.id) {
+          user.workouts.filter(workouts => workouts.id !== action.payload.id);
         }
       });
       return {

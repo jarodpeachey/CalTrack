@@ -19,22 +19,9 @@ export const store = createStore(
   persistCombinedReducers,
   compose(
     applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );
 
 export const persistor = persistStore(store);
-
-
-// export default function configureStore (preloadedState) {
-//   const store = createStore(
-//     createRootReducer(history),
-//     preloadedState,
-//     compose(
-//       applyMiddleware(...middleware),
-//       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-//     ),
-//   );
-
-//   return store;
-// }

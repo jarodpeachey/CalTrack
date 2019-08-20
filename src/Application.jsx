@@ -15,8 +15,6 @@ import Dashboard from './components/pages/Dashboard';
 import Meals from './components/pages/Meals';
 import Workouts from './components/pages/Workouts';
 import { getUsers, getCurrentUser } from './actions/userActions';
-import { setMeals } from './actions/mealActions';
-import { setWorkouts } from './actions/workoutActions';
 
 class Application extends Component {
   static propTypes = {
@@ -38,9 +36,6 @@ class Application extends Component {
   componentDidMount () {
     this.props.getUsers();
     this.props.getCurrentUser();
-
-    this.props.setMeals(this.props.currentUser.meals);
-    this.props.setWorkouts(this.props.currentUser.workouts);
 
     console.log('Users: ', this.props.users);
     console.log('Current user: ', this.props.currentUser);
@@ -150,4 +145,4 @@ const mapStateToProps = state => ({
   workouts: state.workouts,
 });
 
-export default connect(mapStateToProps, { getUsers, getCurrentUser, setMeals, setWorkouts })(Application);
+export default connect(mapStateToProps, { getUsers, getCurrentUser })(Application);
