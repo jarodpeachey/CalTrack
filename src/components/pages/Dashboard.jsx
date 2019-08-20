@@ -69,7 +69,7 @@ class Dashboard extends Component {
               {currentUser.meals ? (
                 <div className={currentUser.workouts ? 'col col-6 py-none' : 'col col-12'}>
                   <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                    <MealsTitle className="title mb-none">Meals</MealsTitle>
+                    <Title className="title mb-none">Meals</Title>
                     <ul className="collection mb-md">
                       <div className="collection-item">
                         <strong>Chicken and Rice</strong>
@@ -103,7 +103,7 @@ class Dashboard extends Component {
               {currentUser.workouts ? (
                 <div className={currentUser.meals ? 'col col-6 py-none' : 'col col-12'}>
                   <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                    <MealsTitle className="title mb-none">Workouts</MealsTitle>
+                    <Title className="title mb-none">Workouts</Title>
                     <ul className="collection mb-md">
                       <div className="collection-item">
                         <strong>Pushups</strong>
@@ -168,18 +168,7 @@ const CaloriesCount = styled.em`
   color: ${({ theme }) => theme.colors.gray5};
 `;
 
-const MealsTitle = styled.h3`
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 8px 16px;
-  border-top-right-radius: 2px;
-  border-top-left-radius: 2px;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
-`;
-
-const WorkoutsTitle = styled.h3`
+const Title = styled.h3`
   width: 100%;
   position: absolute;
   left: 0;

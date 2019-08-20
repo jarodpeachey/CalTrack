@@ -27,7 +27,10 @@ class Application extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {};
+    this.state = {
+      updateApplication: false,
+      windowLocationPathname: '/',
+    };
   }
 
   componentDidMount () {
@@ -36,16 +39,35 @@ class Application extends Component {
 
     console.log('Users: ', this.props.users);
     console.log('Current user: ', this.props.currentUser);
+
+    this.checkWindowLocationUpdate();
   }
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate (nextProps, nextState) {
     if (this.props.getUsers() !== nextProps.getUsers()) {
       return true;
     }
     if (this.props.getCurrentUser() !== nextProps.getCurrentUser()) {
       return true;
     }
+    if (this.state.updateApplication !== nextState.updateApplication) {
+      return true;
+    }
     return false;
+  }
+
+  componentDidUpdate () {
+    this.checkWindowLocationUpdate();
+  }
+
+  checkWindowLocationUpdate () {
+    if (window.location.pathname !== this.state.windowLocationPathname) {
+      this.setState({ updateApplication: true });
+
+      this.setState({ windowLocationPathname: window.location.pathname });
+    }
+
+    console.log(window.location.pathname);
   }
 
   render () {

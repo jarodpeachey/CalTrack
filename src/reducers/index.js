@@ -1,9 +1,13 @@
-import { combineReducers } from 'redux';
+// import { combineReducers } from 'redux';
 // import { connectRouter } from 'connected-react-router';
 import userReducer from './userReducer';
+import mealReducer from './mealReducer';
+import workoutReducer from './workoutReducer';
 
-const rootReducer = combineReducers({
+const reducers = {
   userReducer,
-});
+  mealReducer,
+  workoutReducer,
+};
 
-export default rootReducer;
+export default reducers;
