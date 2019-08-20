@@ -49,20 +49,21 @@ class Header extends Component {
                   </Link>
                 </ColumnOne>
                 <ColumnTwo>
-                  {/* <Link to="/signup"> */}
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    classes={{ root: classes.navigationButton }}
-                    onClick={this.redirectToSignUpPage}
-                  >
-                    Sign Up
-                  </Button>
-                  {/* </Link> */}
+                  <Link to="/signup">
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      className="mx-none"
+                      classes={{ root: classes.navigationButton }}
+                    >
+                      Sign Up
+                    </Button>
+                  </Link>
                   <Link to="/login">
                     <Button
                       color="primary"
                       variant="contained"
+                      className="mx-none"
                       classes={{ root: classes.navigationButton }}
                     >
                       Log In
@@ -82,14 +83,26 @@ class Header extends Component {
                   </Link>
                 </ColumnOne>
                 <ColumnTwo>
-                  <Menu>
-                    <MenuItem>
-                      <Link to="/meals">Meals</Link>
-                    </MenuItem>
-                    <MenuItem>
-                      <Link to="/workouts">Workouts</Link>
-                    </MenuItem>
-                  </Menu>
+                  <Link to="/meals">
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      className="mx-none"
+                      classes={{ root: classes.navigationButton }}
+                    >
+                      Meals
+                    </Button>
+                  </Link>
+                  <Link to="/workouts">
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      className="mx-none"
+                      classes={{ root: classes.navigationButton }}
+                    >
+                      Workouts
+                    </Button>
+                  </Link>
                 </ColumnTwo>
               </Row>
             </div>
