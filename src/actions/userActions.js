@@ -1,6 +1,6 @@
 import axios from 'axios';
 import 'babel-polyfill';
-import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER, SET_CURRENT_USER } from './types';
+import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER, SET_CURRENT_USER, ADD_MEAL, DELETE_MEAL } from './types';
 // import { persistor } from '../Store';
 
 export const getUsers = () => (dispatch) => {
@@ -38,4 +38,23 @@ export const deleteUser = id => (dispatch) => {
     type: DELETE_USER,
     payload: id,
   });
+};
+
+export const editMeals = (type, meal) => (dispatch) => {
+  switch (type) {
+    case 'addMeal':
+      dispatch({
+        type: ADD_MEAL,
+        payload: meal,
+      });
+      break;
+    case 'deleteMeal':
+      dispatch({
+        type: DELETE_MEAL,
+        payload: meal,
+      });
+      break;
+    default:
+      return null;
+  }
 };

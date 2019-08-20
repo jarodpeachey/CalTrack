@@ -2,6 +2,7 @@ import axios from 'axios';
 import 'babel-polyfill';
 import { GET_MEALS, ADD_MEAL, DELETE_MEAL, SET_MEALS } from './types';
 // import { persistor } from '../Store';
+import { editMeals } from './userActions';
 
 export const getMeals = () => (dispatch) => {
   // persistor.purge();
@@ -12,6 +13,7 @@ export const getMeals = () => (dispatch) => {
 
 export const addMeal = meal => (dispatch) => {
   // persistor.purge();
+  editMeals(addMeal, meal);
   dispatch({
     type: ADD_MEAL,
     payload: meal,

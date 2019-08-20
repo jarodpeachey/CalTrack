@@ -1,4 +1,4 @@
-import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER, SET_CURRENT_USER } from '../actions/types';
+import { GET_USERS, ADD_USER, DELETE_USER, GET_CURRENT_USER, SET_CURRENT_USER, ADD_MEAL } from '../actions/types';
 
 const initialState = {
   users: [
@@ -35,6 +35,18 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: action.payload,
+      };
+    case ADD_MEAL:
+      state.currentUser.meals.push(action.payload);
+      state.users.forEach((user) => {
+        if (user.id === state.currentUser.id) {
+          user.meals.push(action.payload);
+        }
+      });
+      return {
+        ...state,
+        currentUser: state.currentUser,
+        users: state.users,
       };
     default:
       return state;

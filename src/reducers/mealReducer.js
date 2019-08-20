@@ -21,7 +21,7 @@ const mealReducer = (state = initialState, action) => {
     case ADD_MEAL:
       return {
         ...state,
-        meals: [...state.meals, action.payload],
+        meals: [...state.meals],
       };
     case DELETE_MEAL:
       return {
