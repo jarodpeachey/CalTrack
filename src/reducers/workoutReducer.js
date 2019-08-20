@@ -2,14 +2,7 @@ import { GET_WORKOUTS, ADD_WORKOUT, DELETE_WORKOUT, SET_WORKOUTS } from '../acti
 
 const initialState = {
   workouts: [
-    {
-      name: 'Pushups',
-      calories: -345,
-    },
-    {
-      name: 'Mile Run',
-      calories: -675,
-    },
+
   ],
 };
 
@@ -36,7 +29,7 @@ const workoutReducer = (state = initialState, action) => {
         workouts: state.filter(workouts => workouts.id !== action.payload),
       };
     default:
-      return state.workouts;
+      return state;
   }
 };
 

@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import { addMeal } from '../../actions/mealActions';
 
 class Dashboard extends Component {
   static propTypes = {
@@ -16,11 +17,23 @@ class Dashboard extends Component {
   constructor (props) {
     super(props);
     this.state = {};
+
+    this.addMeal = this.addMeal.bind(this);
   }
 
   componentDidMount () {}
 
   shouldComponentUpdate () {}
+
+  addMeal () {
+    const meal = {
+      id: 1,
+      name: 'Chicken and Rice',
+      calories: 350,
+    };
+
+    this.props.addMeal(meal);
+  }
 
   render () {
     const { classes, currentUser } = this.props;
@@ -28,7 +41,7 @@ class Dashboard extends Component {
     return (
       <Wrapper>
         <div className="container py-sm">
-          {!currentUser.meals && !currentUser.workouts ? (
+          {!currentUser.meals.length && !currentUser.workouts.length ? (
             <Card className="card border no-shadow px-sm py-sm mb-sm">
               <h4 className="m-none mb-xs">
                 Welcome,
@@ -39,16 +52,17 @@ class Dashboard extends Component {
               </p>
               <div className="row mobile">
                 <div className="col col-6">
-                  <Link to="/meals">
+                  {/* <Link to="/meals"> */}
                     <Button
                       fullWidth
                       variant="contained"
                       color="primary"
                       className="m-none"
+                      onClick={this.addMeal}
                     >
                       Add Meal
                     </Button>
-                  </Link>
+                  {/* </Link> */}
                 </div>
                 <div className="col col-6">
                   <Link to="/workouts">
@@ -66,8 +80,8 @@ class Dashboard extends Component {
             </Card>
           ) : (
             <div className="row">
-              {currentUser.meals ? (
-                <div className={currentUser.workouts ? 'col col-6 py-none' : 'col col-12'}>
+              {currentUser.meals.length ? (
+                <div className={currentUser.workouts.length ? 'col col-6 py-none' : 'col col-12'}>
                   <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
                     <Title className="title mb-none">Meals</Title>
                     <ul className="collection mb-md">
@@ -100,8 +114,8 @@ class Dashboard extends Component {
                   </Card>
                 </div>
               ) : null}
-              {currentUser.workouts ? (
-                <div className={currentUser.meals ? 'col col-6 py-none' : 'col col-12'}>
+              {currentUser.workouts.length ? (
+                <div className={currentUser.meals.length ? 'col col-6 py-none' : 'col col-12'}>
                   <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
                     <Title className="title mb-none">Workouts</Title>
                     <ul className="collection mb-md">
@@ -179,4 +193,4 @@ const Title = styled.h3`
   border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
 `;
 
-export default withStyles(styles)(Dashboard);
+export default connect(null, { addMeal })(withStyles(styles)(Dashboard));

@@ -2,14 +2,7 @@ import { GET_MEALS, ADD_MEAL, DELETE_MEAL, SET_MEALS } from '../actions/types';
 
 const initialState = {
   meals: [
-    {
-      name: 'Chicken and rice',
-      calories: 450,
-    },
-    {
-      name: 'Pizza',
-      calories: 150,
-    },
+
   ],
 };
 
@@ -36,7 +29,7 @@ const mealReducer = (state = initialState, action) => {
         meals: state.filter(meals => meals.id !== action.payload),
       };
     default:
-      return state.meals;
+      return state;
   }
 };
 
