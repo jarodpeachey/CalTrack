@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addMeal } from '../../actions/mealActions';
+import { addMeal } from '../../actions/userActions';
 
 class Dashboard extends Component {
   static propTypes = {
