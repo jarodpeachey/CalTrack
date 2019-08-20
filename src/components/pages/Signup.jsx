@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
@@ -183,5 +184,5 @@ const Heading = styled.h1`
   color: ${({ theme }) => theme.colors.main};
 `;
 
-export default connect(null, { addUser, setCurrentUser })(withStyles(styles)(Signup));
+export default withRouter(connect(null, { addUser, setCurrentUser })(withStyles(styles)(Signup)));
 

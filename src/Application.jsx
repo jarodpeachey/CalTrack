@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { ConnectedRouter } from 'connected-react-router';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -28,8 +28,8 @@ class Application extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      updateApplication: false,
-      windowLocationPathname: '/',
+      // updateApplication: false,
+      // windowLocationPathname: '/',
     };
   }
 
@@ -39,93 +39,109 @@ class Application extends Component {
 
     console.log('Users: ', this.props.users);
     console.log('Current user: ', this.props.currentUser);
-
-    this.checkWindowLocationUpdate();
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    if (this.props.getUsers() !== nextProps.getUsers()) {
-      return true;
-    }
-    if (this.props.getCurrentUser() !== nextProps.getCurrentUser()) {
-      return true;
-    }
-    if (this.state.updateApplication !== nextState.updateApplication) {
-      return true;
-    }
-    return false;
-  }
-
-  componentDidUpdate () {
-    this.checkWindowLocationUpdate();
-  }
-
-  checkWindowLocationUpdate () {
-    if (window.location.pathname !== this.state.windowLocationPathname) {
-      this.setState({ updateApplication: true });
-
-      this.setState({ windowLocationPathname: window.location.pathname });
-    }
-
-    console.log(window.location.pathname);
-  }
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   if (this.props.getUsers() !== nextProps.getUsers()) {
+  //     return true;
+  //   }
+  //   if (this.props.getCurrentUser() !== nextProps.getCurrentUser()) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   render () {
     const { users, currentUser } = this.props;
-    let header;
-
-    if (window.location.pathname === '/welcome' || window.location.pathname === '/') {
-      header = <Header welcomePageActive />;
-    } else {
-      header = <Header />;
-    }
 
     return (
       <MuiThemeProvider theme={muiTheme}>
         <ThemeProvider theme={styledTheme}>
           <Wrapper>
-            <Router>
-              <>
-                {header}
-                <Switch>
-                  <Route
-                    exact
-                    path="/"
-                    render={props => <Main {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/welcome"
-                    render={props => <Main {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/login"
-                    render={props => <Login {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/signup"
-                    render={props => <Signup {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/dashboard"
-                    render={props => <Dashboard {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/meals"
-                    render={props => <Meals {...props} users={users} currentUser={currentUser} />}
-                  />
-                  <Route
-                    exact
-                    path="/workouts"
-                    render={props => <Workouts {...props} users={users} currentUser={currentUser} />}
-                  />
-                </Switch>
-              </>
-            </Router>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => (
+                  <>
+                    {<Header {...props} pathname={location.pathname} />}
+                    <Main {...props} users={users} currentUser={currentUser} />
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/welcome"
+                render={props => (
+                  <>
+                    {<Header {...props} pathname={location.pathname} />}
+                    <Main {...props} users={users} currentUser={currentUser} />
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/login"
+                render={props => (
+                  <>
+                    {<Header {...props} pathname={location.pathname} />}
+                    <Login {...props} users={users} currentUser={currentUser} />
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/signup"
+                render={props => (
+                  <>
+                    {<Header {...props} pathname={location.pathname} />}
+                    <Signup
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/dashboard"
+                render={props => (
+                  <>
+                    {<Header {...props} pathname={location.pathname} />}
+                    <Dashboard
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/meals"
+                render={props => (
+                  <>
+                    {<Header {...props} pathname={location.pathname} />}
+                    <Meals {...props} users={users} currentUser={currentUser} />
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/workouts"
+                render={props => (
+                  <>
+                    {<Header {...props} pathname={location.pathname} />}
+                    <Workouts
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </>
+                )}
+              />
+            </Switch>
           </Wrapper>
         </ThemeProvider>
       </MuiThemeProvider>
@@ -145,4 +161,7 @@ const mapStateToProps = state => ({
   workouts: state.workouts,
 });
 
-export default connect(mapStateToProps, { getUsers, getCurrentUser })(Application);
+export default connect(
+  mapStateToProps,
+  { getUsers, getCurrentUser },
+)(Application);

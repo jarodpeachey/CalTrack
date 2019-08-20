@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
+import { withRouter } from 'react-router-dom';
 
 class Main extends Component {
   static propTypes = {
@@ -76,5 +77,5 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-export default Main;
+export default withRouter(Main);
 

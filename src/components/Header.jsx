@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core';
 
 class Header extends Component {
   static propTypes = {
-    welcomePageActive: PropTypes.bool,
+    classes: PropTypes.object,
+    pathname: PropTypes.string,
+    history: PropTypes.object,
   };
 
   constructor (props) {
@@ -14,37 +17,54 @@ class Header extends Component {
     this.state = {
       // user: null,
     };
+    this.redirectToSignUpPage = this.redirectToSignUpPage.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount () {}
+
+  shouldComponentUpdate (nextProps) {
+    if (this.props.pathname !== nextProps.pathname) {
+      return true;
+    }
+
+    return false;
   }
 
-  shouldComponentUpdate () {
-
+  redirectToSignUpPage () {
+    this.props.history.push('/signup');
   }
 
   render () {
+    const { classes } = this.props;
+
     return (
       <span>
-        {this.props.welcomePageActive ? (
+        {this.props.pathname === '/' || this.props.pathname === '/signup' ? (
           <Wrapper>
             <div className="container py-xs">
               <Row>
                 <ColumnOne>
                   <Link to="/">
-                    <BrandName className="m-none">
-                      CalTrack
-                    </BrandName>
+                    <BrandName className="m-none">CalTrack</BrandName>
                   </Link>
                 </ColumnOne>
                 <ColumnTwo>
-                  <Link to="/signup">
-                    <Button color="secondary">
-                      Sign Up
-                    </Button>
-                  </Link>
+                  {/* <Link to="/signup"> */}
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    classes={{ root: classes.navigationButton }}
+                    onClick={this.redirectToSignUpPage}
+                  >
+                    Sign Up
+                  </Button>
+                  {/* </Link> */}
                   <Link to="/login">
-                    <Button color="secondary" variant="outlined">
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      classes={{ root: classes.navigationButton }}
+                    >
                       Log In
                     </Button>
                   </Link>
@@ -58,22 +78,16 @@ class Header extends Component {
               <Row>
                 <ColumnOne>
                   <Link to="/">
-                    <BrandName className="m-none">
-                      CalTrack
-                    </BrandName>
+                    <BrandName className="m-none">CalTrack</BrandName>
                   </Link>
                 </ColumnOne>
                 <ColumnTwo>
                   <Menu>
                     <MenuItem>
-                      <Link to="/meals">
-                        Meals
-                      </Link>
+                      <Link to="/meals">Meals</Link>
                     </MenuItem>
                     <MenuItem>
-                      <Link to="/workouts">
-                        Workouts
-                      </Link>
+                      <Link to="/workouts">Workouts</Link>
                     </MenuItem>
                   </Menu>
                 </ColumnTwo>
@@ -86,11 +100,18 @@ class Header extends Component {
   }
 }
 
+const styles = () => ({
+  navigationButton: {
+    color: 'white',
+    boxShadow: 'none !important',
+  },
+});
+
 const Wrapper = styled.div`
   position: fixed;
   top: 0;
   background: ${({ theme }) => theme.colors.primary} !important;
-  color: white;
+  color: white !important;
   width: 100%;
   padding: 0;
   box-shadow: 0 20px 40px -25px #666;
@@ -130,5 +151,4 @@ const BrandName = styled.h1`
   color: white !important;
 `;
 
-export default Header;
-
+export default withRouter(withStyles(styles)(Header));

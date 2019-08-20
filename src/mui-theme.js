@@ -45,6 +45,7 @@ const muiTheme = createMuiTheme({
       main: '#158EE1',
       light: '#4CA3DE',
       dark: '#057DCF',
+      contrastText: '#fff',
     },
   },
   breakpoints,
