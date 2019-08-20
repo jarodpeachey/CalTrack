@@ -147,19 +147,6 @@ const ColumnTwo = styled.div`
   justify-content: flex-end;
 `;
 
-const Menu = styled.ul`
-  list-style: none;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-`;
-
-const MenuItem = styled.li`
-  width: fit-content:
-`;
-
 const BrandName = styled.h1`
   color: white !important;
 `;

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
