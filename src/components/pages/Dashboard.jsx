@@ -96,7 +96,7 @@ class Dashboard extends Component {
     return (
       <Wrapper>
         <div className="container py-sm">
-          {!currentUser.meals && !currentUser.workouts ? (
+          {!meals.length && !workouts.length ? (
             <Card className="card border no-shadow px-sm py-sm mb-sm">
               <h4 className="m-none mb-xs">
                 Welcome,
@@ -139,11 +139,20 @@ class Dashboard extends Component {
               <div className="col col-6 py-none">
                 <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
                   <Title className="title mb-none">Meals</Title>
-                  {currentUser.meals.length ? (
+                  {meals.length ? (
                     <>
                       <ul className="collection mb-md">
                         {meals.map(meal => (
-                          <div className="collection-item">{meal.name}</div>
+                          <div className="collection-item">
+                            <strong>{meal.name}</strong>
+                            <div className="right">
+                              <CaloriesCount>
+                                {meal.calories}
+                                {' '}
+                                calories
+                              </CaloriesCount>
+                            </div>
+                          </div>
                         ))}
                       </ul>
                       <Button
@@ -176,7 +185,16 @@ class Dashboard extends Component {
                     <>
                       <ul className="collection mb-md">
                         {workouts.map(workout => (
-                          <div className="collection-item">{workout.name}</div>
+                          <div className="collection-item">
+                            <strong>{workout.name}</strong>
+                            <div className="right">
+                              <CaloriesCount>
+                                {workout.calories}
+                                {' '}
+                                calories
+                              </CaloriesCount>
+                            </div>
+                          </div>
                         ))}
                       </ul>
                       <Button
@@ -189,7 +207,9 @@ class Dashboard extends Component {
                     </>
                   ) : (
                     <div className="center-text">
-                      <h4 className="mt-sm">There are no workouts! Get cracking!!</h4>
+                      <h4 className="mt-sm">
+                        There are no workouts! Get cracking!!
+                      </h4>
                       <Button
                         color="primary"
                         className="m-none"
