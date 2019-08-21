@@ -17,17 +17,42 @@ class Dashboard extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {};
+    this.state = {
+      workouts: [],
+      meals: [],
+    };
 
-    this.addMeal = this.addMeal.bind(this);
-    this.addWorkout = this.addWorkout.bind(this);
+    this.addMealToLocalState = this.addMealToLocalState.bind(this);
+    this.addWorkoutToLocalState = this.addWorkoutToLocalState.bind(this);
   }
 
-  componentDidMount () {}
+  componentDidMount () {
+    this.setState({
+      meals: this.props.currentUser.meals,
+      workouts: this.props.currentUser.workouts,
+    });
+  }
 
-  shouldComponentUpdate () {}
+  componentWillReceiveProps (prevProps) {
+    if (prevProps.currentUser.meals !== this.props.currentUser.meals) {
+      this.setState({ meals: this.props.currentUser.meals });
+    }
+    if (prevProps.currentUser.workouts !== this.props.currentUser.workouts) {
+      this.setState({ workouts: this.props.currentUser.workouts });
+    }
+  }
 
-  addMeal () {
+  shouldComponentUpdate (nextState) {
+    if (this.state.meals !== nextState.meals) {
+      return true;
+    }
+    if (this.state.workouts !== nextState.workouts) {
+      return true;
+    }
+    return false;
+  }
+
+  addMealToLocalState () {
     const meal = {
       id: 1,
       name: 'Chicken and Rice',
@@ -35,9 +60,16 @@ class Dashboard extends Component {
     };
 
     this.props.addMeal(meal);
+
+    const newMealsArray = this.state.meals;
+
+    newMealsArray.push(meal);
+    this.setState({ meals: newMealsArray });
+
+    console.log('New meal is added: ', meal);
   }
 
-  addWorkout () {
+  addWorkoutToLocalState () {
     const workout = {
       id: 1,
       name: 'Pushups',
@@ -45,15 +77,26 @@ class Dashboard extends Component {
     };
 
     this.props.addWorkout(workout);
+
+    const newWorkoutsArray = this.state.workouts;
+
+    newWorkoutsArray.push(workout);
+    this.setState({ workouts: newWorkoutsArray });
+
+    console.log('New workout is added: ', workout);
   }
 
   render () {
     const { classes, currentUser } = this.props;
+    const { meals, workouts } = this.state;
+
+    console.log('Meals: ', meals);
+    console.log('Workouts: ', workouts);
 
     return (
       <Wrapper>
         <div className="container py-sm">
-          {!currentUser.meals.length && !currentUser.workouts.length ? (
+          {!currentUser.meals && !currentUser.workouts ? (
             <Card className="card border no-shadow px-sm py-sm mb-sm">
               <h4 className="m-none mb-xs">
                 Welcome,
@@ -70,7 +113,7 @@ class Dashboard extends Component {
                     variant="contained"
                     color="primary"
                     className="m-none"
-                    onClick={this.addMeal}
+                    onClick={this.addMealToLocalState}
                   >
                     Add Meal
                   </Button>
@@ -83,7 +126,7 @@ class Dashboard extends Component {
                     variant="contained"
                     color="primary"
                     className="m-none"
-                    onClick={this.addWorkout}
+                    onClick={this.addWorkoutToLocalState}
                   >
                     Add Workout
                   </Button>
@@ -93,86 +136,72 @@ class Dashboard extends Component {
             </Card>
           ) : (
             <div className="row">
-              {currentUser.meals.length ? (
-                <div
-                  className={
-                    currentUser.workouts.length ?
-                      'col col-6 py-none' :
-                      'col col-12'
-                  }
-                >
-                  <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                    <Title className="title mb-none">Meals</Title>
-                    <ul className="collection mb-md">
-                      <div className="collection-item">
-                        <strong>Chicken and Rice</strong>
-                        <CaloriesCount className="right">
-                          300 calories
-                        </CaloriesCount>
-                      </div>
-                      <div className="collection-item">
-                        <strong>Smoothie</strong>
-                        <CaloriesCount className="right">
-                          215 calories
-                        </CaloriesCount>
-                      </div>
-                      <div className="collection-item">
-                        <strong>Cookie</strong>
-                        <CaloriesCount className="right">
-                          100 calories
-                        </CaloriesCount>
-                      </div>
-                    </ul>
-                    <Button
-                      classes={{ root: classes.button }}
-                      color="primary"
-                      className="m-none"
-                    >
-                      See More Meals
-                    </Button>
-                  </Card>
-                </div>
-              ) : null}
-              {currentUser.workouts.length ? (
-                <div
-                  className={
-                    currentUser.meals.length ?
-                      'col col-6 py-none' :
-                      'col col-12'
-                  }
-                >
-                  <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                    <Title className="title mb-none">Workouts</Title>
-                    <ul className="collection mb-md">
-                      <div className="collection-item">
-                        <strong>Pushups</strong>
-                        <CaloriesCount className="right">
-                          -150 calories
-                        </CaloriesCount>
-                      </div>
-                      <div className="collection-item">
-                        <strong>Situps</strong>
-                        <CaloriesCount className="right">
-                          -325 calories
-                        </CaloriesCount>
-                      </div>
-                      <div className="collection-item">
-                        <strong>Mile Run</strong>
-                        <CaloriesCount className="right">
-                          -765 calories
-                        </CaloriesCount>
-                      </div>
-                    </ul>
-                    <Button
-                      classes={{ root: classes.button }}
-                      color="primary"
-                      className="m-none"
-                    >
-                      See More Workouts
-                    </Button>
-                  </Card>
-                </div>
-              ) : null}
+              <div className="col col-6 py-none">
+                <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
+                  <Title className="title mb-none">Meals</Title>
+                  {currentUser.meals.length ? (
+                    <>
+                      <ul className="collection mb-md">
+                        {meals.map(meal => (
+                          <div className="collection-item">{meal.name}</div>
+                        ))}
+                      </ul>
+                      <Button
+                        classes={{ root: classes.button }}
+                        color="primary"
+                        className="m-none"
+                      >
+                        See More Meals
+                      </Button>
+                    </>
+                  ) : (
+                    <div className="center-text">
+                      <h4 className="mt-sm">There are no meals! Eat up!</h4>
+                      <Button
+                        color="primary"
+                        className="m-none"
+                        variant="contained"
+                        onClick={this.addMealToLocalState}
+                      >
+                        Add Meal
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              </div>
+              <div className="col col-6 py-none">
+                <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
+                  <Title className="title mb-none">Workouts</Title>
+                  {workouts.length ? (
+                    <>
+                      <ul className="collection mb-md">
+                        {workouts.map(workout => (
+                          <div className="collection-item">{workout.name}</div>
+                        ))}
+                      </ul>
+                      <Button
+                        classes={{ root: classes.button }}
+                        color="primary"
+                        className="m-none"
+                      >
+                        See More Workouts
+                      </Button>
+                    </>
+                  ) : (
+                    <div className="center-text">
+                      <h4 className="mt-sm">There are no workouts! Get cracking!!</h4>
+                      <Button
+                        color="primary"
+                        className="m-none"
+                        variant="contained"
+                        onClick={this.addWorkoutToLocalState}
+                      >
+                        Add Workout
+                      </Button>
+                    </div>
+                  )}
+                </Card>
+              </div>
             </div>
           )}
         </div>
@@ -220,5 +249,5 @@ const Title = styled.h3`
 
 export default connect(
   null,
-  { addMeal },
+  { addMeal, addWorkout },
 )(withStyles(styles)(Dashboard));

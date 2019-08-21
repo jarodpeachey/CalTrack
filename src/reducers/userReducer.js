@@ -43,16 +43,25 @@ const userReducer = (state = initialState, action) => {
         currentUser: action.payload,
       };
     case ADD_MEAL:
-      state.currentUser.meals.push(action.payload);
-      state.users.forEach((user) => {
+      const newCurrentUserMeals = [...state.currentUser.meals];
+      newCurrentUserMeals.push(action.payload);
+
+      const newUsersMeals = [...state.users];
+      newUsersMeals.forEach((user) => {
         if (user.id === state.currentUser.id) {
           user.meals.push(action.payload);
         }
       });
+
+      const updatedCurrentUserMeals = {
+        ...state.currentUser,
+        meals: newCurrentUserMeals,
+      };
+
       return {
         ...state,
-        currentUser: state.currentUser,
-        users: state.users,
+        currentUser: updatedCurrentUserMeals,
+        users: newUsersMeals,
       };
     case DELETE_MEAL:
       state.currentUser.meals.filter(meals => meals.id !== action.payload.id);
@@ -67,16 +76,25 @@ const userReducer = (state = initialState, action) => {
         currentUser: state.currentUser,
       };
     case ADD_WORKOUT:
-      state.currentUser.workouts.push(action.payload);
-      state.users.forEach((user) => {
+      const newCurrentUserWorkouts = [...state.currentUser.workouts];
+      newCurrentUserWorkouts.push(action.payload);
+
+      const newUserWorkouts = [...state.users];
+      newUserWorkouts.forEach((user) => {
         if (user.id === state.currentUser.id) {
           user.workouts.push(action.payload);
         }
       });
+
+      const updatedCurrentUserWorkouts = {
+        ...state.currentUser,
+        workouts: newCurrentUserWorkouts,
+      };
+
       return {
         ...state,
-        currentUser: state.currentUser,
-        users: state.users,
+        currentUser: updatedCurrentUserWorkouts,
+        users: newUserWorkouts,
       };
     case DELETE_WORKOUT:
       state.currentUser.workouts.filter(
