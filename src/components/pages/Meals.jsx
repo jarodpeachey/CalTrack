@@ -153,7 +153,7 @@ class Meals extends Component {
           <div className="container py-md">
             <div className="card p-md border no-shadow bg-white">
               <h3 className="title m-none">
-                {mode === 'addMeal' ? 'Add Meal' : 'Edit Meal'}
+                {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
               </h3>
               <form action="">
                 <div className="row">
