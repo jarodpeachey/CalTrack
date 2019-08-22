@@ -107,30 +107,28 @@ class Dashboard extends Component {
               </p>
               <div className="row mobile">
                 <div className="col col-6">
-                  {/* <Link to="/meals"> */}
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="m-none"
-                    onClick={this.addMealToLocalState}
-                  >
-                    Add Meal
-                  </Button>
-                  {/* </Link> */}
+                  <Link to="/meals">
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className="m-none"
+                    >
+                      Add Meal
+                    </Button>
+                  </Link>
                 </div>
                 <div className="col col-6">
-                  {/* <Link to="/workouts"> */}
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="m-none"
-                    onClick={this.addWorkoutToLocalState}
-                  >
-                    Add Workout
-                  </Button>
-                  {/* </Link> */}
+                  <Link to="/workouts">
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className="m-none"
+                    >
+                      Add Workout
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </Card>
@@ -149,31 +147,34 @@ class Dashboard extends Component {
                               <CaloriesCount>
                                 {meal.calories}
                                 {' '}
-                                calories
+calories
                               </CaloriesCount>
                             </div>
                           </div>
                         ))}
                       </ul>
-                      <Button
-                        classes={{ root: classes.button }}
-                        color="primary"
-                        className="m-none"
-                      >
-                        See More Meals
-                      </Button>
+                      <Link to="/meals">
+                        <Button
+                          classes={{ root: classes.button }}
+                          color="primary"
+                          className="m-none"
+                        >
+                          See More Meals
+                        </Button>
+                      </Link>
                     </>
                   ) : (
                     <div className="center-text">
                       <h4 className="mt-sm">There are no meals! Eat up!</h4>
-                      <Button
-                        color="primary"
-                        className="m-none"
-                        variant="contained"
-                        onClick={this.addMealToLocalState}
-                      >
-                        Add Meal
-                      </Button>
+                      <Link to="/meals">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className="m-none"
+                        >
+                          Add Meal
+                        </Button>
+                      </Link>
                     </div>
                   )}
                 </Card>
@@ -191,33 +192,36 @@ class Dashboard extends Component {
                               <CaloriesCount>
                                 {workout.calories}
                                 {' '}
-                                calories
+calories
                               </CaloriesCount>
                             </div>
                           </div>
                         ))}
                       </ul>
-                      <Button
-                        classes={{ root: classes.button }}
-                        color="primary"
-                        className="m-none"
-                      >
-                        See More Workouts
-                      </Button>
+                      <Link to="/workouts">
+                        <Button
+                          classes={{ root: classes.button }}
+                          color="primary"
+                          className="m-none"
+                        >
+                          See More Workouts
+                        </Button>
+                      </Link>
                     </>
                   ) : (
                     <div className="center-text">
                       <h4 className="mt-sm">
                         There are no workouts! Get cracking!!
                       </h4>
-                      <Button
-                        color="primary"
-                        className="m-none"
-                        variant="contained"
-                        onClick={this.addWorkoutToLocalState}
-                      >
-                        Add Workout
-                      </Button>
+                      <Link to="/workouts">
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          className="m-none"
+                        >
+                          Add Workout
+                        </Button>
+                      </Link>
                     </div>
                   )}
                 </Card>

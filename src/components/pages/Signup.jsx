@@ -105,7 +105,7 @@ class Signup extends Component {
     return (
       <div>
         <FormWrapper>
-          <Heading>
+          <Heading className="mb-sm">
             Sign Up
           </Heading>
           <form onSubmit={this.onFormSubmit}>
@@ -177,6 +177,7 @@ const FormWrapper = styled.div`
   width: 60%;
   margin: 0 auto;
   max-width: 540px;
+  margin-top: ${({ theme }) => theme.spacing.md};
 `;
 
 const Heading = styled.h1`

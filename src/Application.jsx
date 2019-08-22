@@ -58,92 +58,120 @@ class Application extends Component {
     return (
       <MuiThemeProvider theme={muiTheme}>
         <ThemeProvider theme={styledTheme}>
-          <Wrapper>
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={props => (
-                  <>
-                    {<Header {...props} pathname={location.pathname} />}
-                    <Main {...props} users={users} currentUser={currentUser} />
-                  </>
-                )}
-              />
-              <Route
-                exact
-                path="/welcome"
-                render={props => (
-                  <>
-                    {<Header {...props} pathname={location.pathname} />}
-                    <Main {...props} users={users} currentUser={currentUser} />
-                  </>
-                )}
-              />
-              <Route
-                exact
-                path="/login"
-                render={props => (
-                  <>
-                    {<Header {...props} pathname={location.pathname} />}
-                    <Login {...props} users={users} currentUser={currentUser} />
-                  </>
-                )}
-              />
-              <Route
-                exact
-                path="/signup"
-                render={props => (
-                  <>
-                    {<Header {...props} pathname={location.pathname} />}
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <>
+                  {<Header {...props} pathname={location.pathname} />}
+                  <Wrapper>
+                    <Main
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </Wrapper>
+                </>
+              )}
+            />
+            <Route
+              exact
+              path="/welcome"
+              render={props => (
+                <>
+                  {<Header {...props} pathname={location.pathname} />}
+                  <Wrapper>
+                    <Main
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </Wrapper>
+                </>
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={props => (
+                <>
+                  {<Header {...props} pathname={location.pathname} />}
+                  <Wrapper>
+                    <Login
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </Wrapper>
+                </>
+              )}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={props => (
+                <>
+                  {<Header {...props} pathname={location.pathname} />}
+                  <Wrapper>
                     <Signup
                       {...props}
                       users={users}
                       currentUser={currentUser}
                     />
-                  </>
-                )}
-              />
-              <Route
-                exact
-                path="/dashboard"
-                render={props => (
-                  <>
-                    {<Header {...props} pathname={location.pathname} />}
+                  </Wrapper>
+                </>
+              )}
+            />
+            <Route
+              exact
+              path="/dashboard"
+              render={props => (
+                <>
+                  {<Header {...props} pathname={location.pathname} />}
+                  <Wrapper>
                     <Dashboard
                       {...props}
                       users={users}
                       currentUser={currentUser}
                     />
-                  </>
-                )}
-              />
-              <Route
-                exact
-                path="/meals"
-                render={props => (
-                  <>
-                    {<Header {...props} pathname={location.pathname} />}
-                    <Meals {...props} users={users} currentUser={currentUser} />
-                  </>
-                )}
-              />
-              <Route
-                exact
-                path="/workouts"
-                render={props => (
-                  <>
-                    {<Header {...props} pathname={location.pathname} />}
+                  </Wrapper>
+                </>
+              )}
+            />
+            <Route
+              exact
+              path="/meals"
+              render={props => (
+                <>
+                  {<Header {...props} pathname={location.pathname} />}
+                  <Wrapper>
+                    <Meals
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </Wrapper>
+                </>
+              )}
+            />
+            <Route
+              exact
+              path="/workouts"
+              render={props => (
+                <>
+                  {<Header {...props} pathname={location.pathname} />}
+                  <Wrapper>
                     <Workouts
                       {...props}
                       users={users}
                       currentUser={currentUser}
                     />
-                  </>
-                )}
-              />
-            </Switch>
-          </Wrapper>
+                  </Wrapper>
+                </>
+              )}
+            />
+          </Switch>
         </ThemeProvider>
       </MuiThemeProvider>
     );
@@ -153,6 +181,7 @@ class Application extends Component {
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.gray1};
   height: 100vh;
+  padding-top: 68px;
 `;
 
 const mapStateToProps = state => ({
