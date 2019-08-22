@@ -31,7 +31,7 @@ class Meals extends Component {
       mealName: '',
       mealCalories: '',
       mealDescription: '',
-      mode: 'editMealMode',
+      mode: 'addMealMode',
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCaloriesChange = this.handleCaloriesChange.bind(this);
@@ -82,9 +82,13 @@ class Meals extends Component {
     switch (mode) {
       case 'addMealMode':
         buttonsGroup = (
-          <Button variant="contained" className="m-none" color="primary">
-            Add Meal
-          </Button>
+          <div className="row">
+            <div className="col col-12">
+              <Button variant="contained" className="m-none" color="primary">
+                Add Meal
+              </Button>
+            </div>
+          </div>
         );
         break;
       case 'editMealMode':
@@ -117,10 +121,15 @@ class Meals extends Component {
         break;
       default:
         buttonsGroup = (
-          <Button variant="contained" color="primary">
-            Add Meal
-          </Button>
+          <div className="row">
+            <div className="col col-12">
+              <Button variant="contained" className="m-none" color="primary">
+                Add Meal
+              </Button>
+            </div>
+          </div>
         );
+        break;
     }
 
     return (
@@ -143,7 +152,9 @@ class Meals extends Component {
         ) : (
           <div className="container py-md">
             <div className="card p-md border no-shadow bg-white">
-              <h3 className="title m-none">Add Meal</h3>
+              <h3 className="title m-none">
+                {mode === 'addMeal' ? 'Add Meal' : 'Edit Meal'}
+              </h3>
               <form action="">
                 <div className="row">
                   <div className="col col-6">
