@@ -48,8 +48,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 ${({ theme }) => theme.spacing.xl};
-  height: 100vh;
+  height: 100%;
 `;
 
 const Title = styled.h1`

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // import { ConnectedRouter } from 'connected-react-router';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import styled, { ThemeProvider } from 'styled-components';
-import muiTheme from './mui-theme';
+import theme from './mui-theme';
 import styledTheme from './styled-theme';
 import Header from './components/Header';
 import Main from './components/pages/Main';
@@ -56,7 +56,7 @@ class Application extends Component {
     const { users, currentUser } = this.props;
 
     return (
-      <MuiThemeProvider theme={muiTheme}>
+      <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={styledTheme}>
           <Switch>
             <Route
