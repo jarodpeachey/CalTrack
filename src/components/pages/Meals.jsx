@@ -33,22 +33,38 @@ class Meals extends Component {
       mealDescription: '',
       mode: 'editMealMode',
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleCaloriesChange = this.handleCaloriesChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
   }
 
   // componentDidMount () {
   //   this.props.addMeal(meal);
   // }
 
-  handleChange (e, type) {
-    switch (type) {
-      case 'name':
-        this.setState({ mealName: e.target.value });
-        break;
-      default:
-        console.log('');
-        break;
+  shouldComponentUpdate (nextState) {
+    if (this.state.mealName !== nextState.mealName) {
+      return true;
     }
+    if (this.state.mealCalories !== nextState.mealCalories) {
+      return true;
+    }
+    if (this.state.mealDescription !== nextState.mealDescription) {
+      return true;
+    }
+    return false;
+  }
+
+  handleNameChange (e) {
+    this.setState({ mealName: e.target.value });
+  }
+
+  handleCaloriesChange (e) {
+    this.setState({ mealCalories: e.target.value });
+  }
+
+  handleDescriptionChange (e) {
+    this.setState({ mealDescription: e.target.value });
   }
 
   render () {
@@ -118,7 +134,7 @@ class Meals extends Component {
                   margin="normal"
                   label="Meal"
                   value={mealName}
-                  onChange={this.handleChange('name')}
+                  onChange={this.handleNameChange}
                   placeholder="Meal name..."
                 />
               </form>
@@ -140,7 +156,7 @@ class Meals extends Component {
                       fullWidth
                       label="Meal Name"
                       value={mealName}
-                      onChange={this.handleChange('name')}
+                      onChange={this.handleNameChange}
                       placeholder="Meal name..."
                     />
                   </div>
@@ -154,8 +170,9 @@ class Meals extends Component {
                       fullWidth
                       label="Calories"
                       value={mealCalories}
-                      onChange={this.handleChange('calories')}
+                      onChange={this.handleCaloriesChange}
                       placeholder="Calories"
+                      type="number"
                     />
                   </div>
                   <div className="col col-12">
@@ -167,7 +184,7 @@ class Meals extends Component {
                       fullWidth
                       label="Comments and description"
                       value={mealDescription}
-                      onChange={this.handleChange('description')}
+                      onChange={this.handleDescriptionChange}
                       placeholder="Comments and description"
                       multiline
                       disableUnderline
