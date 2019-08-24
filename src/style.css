@@ -1,10 +1,5 @@
-/*
-* Peach V 1.0.0
-* Copyright 2019, Jarod Peachey
-*/
-
-/* Base Styling 
------------------------------------------------------------------*/
+/* LAYOUT AND GRID SYSTEM
+--------------------------------------------------------------- */
 
 *::before,
 *::after,
@@ -17,13 +12,13 @@
   color: white !important;
 }
 
-.bg-primary .subtitle {
-  color: var(--white-transparent);
-}
-
 .bg-accent {
   background: var(--accent);
   color: white !important;
+}
+
+.bg-white {
+  background: white;
 }
 
 .bg-light {
@@ -39,66 +34,30 @@
   color: white !important;
 }
 
-.bg-white {
-  background: white !important;
-  color: var(--dark-gray);
-}
-
 body {
   width: 100%;
-  overflow-y: auto;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  height: 100% !important;
+  overflow-y: auto;
 }
 
 html {
   box-sizing: border-box;
   overflow: auto;
-  height: 100% !important;
 }
 
 :root {
-  /* Main color scheme */
-  --primary: #00c6e0; /* Base color */
-  --primary-dark: #00b6ce;
-  --accent: #e78708; /* Accent and CTA color */
-  --accent-dark: #d67d09;
-  --background-light: #949494;
-  --background-medium: #b1b1b1;
-  --background-dark: #4d4d4d;
-
-  --link: #1576f5;
-  --link-dark: #0064e7;
-  --info: #219df0;
-  --info-dark: #008ce9;
-  --success: rgb(87, 211, 87);
-  --success-dark: rgb(70, 192, 70);
-  --warning: rgb(255, 217, 0);
-  --warning-dark: rgb(243, 207, 0);
-  --danger: rgb(202, 68, 34);
-  --danger-dark: rgb(185, 64, 34);
-  --lightest-gray: #f7f7f7;
-  --lighter-gray: #eeeeee;
-  --light-gray: #e2e2e2;
-  --medium-gray: #d8d8d8;
-  --dark-gray: #3a3a3a;
-  --darkest-gray: #1a1a1a;
-  --white-transparent: rgba(255, 255, 255, 0.808);
-
   --space-none: 0px;
-  --space-xxs: 4px;
-  --space-xs: 8px;
-  --space-sm: 16px;
+  --space-xxs: 8px;
+  --space-xs: 16px;
+  --space-sm: 24px;
   --space-md: 32px;
-  --space-lg: 64px;
-  --space-xl: 96px;
-  --space-xxl: 128px;
+  --space-lg: 48px;
+  --space-xl: 64px;
+  --space-xxl: 72px;
 }
 
-/* LAYOUT AND GRID SYSTEM
---------------------------------------------------------------- */
 .container {
   margin: 0 auto;
   width: 95%;
@@ -1451,108 +1410,9 @@ html {
   }
 }
 
-/* TYPOGRAPHY
- ---------------------------------------------------------------
- ---------------------------------------------------------------*/
-
-html {
-  font-family: 'Raleway';
-  font-weight: 400;
-}
-
-body {
-  font-size: 1rem;
-  font-family: 'Raleway';
-  color: var(--dark-gray);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 600;
-  margin-top: 0rem;
-  margin-bottom: 2rem;
-  letter-spacing: 0.1rem;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-size: 1rem;
-  line-height: 1rem;
-}
-
-h1 {
-  font-size: 40px;
-  margin-bottom: 50px;
-  line-height: 48px;
-}
-
-h2 {
-  font-size: 30px;
-  margin-bottom: 40px;
-  line-height: 38px;
-}
-
-h3 {
-  font-size: 25px;
-  margin-bottom: 36px;
-  line-height: 33.5px;
-}
-
-h4 {
-  font-size: 21px;
-  margin-bottom: 26px;
-  line-height: 25px;
-}
-
-h5 {
-  font-size: 17.8px;
-  margin-bottom: 22.5px;
-  line-height: 22.5px;
-}
-
-h6 {
-  font-size: 14px;
-  margin-bottom: 20px;
-  line-height: 20px;
-}
-
-h1.title,
-h2.title,
-h3.title,
-h4.title,
-h5.title,
-h6.title {
-  margin-bottom: 10px !important;
-}
-
-.subtitle {
-  color: #8f8f8f;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 30px;
-}
-
-p {
-  line-height: 25px;
-  font-size: 16px;
-}
-
-small {
-  font-size: 14px;
-}
-
-strong {
-  font-weight: 600;
-}
-
-h1 strong, h2 strong, h3 strong, h4 strong, h5 strong {
-  font-weight: 800;
-}
+/* CARD
+----------------------------------------------------------------
+----------------------------------------------------------------*/
 
 .card {
   box-shadow: 2px 1px 5px 0px #cacaca;
@@ -1567,14 +1427,9 @@ h1 strong, h2 strong, h3 strong, h4 strong, h5 strong {
   border: 1px solid #ddd;
 }
 
-/* Lists
- ---------------------------------------------------------------
- ---------------------------------------------------------------*/
-
-ul,
-ol {
-  padding-left: 0;
-}
+/* Collection Items
+----------------------------------------------------------------
+----------------------------------------------------------------*/
 
 .collection-item {
   padding: 12.5px;
@@ -1657,82 +1512,6 @@ ol {
 
 .collection-item .right {
   float: right;
-}
-
-/* Tables
- ---------------------------------------------------------------
- ---------------------------------------------------------------*/
-
-table {
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-thead {
-  font-weight: 600;
-}
-
-th,
-td {
-  padding: 10px 10px;
-  border-bottom: 1px solid var(--light-gray);
-  text-align: left;
-  margin: 0;
-}
-
-table.dark {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-table.dark th {
-  background: var(--light-gray);
-  border: none;
-}
-
-table.dark td {
-  padding: 10px 10px;
-  background: var(--lighter-gray);
-  text-align: left;
-  border: none;
-}
-
-/* Code
- ---------------------------------------------------------------
- ---------------------------------------------------------------*/
-
-code {
-  background: var(--lighter-gray);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 1.5rem;
-  color: var(--danger);
-}
-
-code.element::before {
-  content: '<';
-}
-
-code.element::after {
-  content: '>';
-}
-
-.code-example {
-  border: 2px solid var(--medium-gray);
-  border-radius: 4px;
-  margin-bottom: 3rem;
-}
-
-.code-output {
-  padding: 10px 20px;
-}
-
-.code-example code {
-  display: block;
-  padding: 20px;
-  background: var(--medium-gray);
-  font-size: 1.4rem;
-  color: var(--dark-gray);
 }
 
 /* Navbar
@@ -1858,50 +1637,107 @@ code.element::after {
   top: 62px;
 }
 
-/* Transparent navbars */
-nav.transparent {
-  color: white;
+/* TYPOGRAPHY
+ ---------------------------------------------------------------
+ ---------------------------------------------------------------*/
+
+html {
+  font-family: 'Raleway';
+  font-weight: 400;
 }
 
-nav.transparent .menu-item:hover a {
-  color: var(--white-transparent) !important;
+body {
+  font-size: 1rem;
+  font-family: 'Raleway';
+  color: var(--dark-gray);
 }
 
-nav.transparent .menu > .menu-item:hover > .menu {
-  background: white;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  margin-top: 0rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.1rem;
+  margin: 0;
+  padding: 0;
 }
 
-nav.transparent .menu > .menu-item.with-menu:hover::before {
-  background: white;
-  content: '';
-  display: block;
-  width: 14px;
-  height: 14px;
-  transform: rotate(45deg);
-  position: absolute;
-  top: calc(62px - 7px);
-  right: calc(50% - 7px);
-  z-index: -1;
+body {
+  font-size: 1rem;
+  line-height: 1rem;
 }
 
-.menu.mobile > .menu-item.with-menu:hover::after,
-.menu.mobile > .menu-item.with-menu:hover::before,
-.menu.mobile > .menu-item > .menu.unclicked {
-  display: none;
+h1 {
+  font-size: 32px;
+  margin-bottom: 32px;
+  line-height: 48px;
 }
 
-.menu.mobile > .menu-item.with-menu > .menu.clicked {
-  position: fixed;
-  display: block !important;
-  z-index: 500;
-  width: calc(100vw - 17px) !important;
-  top: 78px;
-  left: 0;
-  background: #e3e3e3;
+h2 {
+  font-size: 28px;
+  margin-bottom: 28px;
+  line-height: 38px;
 }
 
-.menu.mobile > .menu-item:hover .menu {
-  display: none;
+h3 {
+  font-size: 22px;
+  margin-bottom: 22px;
+  line-height: 33.5px;
+}
+
+h4 {
+  font-size: 18px;
+  margin-bottom: 18px;
+  line-height: 25px;
+}
+
+h5 {
+  font-size: 17px;
+  margin-bottom: 17px;
+  line-height: 22.5px;
+}
+
+h6 {
+  font-size: 15px;
+  margin-bottom: 15px;
+  line-height: 20px;
+}
+
+h1.title,
+h2.title,
+h3.title,
+h4.title,
+h5.title,
+h6.title {
+  margin-bottom: 10px !important;
+}
+
+.subtitle {
+  color: #8f8f8f;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+p {
+  line-height: 25px;
+  font-size: 16px;
+}
+
+small {
+  font-size: 14px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+h1 strong, h2 strong, h3 strong, h4 strong, h5 strong {
+  font-weight: 800;
 }
 
 /* Display & Positioning Modifiers
@@ -2722,7 +2558,7 @@ nav.transparent .menu > .menu-item.with-menu:hover::before {
   }
 }
 
-@media (max-width: 539px) {
+@media (max-width: 540px) {
   .hidden-below-mobile-lg {
     display: none;
   }
