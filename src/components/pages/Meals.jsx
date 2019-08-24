@@ -100,12 +100,21 @@ class Meals extends Component {
       date,
     };
 
-    this.props.addMeal(meal);
+    if (mealName !== '' && mealCalories !== 0) {
+      this.props.addMeal(meal);
 
-    const newMealsArray = this.state.meals;
+      const newMealsArray = this.state.meals;
 
-    newMealsArray.push(meal);
-    this.setState({ meals: newMealsArray, mealName: '', mealCalories: '', mealDescription: '' });
+      newMealsArray.push(meal);
+      this.setState({
+        meals: newMealsArray,
+        mealName: '',
+        mealCalories: '',
+        mealDescription: '',
+      });
+    } else {
+      alert('Please fill in all the fields');
+    }
   }
 
   render () {
@@ -125,7 +134,12 @@ class Meals extends Component {
         buttonsGroup = (
           <div className="row">
             <div className="col col-12">
-              <Button variant="contained" className="m-none" color="primary" onClick={this.submitForm}>
+              <Button
+                variant="contained"
+                className="m-none"
+                color="primary"
+                onClick={this.submitForm}
+              >
                 Add Meal
               </Button>
             </div>
