@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core/styles';
 import Close from '@material-ui/icons/Close';
 import { addMeal } from '../../actions/userActions';
+import { sortByUserId } from '../../utils/arrayFormat';
 
 const errorTheme = createMuiTheme({
   palette: {
@@ -101,12 +102,11 @@ class Meals extends Component {
       day: date.getDay(),
       date: date.getDate(),
       year: date.getFullYear(),
-      UTCDate: date.getUTCDate(),
     };
 
     let id = 1;
     if (this.state.meals.length) {
-      const sortedMeals = sortByUserId(this.props.meals);
+      const sortedMeals = sortByUserId(this.state.meals);
 
       id = sortedMeals[sortedMeals.length - 1].id + 1;
     }
