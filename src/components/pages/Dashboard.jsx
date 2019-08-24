@@ -248,7 +248,7 @@ const styles = () => ({
 });
 
 const Wrapper = styled.div`
-  padding-top: 80px;
+  padding-top: 20px;
 `;
 
 const Card = styled.div`
