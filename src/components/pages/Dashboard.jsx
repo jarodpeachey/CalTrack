@@ -11,8 +11,8 @@ class Dashboard extends Component {
   static propTypes = {
     currentUser: PropTypes.object,
     classes: PropTypes.object,
-    addMeal: PropTypes.func,
-    addWorkout: PropTypes.func,
+    // addMeal: PropTypes.func,
+    // addWorkout: PropTypes.func,
   };
 
   constructor (props) {
@@ -22,8 +22,8 @@ class Dashboard extends Component {
       meals: [],
     };
 
-    this.addMealToLocalState = this.addMealToLocalState.bind(this);
-    this.addWorkoutToLocalState = this.addWorkoutToLocalState.bind(this);
+    // this.addMealToLocalState = this.addMealToLocalState.bind(this);
+    // this.addWorkoutToLocalState = this.addWorkoutToLocalState.bind(this);
   }
 
   componentDidMount () {
@@ -52,39 +52,39 @@ class Dashboard extends Component {
     return false;
   }
 
-  addMealToLocalState () {
-    const meal = {
-      id: 1,
-      name: 'Chicken and Rice',
-      calories: 350,
-    };
+  // addMealToLocalState () {
+  //   const meal = {
+  //     id: 1,
+  //     name: 'Chicken and Rice',
+  //     calories: 350,
+  //   };
 
-    this.props.addMeal(meal);
+  //   this.props.addMeal(meal);
 
-    const newMealsArray = this.state.meals;
+  //   const newMealsArray = this.state.meals;
 
-    newMealsArray.push(meal);
-    this.setState({ meals: newMealsArray });
+  //   newMealsArray.push(meal);
+  //   this.setState({ meals: newMealsArray });
 
-    console.log('New meal is added: ', meal);
-  }
+  //   console.log('New meal is added: ', meal);
+  // }
 
-  addWorkoutToLocalState () {
-    const workout = {
-      id: 1,
-      name: 'Pushups',
-      calories: -500,
-    };
+  // addWorkoutToLocalState () {
+  //   const workout = {
+  //     id: 1,
+  //     name: 'Pushups',
+  //     calories: -500,
+  //   };
 
-    this.props.addWorkout(workout);
+  //   this.props.addWorkout(workout);
 
-    const newWorkoutsArray = this.state.workouts;
+  //   const newWorkoutsArray = this.state.workouts;
 
-    newWorkoutsArray.push(workout);
-    this.setState({ workouts: newWorkoutsArray });
+  //   newWorkoutsArray.push(workout);
+  //   this.setState({ workouts: newWorkoutsArray });
 
-    console.log('New workout is added: ', workout);
-  }
+  //   console.log('New workout is added: ', workout);
+  // }
 
   render () {
     const { classes, currentUser } = this.props;

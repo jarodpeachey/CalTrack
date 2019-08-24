@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Input, Button } from '@material-ui/core';
 import {
@@ -20,13 +20,15 @@ const errorTheme = createMuiTheme({
 
 class Meals extends Component {
   static propTypes = {
-    // users: this.PropTypes.array,
+    currentUser: PropTypes.object,
     classes: PropTypes.object,
+    addMeal: PropTypes.func,
   };
 
   constructor (props) {
     super(props);
     this.state = {
+      meals: [],
       isMobileModeOn: false,
       mealName: '',
       mealCalories: '',
@@ -36,11 +38,18 @@ class Meals extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCaloriesChange = this.handleCaloriesChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
-  // componentDidMount () {
-  //   this.props.addMeal(meal);
-  // }
+  componentDidMount () {
+    this.setState({ meals: this.props.currentUser.meals });
+  }
+
+  componentWillReceiveProps (prevProps) {
+    if (prevProps.currentUser.meals !== this.props.currentUser.meals) {
+      this.setState({ meals: this.props.currentUser.meals });
+    }
+  }
 
   shouldComponentUpdate (nextState) {
     if (this.state.mealName !== nextState.mealName) {
@@ -50,6 +59,9 @@ class Meals extends Component {
       return true;
     }
     if (this.state.mealDescription !== nextState.mealDescription) {
+      return true;
+    }
+    if (this.state.meals !== nextState.meals) {
       return true;
     }
     return false;
@@ -65,6 +77,35 @@ class Meals extends Component {
 
   handleDescriptionChange (e) {
     this.setState({ mealDescription: e.target.value });
+  }
+
+  submitForm () {
+    const { mealName, mealCalories, mealDescription } = this.state;
+    let date = new Date();
+    date = {
+      month: date.getMonth(),
+      day: date.getDay(),
+      date: date.getDate(),
+      year: date.getFullYear(),
+      UTCDate: date.getUTCDate(),
+    };
+
+    console.log(date);
+
+    const meal = {
+      id: 1,
+      name: mealName,
+      calories: mealCalories,
+      description: mealDescription,
+      date,
+    };
+
+    this.props.addMeal(meal);
+
+    const newMealsArray = this.state.meals;
+
+    newMealsArray.push(meal);
+    this.setState({ meals: newMealsArray, mealName: '', mealCalories: '', mealDescription: '' });
   }
 
   render () {
@@ -84,7 +125,7 @@ class Meals extends Component {
         buttonsGroup = (
           <div className="row">
             <div className="col col-12">
-              <Button variant="contained" className="m-none" color="primary">
+              <Button variant="contained" className="m-none" color="primary" onClick={this.submitForm}>
                 Add Meal
               </Button>
             </div>
