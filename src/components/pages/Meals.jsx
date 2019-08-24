@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Input, Button } from '@material-ui/core';
+import { Input, Button, IconButton, Tooltip, Grow } from '@material-ui/core';
 import {
   withStyles,
   MuiThemeProvider,
   createMuiTheme,
 } from '@material-ui/core/styles';
+import Close from '@material-ui/icons/Close';
 import { addMeal } from '../../actions/userActions';
 
 const errorTheme = createMuiTheme({
@@ -34,11 +35,14 @@ class Meals extends Component {
       mealCalories: '',
       mealDescription: '',
       mode: 'addMealMode',
+      displayNoMealsNotif: true,
+      submitButtonActive: false,
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCaloriesChange = this.handleCaloriesChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.clearNoMealsNotification = this.clearNoMealsNotification.bind(this);
   }
 
   componentDidMount () {
@@ -69,10 +73,20 @@ class Meals extends Component {
 
   handleNameChange (e) {
     this.setState({ mealName: e.target.value });
+    if (this.state.mealCalories !== '' && e.target.value !== '') {
+      this.setState({ submitButtonActive: true });
+    } else {
+      this.setState({ submitButtonActive: false });
+    }
   }
 
   handleCaloriesChange (e) {
     this.setState({ mealCalories: e.target.value });
+    if (this.state.mealName !== '' && e.target.value !== '') {
+      this.setState({ submitButtonActive: true });
+    } else {
+      this.setState({ submitButtonActive: false });
+    }
   }
 
   handleDescriptionChange (e) {
@@ -90,10 +104,17 @@ class Meals extends Component {
       UTCDate: date.getUTCDate(),
     };
 
+    let id = 1;
+    if (this.state.meals.length) {
+      const sortedMeals = sortByUserId(this.props.meals);
+
+      id = sortedMeals[sortedMeals.length - 1].id + 1;
+    }
+
     console.log(date);
 
     const meal = {
-      id: 1,
+      id,
       name: mealName,
       calories: mealCalories,
       description: mealDescription,
@@ -117,6 +138,10 @@ class Meals extends Component {
     }
   }
 
+  clearNoMealsNotification () {
+    this.setState({ displayNoMealsNotif: false });
+  }
+
   render () {
     const {
       isMobileModeOn,
@@ -124,6 +149,8 @@ class Meals extends Component {
       mealCalories,
       mealDescription,
       mode,
+      meals,
+      submitButtonActive,
     } = this.state;
     const { classes } = this.props;
 
@@ -139,6 +166,7 @@ class Meals extends Component {
                 className="m-none"
                 color="primary"
                 onClick={this.submitForm}
+                disabled={!submitButtonActive}
               >
                 Add Meal
               </Button>
@@ -191,7 +219,7 @@ class Meals extends Component {
       <>
         {isMobileModeOn ? (
           <div className="container py-sm">
-            <div className="card p-md border no-shadow bg-white">
+            <div className="card p-md mb-lg border no-shadow bg-white">
               <h3 className="title m-none">Add Meal</h3>
               <form action="">
                 <Input
@@ -206,7 +234,7 @@ class Meals extends Component {
           </div>
         ) : (
           <div className="container py-md">
-            <div className="card p-md border no-shadow bg-white">
+            <div className="card p-md mb-lg border no-shadow bg-white">
               <h3 className="title m-none">
                 {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
               </h3>
@@ -261,6 +289,44 @@ class Meals extends Component {
                 {buttonsGroup}
               </form>
             </div>
+            {!this.state.meals.length && this.state.displayNoMealsNotif ? (
+              <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
+                <h4 className="m-none">There are no meals yet, add a meal!</h4>
+                <Tooltip
+                  classes={{ tooltip: classes.toolTip }}
+                  title="Dismiss"
+                  TransitionComponent={Grow}
+                >
+                  <IconButton
+                    onClick={this.clearNoMealsNotification}
+                    classes={{ root: classes.iconButton }}
+                  >
+                    <Close />
+                  </IconButton>
+                </Tooltip>
+              </Card>
+            ) : (
+              <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
+                <h4 className="m-none">
+You have
+                  {meals.length}
+                  {' '}
+meals!
+                </h4>
+                <Tooltip
+                  classes={{ tooltip: classes.toolTip }}
+                  title="Dismiss"
+                  TransitionComponent={Grow}
+                >
+                  <IconButton
+                    onClick={this.clearNoMealsNotification}
+                    classes={{ root: classes.iconButton }}
+                  >
+                    <Close />
+                  </IconButton>
+                </Tooltip>
+              </Card>
+            )}
           </div>
         )}
       </>
@@ -285,7 +351,19 @@ const styles = theme => ({
   focusedInput: {
     border: `1px solid ${theme.palette.primary.main}`,
   },
+  iconButton: {
+    marginLeft: 'auto',
+  },
+  toolTip: {
+    // transform: 'translateY(10)',
+    position: 'relative',
+    bottom: 16,
+  },
 });
+
+const Card = styled.div`
+  border: 1px solid #ddd;
+`;
 
 export default connect(
   null,
