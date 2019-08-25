@@ -12,6 +12,7 @@ import Close from '@material-ui/icons/Close';
 import { addMeal } from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
+import MealItem from '../MealItem';
 
 const errorTheme = createMuiTheme({
   palette: {
@@ -45,6 +46,7 @@ class Meals extends Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.clearNoMealsNotification = this.clearNoMealsNotification.bind(this);
+    this.editMeal = this.editMeal.bind(this);
   }
 
   componentDidMount () {
@@ -141,6 +143,10 @@ class Meals extends Component {
 
   clearNoMealsNotification () {
     this.setState({ displayNoMealsNotif: false });
+  }
+
+  editMeal (id) {
+    console.log('Editing meal with id of: ', id);
   }
 
   render () {
@@ -307,14 +313,11 @@ class Meals extends Component {
                 </Tooltip>
               </Card>
             ) : (
-              <div>
+              <div className="card p-md mb-lg border no-shadow bg-white">
                 <Title>Meals</Title>
                 <ul>
                   {meals.map(meal => (
-                    <CollectionItem className="card no-shadow border">
-                      <strong><h4 className="m-none">{meal.name}</h4></strong>
-                      <CaloriesCount><i>{meal.calories} calories</i></CaloriesCount>
-                    </CollectionItem>
+                    <MealItem meal={meal} editMeal={this.editMeal} />
                   ))}
                 </ul>
               </div>
@@ -355,21 +358,6 @@ const styles = theme => ({
 
 const Card = styled.div`
   border: 1px solid #ddd;
-`;
-
-const CollectionItem = styled.div`
-  background: white;
-  margin: 8px 0;
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-`;
-
-const CaloriesCount = styled.span`
-  color: #888;
-  margin: none;
-  margin-left: 6px;
 `;
 
 export default connect(
