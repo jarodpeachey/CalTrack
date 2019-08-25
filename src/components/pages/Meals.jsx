@@ -146,7 +146,20 @@ class Meals extends Component {
   }
 
   editMeal (id) {
-    console.log('Editing meal with id of: ', id);
+    let mealToEdit = {};
+
+    this.state.meals.forEach((meal) => {
+      if (meal.id === id) {
+        mealToEdit = meal;
+      }
+    });
+
+    this.setState({
+      mealName: mealToEdit.name,
+      mealCalories: mealToEdit.calories,
+      mealDescription: mealToEdit.description,
+      mode: 'editMealMode',
+    });
   }
 
   render () {
@@ -184,28 +197,17 @@ class Meals extends Component {
       case 'editMealMode':
         buttonsGroup = (
           <>
-            <div className="row">
-              <div className="col col-6 pt-none">
-                <Button variant="contained" color="primary" className="m-none">
-                  Update Meal
-                </Button>
-                <Button variant="outlined">Cancel</Button>
-              </div>
-              <div className="col col-6">
-                <div className="float-right">
-                  <MuiThemeProvider theme={errorTheme}>
-                    <Button
-                      classes={{ root: classes.deleteButton }}
-                      color="primary"
-                      className="m-none"
-                      // variant="outlined"
-                    >
-                      Delete Meal
-                    </Button>
-                  </MuiThemeProvider>
-                </div>
-              </div>
-            </div>
+            <Button variant="contained" color="primary" className="m-none">
+              Update Meal
+            </Button>
+            <Button variant="outlined" className="my-none">
+              Cancel
+            </Button>
+            <MuiThemeProvider theme={errorTheme}>
+              <Button color="primary" className="m-none float-right">
+                Delete Meal
+              </Button>
+            </MuiThemeProvider>
           </>
         );
         break;
@@ -342,6 +344,7 @@ const styles = theme => ({
     padding: theme.spacing(4, 4, 2, 4),
     border: '1px solid #ddd',
     borderRadius: 2,
+    marginBottom: theme.spacing(2),
   },
   focusedInput: {
     border: `1px solid ${theme.palette.primary.main}`,
