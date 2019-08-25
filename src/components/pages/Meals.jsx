@@ -234,7 +234,7 @@ class Meals extends Component {
             </div>
           </div>
         ) : (
-          <div className="container py-md">
+          <div className="container p-none mt-md">
             <div className="card p-md mb-lg border no-shadow bg-white">
               <h3 className="title m-none">
                 {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}

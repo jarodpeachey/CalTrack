@@ -179,8 +179,8 @@ class Application extends Component {
 }
 
 const Wrapper = styled.div`
-  background: ${({ theme }) => theme.colors.gray1};
-  height: 100%;
+  // background: ${({ theme }) => theme.colors.gray1};
+  height: 100% !important;
   padding-top: 68px;
 `;
 

@@ -45,6 +45,16 @@ body {
 html {
   box-sizing: border-box;
   overflow: auto;
+  height: 100% !important;
+}
+
+body {
+  height: 100% !important;
+  background: #f7f7f7;
+}
+
+#app {
+  height: 100% !important;
 }
 
 :root {

@@ -41,7 +41,7 @@ class Header extends Component {
       <span>
         {this.props.pathname === '/' || this.props.pathname === '/signup' ? (
           <Wrapper>
-            <div className="container py-xs">
+            <div className="container py-xxs">
               <Row>
                 <ColumnOne>
                   <Link to="/">
@@ -75,7 +75,7 @@ class Header extends Component {
           </Wrapper>
         ) : (
           <Wrapper>
-            <div className="container py-xs">
+            <div className="container py-xxs">
               <Row>
                 <ColumnOne>
                   <Link to="/">
@@ -121,7 +121,7 @@ const styles = () => ({
 });
 
 const Wrapper = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   background: ${({ theme }) => theme.colors.primary} !important;
   color: white !important;
