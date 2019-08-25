@@ -260,17 +260,6 @@ const CaloriesCount = styled.em`
   color: ${({ theme }) => theme.colors.gray5};
 `;
 
-const Title = styled.h3`
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 8px 16px;
-  border-top-right-radius: 2px;
-  border-top-left-radius: 2px;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
-`;
-
 export default connect(
   null,
   { addMeal, addWorkout },

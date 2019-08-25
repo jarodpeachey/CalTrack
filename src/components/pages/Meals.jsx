@@ -11,6 +11,7 @@ import {
 import Close from '@material-ui/icons/Close';
 import { addMeal } from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
+import { Title } from '../Layout/Title';
 
 const errorTheme = createMuiTheme({
   palette: {
@@ -306,26 +307,17 @@ class Meals extends Component {
                 </Tooltip>
               </Card>
             ) : (
-              <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
-                <h4 className="m-none">
-You have
-                  {meals.length}
-                  {' '}
-meals!
-                </h4>
-                <Tooltip
-                  classes={{ tooltip: classes.toolTip }}
-                  title="Dismiss"
-                  TransitionComponent={Grow}
-                >
-                  <IconButton
-                    onClick={this.clearNoMealsNotification}
-                    classes={{ root: classes.iconButton }}
-                  >
-                    <Close />
-                  </IconButton>
-                </Tooltip>
-              </Card>
+              <div>
+                <Title>Meals</Title>
+                <ul>
+                  {meals.map(meal => (
+                    <CollectionItem className="card no-shadow border">
+                      <strong><h4 className="m-none">{meal.name}</h4></strong>
+                      <CaloriesCount><i>{meal.calories} calories</i></CaloriesCount>
+                    </CollectionItem>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         )}
@@ -363,6 +355,21 @@ const styles = theme => ({
 
 const Card = styled.div`
   border: 1px solid #ddd;
+`;
+
+const CollectionItem = styled.div`
+  background: white;
+  margin: 8px 0;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const CaloriesCount = styled.span`
+  color: #888;
+  margin: none;
+  margin-left: 6px;
 `;
 
 export default connect(

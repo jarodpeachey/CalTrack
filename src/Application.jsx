@@ -180,7 +180,7 @@ class Application extends Component {
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.gray1};
-  height: 100vh;
+  height: 100%;
   padding-top: 68px;
 `;
 

@@ -1431,6 +1431,10 @@ html {
 ----------------------------------------------------------------
 ----------------------------------------------------------------*/
 
+ul {
+  padding: 0;
+}
+
 .collection-item {
   padding: 12.5px;
   list-style: none;
@@ -1440,6 +1444,7 @@ html {
   font-weight: 500;
   display: block;
   line-height: inherit;
+  background: white !important;
 }
 
 .collection-item.head {
