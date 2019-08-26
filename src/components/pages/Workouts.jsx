@@ -100,7 +100,7 @@ class Workouts extends Component {
   }
 
   submitForm () {
-    const { workoutName, workoutCalories, workoutDescription } = this.state;
+    const { workoutName, workoutCalories, workoutDescription, workouts } = this.state;
     let date = new Date();
     date = {
       month: date.getMonth(),
@@ -110,8 +110,8 @@ class Workouts extends Component {
     };
 
     let id = 1;
-    if (this.state.workouts.length) {
-      const sortedWorkouts = sortByUserId(this.state.workouts);
+    if (workouts.length) {
+      const sortedWorkouts = sortByUserId(workouts);
 
       id = sortedWorkouts[sortedWorkouts.length - 1].id + 1;
     }
@@ -129,7 +129,7 @@ class Workouts extends Component {
     if (workoutName !== '' && workoutCalories !== 0) {
       this.props.addWorkout(workout);
 
-      const newWorkoutsArray = this.state.workouts;
+      const newWorkoutsArray = workouts;
 
       newWorkoutsArray.push(workout);
       this.setState({

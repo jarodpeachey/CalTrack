@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
-import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';

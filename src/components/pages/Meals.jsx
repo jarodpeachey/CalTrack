@@ -98,7 +98,7 @@ class Meals extends Component {
   }
 
   submitForm () {
-    const { mealName, mealCalories, mealDescription } = this.state;
+    const { mealName, mealCalories, mealDescription, meals } = this.state;
     let date = new Date();
     date = {
       month: date.getMonth(),
@@ -108,8 +108,8 @@ class Meals extends Component {
     };
 
     let id = 1;
-    if (this.state.meals.length) {
-      const sortedMeals = sortByUserId(this.state.meals);
+    if (meals.length) {
+      const sortedMeals = sortByUserId(meals);
 
       id = sortedMeals[sortedMeals.length - 1].id + 1;
     }
@@ -127,7 +127,7 @@ class Meals extends Component {
     if (mealName !== '' && mealCalories !== 0) {
       this.props.addMeal(meal);
 
-      const newMealsArray = this.state.meals;
+      const newMealsArray = meals;
 
       newMealsArray.push(meal);
       this.setState({
