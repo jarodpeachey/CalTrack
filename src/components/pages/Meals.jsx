@@ -282,31 +282,40 @@ class Meals extends Component {
               {buttonsGroup}
             </form>
           </div>
-          {!this.state.meals.length && this.state.displayNoMealsNotif ? (
-            <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
-              <h4 className="m-none">There are no meals yet, add a meal!</h4>
-              <Tooltip
-                classes={{ tooltip: classes.toolTip }}
-                title="Dismiss"
-                TransitionComponent={Grow}
-              >
-                <IconButton
-                  onClick={this.clearNoMealsNotification}
-                  classes={{ root: classes.iconButton }}
-                >
-                  <Close />
-                </IconButton>
-              </Tooltip>
-            </Card>
-          ) : (
+          {this.state.meals.length ? (
             <div className="card p-md mb-lg border no-shadow bg-white">
               <Title>Meals</Title>
               <ul>
                 {meals.map(meal => (
-                  <MealItem meal={meal} editMeal={this.editMeal} />
+                  <MealItem
+                    meal={meal}
+                    editMeal={this.editMeal}
+                  />
                 ))}
               </ul>
             </div>
+          ) : (
+            <>
+              {this.state.displayNoMealsNotif && (
+                <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
+                  <h4 className="m-none">
+                    There are no meals yet, add a meal!
+                  </h4>
+                  <Tooltip
+                    classes={{ tooltip: classes.toolTip }}
+                    title="Dismiss"
+                    TransitionComponent={Grow}
+                  >
+                    <IconButton
+                      onClick={this.clearNoMealsNotification}
+                      classes={{ root: classes.iconButton }}
+                    >
+                      <Close />
+                    </IconButton>
+                  </Tooltip>
+                </Card>
+              )}
+            </>
           )}
         </div>
       </>

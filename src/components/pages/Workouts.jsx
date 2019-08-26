@@ -45,7 +45,9 @@ class Workouts extends Component {
     this.handleCaloriesChange = this.handleCaloriesChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    this.clearNoWorkoutsNotification = this.clearNoWorkoutsNotification.bind(this);
+    this.clearNoWorkoutsNotification = this.clearNoWorkoutsNotification.bind(
+      this,
+    );
     this.editWorkout = this.editWorkout.bind(this);
   }
 
@@ -282,31 +284,40 @@ class Workouts extends Component {
               {buttonsGroup}
             </form>
           </div>
-          {!this.state.workouts.length && this.state.displayNoWorkoutsNotif ? (
-            <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
-              <h4 className="m-none">There are no workouts yet, add a workout!</h4>
-              <Tooltip
-                classes={{ tooltip: classes.toolTip }}
-                title="Dismiss"
-                TransitionComponent={Grow}
-              >
-                <IconButton
-                  onClick={this.clearNoWorkoutsNotification}
-                  classes={{ root: classes.iconButton }}
-                >
-                  <Close />
-                </IconButton>
-              </Tooltip>
-            </Card>
-          ) : (
+          {this.state.workouts.length ? (
             <div className="card p-md mb-lg border no-shadow bg-white">
               <Title>Workouts</Title>
               <ul>
                 {workouts.map(workout => (
-                  <WorkoutItem workout={workout} editWorkout={this.editWorkout} />
+                  <WorkoutItem
+                    workout={workout}
+                    editWorkout={this.editWorkout}
+                  />
                 ))}
               </ul>
             </div>
+          ) : (
+            <>
+              {this.state.displayNoWorkoutsNotif && (
+                <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
+                  <h4 className="m-none">
+                    There are no workouts yet, add a workout!
+                  </h4>
+                  <Tooltip
+                    classes={{ tooltip: classes.toolTip }}
+                    title="Dismiss"
+                    TransitionComponent={Grow}
+                  >
+                    <IconButton
+                      onClick={this.clearNoWorkoutsNotification}
+                      classes={{ root: classes.iconButton }}
+                    >
+                      <Close />
+                    </IconButton>
+                  </Tooltip>
+                </Card>
+              )}
+            </>
           )}
         </div>
       </>
