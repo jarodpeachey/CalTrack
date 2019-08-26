@@ -227,7 +227,7 @@ class Meals extends Component {
     return (
       <>
         <div className="container p-none mt-md">
-          <div className="card p-md mb-lg border no-shadow bg-white">
+          <div className="card p-md mb-md border no-shadow bg-white">
             <h3 className="title m-none">
               {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
             </h3>
@@ -283,7 +283,7 @@ class Meals extends Component {
             </form>
           </div>
           {this.state.meals.length ? (
-            <div className="card p-md mb-lg border no-shadow bg-white">
+            <div className="card p-md mb-md border no-shadow bg-white">
               <Title>Meals</Title>
               <ul>
                 {meals.map(meal => (

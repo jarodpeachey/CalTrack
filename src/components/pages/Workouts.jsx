@@ -229,7 +229,7 @@ class Workouts extends Component {
     return (
       <>
         <div className="container p-none mt-md">
-          <div className="card p-md mb-lg border no-shadow bg-white">
+          <div className="card p-md mb-md border no-shadow bg-white">
             <h3 className="title m-none">
               {mode === 'addWorkoutMode' ? 'Add Workout' : 'Edit Workout'}
             </h3>
@@ -285,7 +285,7 @@ class Workouts extends Component {
             </form>
           </div>
           {this.state.workouts.length ? (
-            <div className="card p-md mb-lg border no-shadow bg-white">
+            <div className="card p-md mb-md border no-shadow bg-white">
               <Title>Workouts</Title>
               <ul>
                 {workouts.map(workout => (
