@@ -33,7 +33,7 @@ class Meals extends Component {
     super(props);
     this.state = {
       meals: [],
-      isMobileModeOn: false,
+      // isMobileModeOn: false,
       mealName: '',
       mealCalories: '',
       mealDescription: '',
@@ -164,7 +164,7 @@ class Meals extends Component {
 
   render () {
     const {
-      isMobileModeOn,
+      // isMobileModeOn,
       mealName,
       mealCalories,
       mealDescription,
@@ -226,106 +226,89 @@ class Meals extends Component {
 
     return (
       <>
-        {isMobileModeOn ? (
-          <div className="container py-sm">
-            <div className="card p-md mb-lg border no-shadow bg-white">
-              <h3 className="title m-none">Add Meal</h3>
-              <form action="">
-                <Input
-                  margin="normal"
-                  label="Meal"
-                  value={mealName}
-                  onChange={this.handleNameChange}
-                  placeholder="Meal name..."
-                />
-              </form>
-            </div>
-          </div>
-        ) : (
-          <div className="container p-none mt-md">
-            <div className="card p-md mb-lg border no-shadow bg-white">
-              <h3 className="title m-none">
-                {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
-              </h3>
-              <form action="">
-                <div className="row">
-                  <div className="col col-6">
-                    <Input
-                      classes={{
-                        root: classes.input,
-                        focused: classes.focusedInput,
-                      }}
-                      disableUnderline
-                      fullWidth
-                      label="Meal Name"
-                      value={mealName}
-                      onChange={this.handleNameChange}
-                      placeholder="Meal name..."
-                    />
-                  </div>
-                  <div className="col col-6">
-                    <Input
-                      classes={{
-                        root: classes.input,
-                        focused: classes.focusedInput,
-                      }}
-                      disableUnderline
-                      fullWidth
-                      label="Calories"
-                      value={mealCalories}
-                      onChange={this.handleCaloriesChange}
-                      placeholder="Calories"
-                      type="number"
-                    />
-                  </div>
-                  <div className="col col-12">
-                    <Input
-                      classes={{
-                        root: classes.textField,
-                        focused: classes.focusedInput,
-                      }}
-                      fullWidth
-                      label="Comments and description"
-                      value={mealDescription}
-                      onChange={this.handleDescriptionChange}
-                      placeholder="Comments and description"
-                      multiline
-                      disableUnderline
-                      rows="4"
-                    />
-                  </div>
+        <div className="container p-none mt-md">
+          <div className="card p-md mb-lg border no-shadow bg-white">
+            <h3 className="title m-none">
+              {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
+            </h3>
+            <form action="">
+              <div className="row">
+                <div className="col col-6">
+                  <Input
+                    classes={{
+                      root: classes.input,
+                      focused: classes.focusedInput,
+                    }}
+                    disableUnderline
+                    fullWidth
+                    label="Meal Name"
+                    value={mealName}
+                    onChange={this.handleNameChange}
+                    placeholder="Meal name..."
+                  />
                 </div>
-                {buttonsGroup}
-              </form>
-            </div>
-            {!this.state.meals.length && this.state.displayNoMealsNotif ? (
-              <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
-                <h4 className="m-none">There are no meals yet, add a meal!</h4>
-                <Tooltip
-                  classes={{ tooltip: classes.toolTip }}
-                  title="Dismiss"
-                  TransitionComponent={Grow}
-                >
-                  <IconButton
-                    onClick={this.clearNoMealsNotification}
-                    classes={{ root: classes.iconButton }}
-                  >
-                    <Close />
-                  </IconButton>
-                </Tooltip>
-              </Card>
-            ) : (
-              <div className="card p-md mb-lg border no-shadow bg-white">
-                <Title>Meals</Title>
-                <ul>
-                  {meals.map(meal => (
-                    <MealItem meal={meal} editMeal={this.editMeal} />
-                  ))}
-                </ul>
+                <div className="col col-6">
+                  <Input
+                    classes={{
+                      root: classes.input,
+                      focused: classes.focusedInput,
+                    }}
+                    disableUnderline
+                    fullWidth
+                    label="Calories"
+                    value={mealCalories}
+                    onChange={this.handleCaloriesChange}
+                    placeholder="Calories"
+                    type="number"
+                  />
+                </div>
+                <div className="col col-12">
+                  <Input
+                    classes={{
+                      root: classes.textField,
+                      focused: classes.focusedInput,
+                    }}
+                    fullWidth
+                    label="Comments and description"
+                    value={mealDescription}
+                    onChange={this.handleDescriptionChange}
+                    placeholder="Comments and description"
+                    multiline
+                    disableUnderline
+                    rows="4"
+                  />
+                </div>
               </div>
-            )}
+              {buttonsGroup}
+            </form>
           </div>
-        )}
+          {!this.state.meals.length && this.state.displayNoMealsNotif ? (
+            <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
+              <h4 className="m-none">There are no meals yet, add a meal!</h4>
+              <Tooltip
+                classes={{ tooltip: classes.toolTip }}
+                title="Dismiss"
+                TransitionComponent={Grow}
+              >
+                <IconButton
+                  onClick={this.clearNoMealsNotification}
+                  classes={{ root: classes.iconButton }}
+                >
+                  <Close />
+                </IconButton>
+              </Tooltip>
+            </Card>
+          ) : (
+            <div className="card p-md mb-lg border no-shadow bg-white">
+              <Title>Meals</Title>
+              <ul>
+                {meals.map(meal => (
+                  <MealItem meal={meal} editMeal={this.editMeal} />
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </>
     );
   }
