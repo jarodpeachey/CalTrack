@@ -13,7 +13,7 @@ class MealItem extends Component {
   static propTypes = {
     meal: PropTypes.object,
     classes: PropTypes.object,
-    editMeal: PropTypes.func,
+    switchToEditMealMode: PropTypes.func,
   };
 
   constructor (props) {
@@ -25,7 +25,7 @@ class MealItem extends Component {
     };
 
     this.toggleMealInformation = this.toggleMealInformation.bind(this);
-    this.editMealItem = this.editMealItem.bind(this);
+    this.switchToEditMealMode = this.switchToEditMealMode.bind(this);
   }
 
   componentDidMount () {
@@ -59,10 +59,10 @@ class MealItem extends Component {
     });
   }
 
-  editMealItem () {
+  switchToEditMealMode () {
     const { meal } = this.state;
 
-    this.props.editMeal(meal.id);
+    this.props.switchToEditMealMode(meal.id);
   }
 
   render () {
@@ -91,7 +91,7 @@ calories
                 ) : null}
                 <CloseIcon>
                   <IconButton
-                    onClick={this.editMealItem}
+                    onClick={this.switchToEditMealMode}
                     classes={{ root: classes.iconButton }}
                   >
                     <Edit />
@@ -126,7 +126,7 @@ calories
                 ) : null}
                 <CloseIcon>
                   <IconButton
-                    onClick={this.editMealItem}
+                    onClick={this.switchToEditMealMode}
                     classes={{ root: classes.iconButton }}
                   >
                     <Edit />

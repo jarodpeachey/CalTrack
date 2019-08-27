@@ -9,6 +9,8 @@ import {
   createMuiTheme,
 } from '@material-ui/core/styles';
 import Close from '@material-ui/icons/Close';
+import Delete from '@material-ui/icons/Delete';
+import Check from '@material-ui/icons/Check';
 import { addMeal } from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
@@ -46,7 +48,8 @@ class Meals extends Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.clearNoMealsNotification = this.clearNoMealsNotification.bind(this);
-    this.editMeal = this.editMeal.bind(this);
+    this.switchToEditMealMode = this.switchToEditMealMode.bind(this);
+    this.clearEditMode = this.clearEditMode.bind(this);
   }
 
   componentDidMount () {
@@ -145,7 +148,7 @@ class Meals extends Component {
     this.setState({ displayNoMealsNotif: false });
   }
 
-  editMeal (id) {
+  switchToEditMealMode (id) {
     let mealToEdit = {};
 
     this.state.meals.forEach((meal) => {
@@ -160,6 +163,10 @@ class Meals extends Component {
       mealDescription: mealToEdit.description,
       mode: 'editMealMode',
     });
+  }
+
+  clearEditMode () {
+    this.setState({ mealName: '', mealCalories: '', mealDescription: '', mode: 'addMealMode' });
   }
 
   render () {
@@ -198,15 +205,27 @@ class Meals extends Component {
         buttonsGroup = (
           <>
             <Button variant="contained" color="primary" className="m-none">
-              Update Meal
+              <MobileUpdateButton className="hidden-above-mobile-lg m-none full-width">
+                <Check />
+              </MobileUpdateButton>
+              <span className="hidden-below-mobile-lg">
+                Update Meal
+              </span>
             </Button>
-            <Button variant="outlined" className="my-none">
+            <Button variant="outlined" className="my-none" onClick={this.clearEditMode}>
               Cancel
             </Button>
             <MuiThemeProvider theme={errorTheme}>
-              <Button color="primary" className="m-none float-right">
-                Delete Meal
-              </Button>
+              <div className="hidden-above-mobile-lg float-right">
+                <IconButton color="primary" className="m-none" classes={{ root: classes.deleteButton }}>
+                  <Delete />
+                </IconButton>
+              </div>
+              <div className="hidden-below-mobile-lg float-right">
+                <Button color="primary" className="m-none">
+                  Delete Meal
+                </Button>
+              </div>
             </MuiThemeProvider>
           </>
         );
@@ -287,10 +306,7 @@ class Meals extends Component {
               <Title>Meals</Title>
               <ul>
                 {meals.map(meal => (
-                  <MealItem
-                    meal={meal}
-                    editMeal={this.editMeal}
-                  />
+                  <MealItem meal={meal} switchToEditMealMode={this.switchToEditMealMode} />
                 ))}
               </ul>
             </div>
@@ -349,10 +365,18 @@ const styles = theme => ({
     position: 'relative',
     bottom: 16,
   },
+  deleteButton: {
+    position: 'relative',
+    bottom: 5,
+  },
 });
 
 const Card = styled.div`
   border: 1px solid #ddd;
+`;
+
+const MobileUpdateButton = styled.span`
+  height: 24px !important;
 `;
 
 export default connect(
