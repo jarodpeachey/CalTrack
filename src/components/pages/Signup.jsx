@@ -68,7 +68,7 @@ class Signup extends Component {
     e.preventDefault();
 
     if (this.state.nameValue && this.state.userNameValue && (this.state.passwordValue === this.state.confirmValue)) {
-      let id = 1;
+      let id = 0;
       if (this.props.users.length) {
         const sortedUsers = sortByUserId(this.props.users);
 

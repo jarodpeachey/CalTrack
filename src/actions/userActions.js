@@ -7,28 +7,26 @@ import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
   ADD_MEAL,
+  EDIT_MEAL,
   DELETE_MEAL,
   ADD_WORKOUT,
   DELETE_WORKOUT,
 } from './types';
-import { persistor } from '../Store';
+// import { persistor } from '../Store';
 
 export const getUsers = () => (dispatch) => {
-  persistor.purge();
   dispatch({
     type: GET_USERS,
   });
 };
 
 export const getCurrentUser = () => (dispatch) => {
-  persistor.purge();
   dispatch({
     type: GET_CURRENT_USER,
   });
 };
 
 export const setCurrentUser = user => (dispatch) => {
-  persistor.purge();
   dispatch({
     type: SET_CURRENT_USER,
     payload: user,
@@ -36,7 +34,6 @@ export const setCurrentUser = user => (dispatch) => {
 };
 
 export const addUser = user => (dispatch) => {
-  persistor.purge();
   dispatch({
     type: ADD_USER,
     payload: user,
@@ -51,10 +48,16 @@ export const deleteUser = id => (dispatch) => {
 };
 
 export const addMeal = meal => (dispatch) => {
-  persistor.purge();
   dispatch({
     type: ADD_MEAL,
     payload: meal,
+  });
+};
+
+export const editMeal = newMeal => (dispatch) => {
+  dispatch({
+    type: EDIT_MEAL,
+    payload: newMeal,
   });
 };
 
@@ -66,7 +69,6 @@ export const deleteMeal = meal => (dispatch) => {
 };
 
 export const addWorkout = workout => (dispatch) => {
-  persistor.purge();
   dispatch({
     type: ADD_WORKOUT,
     payload: workout,

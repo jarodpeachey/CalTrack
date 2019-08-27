@@ -18,7 +18,14 @@ const renderApp = () => {
       <Provider store={store}>
         <PersistGate loading={<h1>Loading...</h1>} persistor={persistor}>
           <Router history={history}>
-            <Route component={Application} />
+            <Route
+              render={props => (
+                <Application
+                  {...props}
+                  testProp="TEST"
+                />
+              )}
+            />
           </Router>
           {/* <Application /> */}
         </PersistGate>

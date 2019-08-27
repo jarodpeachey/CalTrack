@@ -29,24 +29,24 @@ class Application extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      // updateApplication: false,
-      // windowLocationPathname: '/',
+
     };
   }
 
   componentDidMount () {
     this.props.getUsers();
     this.props.getCurrentUser();
-
-    console.log('Users: ', this.props.users);
-    console.log('Current user: ', this.props.currentUser);
   }
 
-  // shouldComponentUpdate (nextProps, nextState) {
-  //   if (this.props.getUsers() !== nextProps.getUsers()) {
+  // componentWillReceiveProps (nextProps) {
+  //   this.setState({ users: nextProps.users, currentUser: nextProps.currentUser });
+  // }
+
+  // shouldComponentUpdate (nextProps) {
+  //   if (this.props.users !== nextProps.users) {
   //     return true;
   //   }
-  //   if (this.props.getCurrentUser() !== nextProps.getCurrentUser()) {
+  //   if (this.props.currentUser !== nextProps.currentUser) {
   //     return true;
   //   }
   //   return false;
@@ -54,6 +54,8 @@ class Application extends Component {
 
   render () {
     const { users, currentUser } = this.props;
+    console.log('Users: ', users);
+    console.log('Current user: ', currentUser);
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -187,8 +189,6 @@ const Wrapper = styled.div`
 const mapStateToProps = state => ({
   users: state.userReducer.users,
   currentUser: state.userReducer.currentUser,
-  meals: state.meals,
-  workouts: state.workouts,
 });
 
 export default connect(

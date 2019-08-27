@@ -11,7 +11,7 @@ import {
 import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
-import { addMeal } from '../../actions/userActions';
+import { addMeal, editMeal } from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import MealItem from '../MealItem';
@@ -42,6 +42,7 @@ class Meals extends Component {
       mode: 'addMealMode',
       displayNoMealsNotif: true,
       submitButtonActive: false,
+      mealToEdit: {},
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCaloriesChange = this.handleCaloriesChange.bind(this);
@@ -50,19 +51,18 @@ class Meals extends Component {
     this.clearNoMealsNotification = this.clearNoMealsNotification.bind(this);
     this.switchToEditMealMode = this.switchToEditMealMode.bind(this);
     this.clearEditMode = this.clearEditMode.bind(this);
+    this.updateMeal = this.updateMeal.bind(this);
   }
 
   componentDidMount () {
     this.setState({ meals: this.props.currentUser.meals });
   }
 
-  componentWillReceiveProps (prevProps) {
-    if (prevProps.currentUser.meals !== this.props.currentUser.meals) {
-      this.setState({ meals: this.props.currentUser.meals });
-    }
+  componentWillReceiveProps (nextProps) {
+    this.setState({ meals: nextProps.currentUser.meals });
   }
 
-  shouldComponentUpdate (nextState) {
+  shouldComponentUpdate (nextState, nextProps) {
     if (this.state.mealName !== nextState.mealName) {
       return true;
     }
@@ -75,7 +75,10 @@ class Meals extends Component {
     if (this.state.meals !== nextState.meals) {
       return true;
     }
-    return false;
+    if (this.props.currentUser !== nextProps.currentUser) {
+      return true;
+    }
+    // return false;
   }
 
   handleNameChange (e) {
@@ -110,7 +113,7 @@ class Meals extends Component {
       year: date.getFullYear(),
     };
 
-    let id = 1;
+    let id = 0;
     if (meals.length) {
       const sortedMeals = sortByUserId(meals);
 
@@ -129,12 +132,11 @@ class Meals extends Component {
 
     if (mealName !== '' && mealCalories !== 0) {
       this.props.addMeal(meal);
+      // const newMealsArray = meals;
 
-      const newMealsArray = meals;
-
-      newMealsArray.push(meal);
+      // newMealsArray.push(meal);
       this.setState({
-        meals: newMealsArray,
+        // meals: newMealsArray,
         mealName: '',
         mealCalories: '',
         mealDescription: '',
@@ -162,11 +164,50 @@ class Meals extends Component {
       mealCalories: mealToEdit.calories,
       mealDescription: mealToEdit.description,
       mode: 'editMealMode',
+      mealToEdit,
     });
   }
 
   clearEditMode () {
-    this.setState({ mealName: '', mealCalories: '', mealDescription: '', mode: 'addMealMode' });
+    this.setState({ mealName: '', mealCalories: '', mealDescription: '', mode: 'addMealMode', mealToEdit: {} });
+  }
+
+  updateMeal () {
+    const { mealName: newMealName, mealCalories: newMealCalories, mealDescription: newMealDescription, meals, mealToEdit } = this.state;
+
+    const newMeal = {
+      id: mealToEdit.id,
+      name: newMealName,
+      calories: newMealCalories,
+      description: newMealDescription,
+      date: mealToEdit.date,
+    };
+
+    if (newMealName !== '' && newMealCalories !== 0) {
+      this.props.editMeal(newMeal);
+      const newMealsArray = meals;
+
+      newMealsArray.forEach((meal) => {
+        if (meal.id === mealToEdit.id) {
+          meal.id = newMeal.id;
+          meal.name = newMeal.name;
+          meal.calories = newMeal.calories;
+          meal.description = newMeal.description;
+          meal.date = newMeal.date;
+        }
+      });
+
+      this.setState({
+        mealName: '',
+        mealCalories: '',
+        mealDescription: '',
+        mode: 'addMealMode',
+        mealToEdit: {},
+        meals: newMealsArray,
+      });
+    } else {
+      alert('Please fill in all the fields');
+    }
   }
 
   render () {
@@ -204,7 +245,7 @@ class Meals extends Component {
       case 'editMealMode':
         buttonsGroup = (
           <>
-            <Button variant="contained" color="primary" className="m-none">
+            <Button variant="contained" color="primary" className="m-none" onClick={this.updateMeal}>
               <MobileUpdateButton className="hidden-above-mobile-lg m-none full-width">
                 <Check />
               </MobileUpdateButton>
@@ -381,5 +422,5 @@ const MobileUpdateButton = styled.span`
 
 export default connect(
   null,
-  { addMeal },
+  { addMeal, editMeal },
 )(withStyles(styles)(Meals));

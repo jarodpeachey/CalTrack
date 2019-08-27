@@ -4,6 +4,7 @@ export const DELETE_USER = 'DELETE_USER';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const ADD_MEAL = 'ADD_MEAL';
+export const EDIT_MEAL = 'EDIT_MEAL';
 export const DELETE_MEAL = 'DELETE_MEAL';
 export const ADD_WORKOUT = 'ADD_WORKOUT';
 export const DELETE_WORKOUT = 'DELETE_WORKOUT';

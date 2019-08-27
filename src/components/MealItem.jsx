@@ -28,18 +28,17 @@ class MealItem extends Component {
     this.switchToEditMealMode = this.switchToEditMealMode.bind(this);
   }
 
-  componentDidMount () {
-    this.setState({ meal: this.props.meal });
-  }
+  // componentDidMount () {
+  //   this.setState({ meal: this.props.meal });
+  // }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.meal !== nextProps.meal) {
-      this.setState({ meal: nextProps.meal });
-    }
+    this.setState({ showInformation: false });
+    this.setState({ showInformation: null });
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    if (this.state.meal !== nextState.meal) {
+    if (this.props.meal !== nextProps.meal) {
       return true;
     }
     if (this.state.showInformation !== nextState.showInformation) {
@@ -60,14 +59,14 @@ class MealItem extends Component {
   }
 
   switchToEditMealMode () {
-    const { meal } = this.state;
+    const { meal } = this.props;
 
     this.props.switchToEditMealMode(meal.id);
   }
 
   render () {
-    const { classes } = this.props;
-    const { meal, showInformation, hasBeenOpened } = this.state;
+    const { meal, classes } = this.props;
+    const { showInformation, hasBeenOpened } = this.state;
 
     return (
       <>

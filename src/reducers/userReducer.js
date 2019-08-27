@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import {
   GET_USERS,
   ADD_USER,
@@ -5,6 +6,7 @@ import {
   GET_CURRENT_USER,
   SET_CURRENT_USER,
   ADD_MEAL,
+  EDIT_MEAL,
   DELETE_MEAL,
   ADD_WORKOUT,
   DELETE_WORKOUT,
@@ -14,6 +16,27 @@ const initialState = {
   users: [],
   currentUser: {},
 };
+
+function updateObjectInArray (array, action) {
+  return array.map((item, index) => {
+    if (index !== action.index) {
+      // This isn't the item we care about - keep it as-is
+      return item;
+    }
+
+    // Otherwise, this is the one we want - return an updated value
+    return {
+      ...item,
+      ...action.payload,
+    };
+  });
+}
+
+function insertMeal (array, action) {
+  const newArray = array.slice();
+  newArray.splice(action.index, 0, action.payload);
+  return newArray;
+}
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -43,25 +66,76 @@ const userReducer = (state = initialState, action) => {
         currentUser: action.payload,
       };
     case ADD_MEAL:
-      const newCurrentUserMeals = [...state.currentUser.meals];
-      newCurrentUserMeals.push(action.payload);
+      // const newCurrentUserMeals = [...state.currentUser.meals];
+      // newCurrentUserMeals.push(action.payload);
 
-      const newUsersMeals = [...state.users];
-      newUsersMeals.forEach((user) => {
-        if (user.id === state.currentUser.id) {
-          user.meals.push(action.payload);
+      // newUsersMeals.forEach((user) => {
+      //   if (user.id === state.currentUser.id) {
+      //     user.meals.push(action.payload);
+      //   }
+      // });
+
+      // const newUsersMeals = [...state.users];
+
+      // const userToUpdate = newUsersMeals.filter(
+      //   user => user.id === state.currentUser.id,
+      // );
+
+      // const updatedCurrentUserMeals = {
+      //   ...state.currentUser,
+      //   meals: newCurrentUserMeals,
+      // };
+
+      const newMealsArray = update(state.currentUser.meals, {$push: [action.payload]});
+
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          meals: newMealsArray,
+        },
+      };
+    case EDIT_MEAL:
+      const newCurrentUserMealsEditMode = [...state.currentUser.meals];
+      newCurrentUserMealsEditMode.forEach((meal) => {
+        if (meal.id === action.payload.id) {
+          meal.id = action.payload.id;
+          meal.name = action.payload.name;
+          meal.calories = action.payload.calories;
+          meal.description = action.payload.description;
+          meal.date = action.payload.date;
         }
       });
 
-      const updatedCurrentUserMeals = {
+      const newUsersMealsEditMeal = [...state.users];
+      newUsersMealsEditMeal.forEach((user) => {
+        if (user.id === state.currentUser.id) {
+          user.meals.forEach((meal) => {
+            if (meal.id === action.payload.id) {
+              meal.id = action.payload.id;
+              meal.name = action.payload.name;
+              meal.calories = action.payload.calories;
+              meal.description = action.payload.description;
+              meal.date = action.payload.date;
+            }
+          });
+        }
+      });
+
+      const updatedCurrentUserMealsEditMeal = {
         ...state.currentUser,
-        meals: newCurrentUserMeals,
+        meals: newCurrentUserMealsEditMode,
       };
 
       return {
         ...state,
-        currentUser: updatedCurrentUserMeals,
-        users: newUsersMeals,
+        currentUser: {
+          ...state.currentUser,
+          meals: [
+            ...state.currentUser.meals,
+            updateObjectInArray(state.currentUser.meals, action),
+          ],
+        },
       };
     case DELETE_MEAL:
       state.currentUser.meals.filter(meals => meals.id !== action.payload.id);
