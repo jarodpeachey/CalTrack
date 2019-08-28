@@ -48,23 +48,14 @@ const userReducer = (state = initialState, action) => {
       // const newCurrentUserMeals = [...state.currentUser.meals];
       // newCurrentUserMeals.push(action.payload);
 
-      // newUsersMeals.forEach((user) => {
-      //   if (user.id === state.currentUser.id) {
-      //     user.meals.push(action.payload);
-      //   }
-      // });
 
       const newUsersMeals = [...state.users];
 
-      let userToUpdate = {};
-
       newUsersMeals.forEach((user) => {
         if (user.id === state.currentUser.id) {
-          userToUpdate = user;
+          user.meals.push(action.payload);
         }
       });
-
-      console.log('User to update: ', userToUpdate);
 
       // const updatedCurrentUserMeals = {
       //   ...state.currentUser,
@@ -82,16 +73,7 @@ const userReducer = (state = initialState, action) => {
             action.payload,
           ],
         },
-        users: {
-          ...state.users,
-          [`${userToUpdate.id}`]: {
-            ...state.users[userToUpdate.id],
-            meals: [
-              ...state.currentUser.meals,
-              action.payload,
-            ],
-          },
-        },
+        users: newUsersMeals,
       };
     case EDIT_MEAL:
       const newCurrentUserMealsEditMode = [...state.currentUser.meals];
