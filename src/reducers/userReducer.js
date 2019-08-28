@@ -45,9 +45,6 @@ const userReducer = (state = initialState, action) => {
         currentUser: action.payload,
       };
     case ADD_MEAL:
-      // const newCurrentUserMeals = [...state.currentUser.meals];
-      // newCurrentUserMeals.push(action.payload);
-
       const newUsersMeals = [...state.users];
 
       newUsersMeals.forEach((user) => {
@@ -55,13 +52,6 @@ const userReducer = (state = initialState, action) => {
           user.meals.push(action.payload);
         }
       });
-
-      // const updatedCurrentUserMeals = {
-      //   ...state.currentUser,
-      //   meals: newCurrentUserMeals,
-      // };
-
-      // const newMealsArray = update(state.currentUser.meals, {$push: [action.payload]});
 
       return {
         ...state,
