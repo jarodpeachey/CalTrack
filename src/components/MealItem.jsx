@@ -28,17 +28,16 @@ class MealItem extends Component {
     this.switchToEditMealMode = this.switchToEditMealMode.bind(this);
   }
 
-  // componentDidMount () {
-  //   this.setState({ meal: this.props.meal });
-  // }
+  componentDidMount () {
+    this.setState({ meal: this.props.meal });
+  }
 
   componentWillReceiveProps (nextProps) {
-    this.setState({ showInformation: false });
-    this.setState({ showInformation: null });
+    this.setState({ meal: nextProps.meal });
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    if (this.props.meal !== nextProps.meal) {
+    if (this.state.meal !== nextState.meal) {
       return true;
     }
     if (this.state.showInformation !== nextState.showInformation) {
