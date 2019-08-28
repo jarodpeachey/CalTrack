@@ -48,7 +48,6 @@ const userReducer = (state = initialState, action) => {
       // const newCurrentUserMeals = [...state.currentUser.meals];
       // newCurrentUserMeals.push(action.payload);
 
-
       const newUsersMeals = [...state.users];
 
       newUsersMeals.forEach((user) => {
