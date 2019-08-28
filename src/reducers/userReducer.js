@@ -17,6 +17,39 @@ const initialState = {
   currentUser: {},
 };
 
+const updateArrayItem = (array, newItem) => {
+  const newArray = [...array];
+
+  return newArray.map((item) => {
+    if (item.id !== newItem.id) {
+      return item;
+    }
+
+    return {
+      ...item,
+      ...newItem,
+    };
+  });
+
+  // newMealsArray.forEach((meal) => {
+  //   if (meal.id === newMeal.id) {
+  //     meal.id = newMeal.id;
+  //     meal.name = newMeal.name;
+  //     meal.calories = newMeal.calories;
+  //     meal.description = newMeal.description;
+  //     meal.date = newMeal.date;
+  //   } else {
+  //     meal.id = meal.id;
+  //     meal.name = meal.name;
+  //     meal.calories = meal.calories;
+  //     meal.description = meal.description;
+  //     meal.date = meal.date;
+  //   }
+  // });
+
+  // return newMealsArray;
+};
+
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS:
@@ -57,53 +90,36 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: {
           ...state.currentUser,
-          meals: [
-            ...state.currentUser.meals,
-            action.payload,
-          ],
+          meals: [...state.currentUser.meals, action.payload],
         },
         users: newUsersMeals,
       };
     case EDIT_MEAL:
-      const newCurrentUserMealsEditMode = [...state.currentUser.meals];
-      newCurrentUserMealsEditMode.forEach((meal) => {
-        if (meal.id === action.payload.id) {
-          meal.id = action.payload.id;
-          meal.name = action.payload.name;
-          meal.calories = action.payload.calories;
-          meal.description = action.payload.description;
-          meal.date = action.payload.date;
-        }
-      });
+      // const newUsersMealsEditMeal = [...state.users];
+      // newUsersMealsEditMeal.forEach((user) => {
+      //   if (user.id === state.currentUser.id) {
+      //     user.meals.forEach((meal) => {
+      //       if (meal.id === action.payload.id) {
+      //         meal.id = action.payload.id;
+      //         meal.name = action.payload.name;
+      //         meal.calories = action.payload.calories;
+      //         meal.description = action.payload.description;
+      //         meal.date = action.payload.date;
+      //       }
+      //     });
+      //   }
+      // });
 
-      const newUsersMealsEditMeal = [...state.users];
-      newUsersMealsEditMeal.forEach((user) => {
-        if (user.id === state.currentUser.id) {
-          user.meals.forEach((meal) => {
-            if (meal.id === action.payload.id) {
-              meal.id = action.payload.id;
-              meal.name = action.payload.name;
-              meal.calories = action.payload.calories;
-              meal.description = action.payload.description;
-              meal.date = action.payload.date;
-            }
-          });
-        }
-      });
-
-      const updatedCurrentUserMealsEditMeal = {
-        ...state.currentUser,
-        meals: newCurrentUserMealsEditMode,
-      };
+      // const updatedCurrentUserMealsEditMeal = {
+      //   ...state.currentUser,
+      //   meals: newCurrentUserMealsEditMode,
+      // };
 
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          meals: [
-            ...state.currentUser.meals,
-            updateObjectInArray(state.currentUser.meals, action),
-          ],
+          meals: updateArrayItem([...state.currentUser.meals], action.payload),
         },
       };
     case DELETE_MEAL:

@@ -167,7 +167,7 @@ class Meals extends Component {
   }
 
   updateMeal () {
-    const { mealName: newMealName, mealCalories: newMealCalories, mealDescription: newMealDescription, meals, mealToEdit } = this.state;
+    const { mealName: newMealName, mealCalories: newMealCalories, mealDescription: newMealDescription, mealToEdit } = this.state;
 
     const newMeal = {
       id: mealToEdit.id,
@@ -179,17 +179,6 @@ class Meals extends Component {
 
     if (newMealName !== '' && newMealCalories !== 0) {
       this.props.editMeal(newMeal);
-      const newMealsArray = meals;
-
-      newMealsArray.forEach((meal) => {
-        if (meal.id === mealToEdit.id) {
-          meal.id = newMeal.id;
-          meal.name = newMeal.name;
-          meal.calories = newMeal.calories;
-          meal.description = newMeal.description;
-          meal.date = newMeal.date;
-        }
-      });
 
       this.setState({
         mealName: '',
@@ -197,7 +186,6 @@ class Meals extends Component {
         mealDescription: '',
         mode: 'addMealMode',
         mealToEdit: {},
-        meals: newMealsArray,
       });
     } else {
       alert('Please fill in all the fields');
