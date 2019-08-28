@@ -17,27 +17,6 @@ const initialState = {
   currentUser: {},
 };
 
-function updateObjectInArray (array, action) {
-  return array.map((item, index) => {
-    if (index !== action.index) {
-      // This isn't the item we care about - keep it as-is
-      return item;
-    }
-
-    // Otherwise, this is the one we want - return an updated value
-    return {
-      ...item,
-      ...action.payload,
-    };
-  });
-}
-
-function insertMeal (array, action) {
-  const newArray = array.slice();
-  newArray.splice(action.index, 0, action.payload);
-  return newArray;
-}
-
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS:
@@ -75,24 +54,43 @@ const userReducer = (state = initialState, action) => {
       //   }
       // });
 
-      // const newUsersMeals = [...state.users];
+      const newUsersMeals = [...state.users];
 
-      // const userToUpdate = newUsersMeals.filter(
-      //   user => user.id === state.currentUser.id,
-      // );
+      let userToUpdate = {};
+
+      newUsersMeals.forEach((user) => {
+        if (user.id === state.currentUser.id) {
+          userToUpdate = user;
+        }
+      });
+
+      console.log('User to update: ', userToUpdate);
 
       // const updatedCurrentUserMeals = {
       //   ...state.currentUser,
       //   meals: newCurrentUserMeals,
       // };
 
-      const newMealsArray = update(state.currentUser.meals, {$push: [action.payload]});
+      // const newMealsArray = update(state.currentUser.meals, {$push: [action.payload]});
 
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          meals: newMealsArray,
+          meals: [
+            ...state.currentUser.meals,
+            action.payload,
+          ],
+        },
+        users: {
+          ...state.users,
+          [`${userToUpdate.id}`]: {
+            ...state.users[userToUpdate.id],
+            meals: [
+              ...state.currentUser.meals,
+              action.payload,
+            ],
+          },
         },
       };
     case EDIT_MEAL:

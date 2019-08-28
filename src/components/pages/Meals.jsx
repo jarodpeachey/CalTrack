@@ -75,10 +75,7 @@ class Meals extends Component {
     if (this.state.meals !== nextState.meals) {
       return true;
     }
-    if (this.props.currentUser !== nextProps.currentUser) {
-      return true;
-    }
-    // return false;
+    return false;
   }
 
   handleNameChange (e) {
@@ -132,11 +129,8 @@ class Meals extends Component {
 
     if (mealName !== '' && mealCalories !== 0) {
       this.props.addMeal(meal);
-      // const newMealsArray = meals;
 
-      // newMealsArray.push(meal);
       this.setState({
-        // meals: newMealsArray,
         mealName: '',
         mealCalories: '',
         mealDescription: '',
