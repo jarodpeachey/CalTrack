@@ -130,7 +130,12 @@ class Header extends Component {
   }
 }
 
-const styles = () => ({});
+const styles = () => ({
+  navigationButton: {
+    color: 'white',
+    boxShadow: 'none !important',
+  },
+});
 
 const Menu = styled.ul`
   list-style: none;
