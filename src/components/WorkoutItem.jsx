@@ -13,7 +13,7 @@ class WorkoutItem extends Component {
   static propTypes = {
     workout: PropTypes.object,
     classes: PropTypes.object,
-    editWorkout: PropTypes.func,
+    switchToEditWorkoutMode: PropTypes.func,
   };
 
   constructor (props) {
@@ -25,7 +25,7 @@ class WorkoutItem extends Component {
     };
 
     this.toggleWorkoutInformation = this.toggleWorkoutInformation.bind(this);
-    this.editWorkoutItem = this.editWorkoutItem.bind(this);
+    this.switchToEditWorkoutMode = this.switchToEditWorkoutMode.bind(this);
   }
 
   componentDidMount () {
@@ -33,9 +33,7 @@ class WorkoutItem extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.workout !== nextProps.workout) {
-      this.setState({ workout: nextProps.workout });
-    }
+    this.setState({ workout: nextProps.workout });
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -59,15 +57,15 @@ class WorkoutItem extends Component {
     });
   }
 
-  editWorkoutItem () {
-    const { workout } = this.state;
+  switchToEditWorkoutMode () {
+    const { workout } = this.props;
 
-    this.props.editWorkout(workout.id);
+    this.props.switchToEditWorkoutMode(workout.id);
   }
 
   render () {
-    const { classes } = this.props;
-    const { workout, showInformation, hasBeenOpened } = this.state;
+    const { workout, classes } = this.props;
+    const { showInformation, hasBeenOpened } = this.state;
 
     return (
       <>
@@ -91,7 +89,7 @@ calories
                 ) : null}
                 <CloseIcon>
                   <IconButton
-                    onClick={this.editWorkoutItem}
+                    onClick={this.switchToEditWorkoutMode}
                     classes={{ root: classes.iconButton }}
                   >
                     <Edit />
@@ -126,7 +124,7 @@ calories
                 ) : null}
                 <CloseIcon>
                   <IconButton
-                    onClick={this.editWorkoutItem}
+                    onClick={this.switchToEditWorkoutMode}
                     classes={{ root: classes.iconButton }}
                   >
                     <Edit />

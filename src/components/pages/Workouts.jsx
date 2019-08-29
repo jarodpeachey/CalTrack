@@ -125,7 +125,7 @@ class Workouts extends Component {
     const workout = {
       id,
       name: workoutName,
-      calories: workoutCalories,
+      calories: -workoutCalories,
       description: workoutDescription,
       date,
     };
@@ -346,7 +346,7 @@ class Workouts extends Component {
                     label="Calories"
                     value={workoutCalories}
                     onChange={this.handleCaloriesChange}
-                    placeholder="Calories"
+                    placeholder="Calories Burned"
                     type="number"
                   />
                 </div>
