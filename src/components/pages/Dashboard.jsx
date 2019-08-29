@@ -55,6 +55,10 @@ class Dashboard extends Component {
     return false;
   }
 
+  switchToEditMeal () {
+    
+  }
+
   // addMealToLocalState () {
   //   const meal = {
   //     id: 1,
@@ -144,7 +148,7 @@ class Dashboard extends Component {
                     <>
                       <ul className="collection my-md">
                         {meals.map(meal => (
-                          <MealItemCompressed meal={meal} />
+                          <MealItemCompressed editMeal={this.switchToEditMeal} meal={meal} />
                         ))}
                       </ul>
                       <Link to="/meals">

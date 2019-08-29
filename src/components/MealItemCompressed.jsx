@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Edit from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import { deleteMeal } from '../actions/userActions';
 
@@ -11,6 +12,7 @@ class MealItemCompressed extends Component {
   static propTypes = {
     meal: PropTypes.object,
     classes: PropTypes.object,
+    editMeal: PropTypes.func,
   };
 
   constructor (props) {
@@ -62,15 +64,33 @@ class MealItemCompressed extends Component {
         <strong>{meal.name}</strong>
         <div className="float-right">
           {hover ? (
-            <IconButton classes={{ root: classes.iconButton }}>
-              <Edit />
-            </IconButton>
+            <Link
+              to={{
+                pathname: '/meals',
+                state: {
+                  mealToEdit: meal,
+                },
+              }}
+            >
+              <IconButton classes={{ root: classes.iconButton }}>
+                <Edit />
+              </IconButton>
+            </Link>
           ) : (
-            <CaloriesCount>
-              {meal.calories}
-              {' '}
+            <Link
+              to={{
+                pathname: '/meals',
+                state: {
+                  mealToEdit: meal,
+                },
+              }}
+            >
+              <CaloriesCount>
+                {meal.calories}
+                {' '}
 calories
-            </CaloriesCount>
+              </CaloriesCount>
+            </Link>
           )}
         </div>
       </CollectionItem>

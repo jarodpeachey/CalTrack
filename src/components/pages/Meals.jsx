@@ -59,6 +59,17 @@ class Meals extends Component {
 
   componentDidMount () {
     this.setState({ meals: this.props.currentUser.meals });
+
+    if (this.props.location.state) {
+      const { mealToEdit } = this.props.location.state;
+      this.setState({
+        mealName: mealToEdit.name,
+        mealCalories: mealToEdit.calories,
+        mealDescription: mealToEdit.description,
+        mode: 'editMealMode',
+        mealToEdit,
+      });
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -206,9 +217,7 @@ class Meals extends Component {
   }
 
   deleteMeal () {
-    const {
-      mealToEdit,
-    } = this.state;
+    const { mealToEdit } = this.state;
 
     this.props.deleteMeal(mealToEdit);
 
