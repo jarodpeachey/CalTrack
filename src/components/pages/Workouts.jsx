@@ -59,6 +59,17 @@ class Workouts extends Component {
 
   componentDidMount () {
     this.setState({ workouts: this.props.currentUser.workouts });
+
+    if (this.props.location.state) {
+      const { workoutToEdit } = this.props.location.state;
+      this.setState({
+        mealName: workoutToEdit.name,
+        mealCalories: workoutToEdit.calories,
+        mealDescription: workoutToEdit.description,
+        mode: 'editWorkoutMode',
+        workoutToEdit,
+      });
+    }
   }
 
   componentWillReceiveProps (nextProps) {

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Edit from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import { deleteWorkout } from '../actions/userActions';
 
@@ -11,6 +12,7 @@ class WorkoutItemCompressed extends Component {
   static propTypes = {
     workout: PropTypes.object,
     classes: PropTypes.object,
+    editWorkout: PropTypes.func,
   };
 
   constructor (props) {
@@ -62,15 +64,33 @@ class WorkoutItemCompressed extends Component {
         <strong>{workout.name}</strong>
         <div className="float-right">
           {hover ? (
-            <IconButton classes={{ root: classes.iconButton }}>
-              <Edit />
-            </IconButton>
+            <Link
+              to={{
+                pathname: '/workouts',
+                state: {
+                  workoutToEdit: workout,
+                },
+              }}
+            >
+              <IconButton classes={{ root: classes.iconButton }}>
+                <Edit />
+              </IconButton>
+            </Link>
           ) : (
-            <CaloriesCount>
-              {workout.calories}
-              {' '}
+            <Link
+              to={{
+                pathname: '/workouts',
+                state: {
+                  workoutToEdit: workout,
+                },
+              }}
+            >
+              <CaloriesCount>
+                {workout.calories}
+                {' '}
 calories
-            </CaloriesCount>
+              </CaloriesCount>
+            </Link>
           )}
         </div>
       </CollectionItem>

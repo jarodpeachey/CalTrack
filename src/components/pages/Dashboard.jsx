@@ -148,7 +148,7 @@ class Dashboard extends Component {
                     <>
                       <ul className="collection my-md">
                         {meals.map(meal => (
-                          <MealItemCompressed editMeal={this.switchToEditMeal} meal={meal} />
+                          <MealItemCompressed meal={meal} />
                         ))}
                       </ul>
                       <Link to="/meals">
