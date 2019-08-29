@@ -39,7 +39,7 @@ class Workouts extends Component {
       workouts: [],
       // isMobileModeOn: false,
       workoutName: '',
-      workoutCalories: '',
+      workoutCalories: 0,
       workoutDescription: '',
       mode: 'addWorkoutMode',
       displayNoWorkoutsNotif: true,
@@ -83,7 +83,7 @@ class Workouts extends Component {
 
   handleNameChange (e) {
     this.setState({ workoutName: e.target.value });
-    if (this.state.workoutCalories !== '' && e.target.value !== '') {
+    if (this.state.workoutCalories !== 0 && e.target.value !== '') {
       this.setState({ submitButtonActive: true });
     } else {
       this.setState({ submitButtonActive: false });
@@ -92,7 +92,7 @@ class Workouts extends Component {
 
   handleCaloriesChange (e) {
     this.setState({ workoutCalories: e.target.value });
-    if (this.state.workoutName !== '' && e.target.value !== '') {
+    if (this.state.workoutName !== '' && e.target.value !== 0) {
       this.setState({ submitButtonActive: true });
     } else {
       this.setState({ submitButtonActive: false });
@@ -120,22 +120,21 @@ class Workouts extends Component {
       id = sortedWorkouts[sortedWorkouts.length - 1].id + 1;
     }
 
-    console.log(date);
-
     const workout = {
       id,
       name: workoutName,
-      calories: -workoutCalories,
+      calories: JSON.parse(workoutCalories),
       description: workoutDescription,
       date,
     };
 
     if (workoutName !== '' && workoutCalories !== 0) {
       this.props.addWorkout(workout);
+      // this.props.updateCalories('add', workout.calories);
 
       this.setState({
         workoutName: '',
-        workoutCalories: '',
+        workoutCalories: 0,
         workoutDescription: '',
       });
     } else {
@@ -168,7 +167,7 @@ class Workouts extends Component {
   clearEditMode () {
     this.setState({
       workoutName: '',
-      workoutCalories: '',
+      workoutCalories: 0,
       workoutDescription: '',
       mode: 'addWorkoutMode',
       workoutToEdit: {},
@@ -186,7 +185,7 @@ class Workouts extends Component {
     const newWorkout = {
       id: workoutToEdit.id,
       name: newWorkoutName,
-      calories: newWorkoutCalories,
+      calories: JSON.parse(newWorkoutCalories),
       description: newWorkoutDescription,
       date: workoutToEdit.date,
     };
@@ -196,7 +195,7 @@ class Workouts extends Component {
 
       this.setState({
         workoutName: '',
-        workoutCalories: '',
+        workoutCalories: 0,
         workoutDescription: '',
         mode: 'addWorkoutMode',
         workoutToEdit: {},
@@ -211,11 +210,11 @@ class Workouts extends Component {
       workoutToEdit,
     } = this.state;
 
-    this.props.deleteWorkout(workoutToEdit.id);
+    this.props.deleteWorkout(workoutToEdit);
 
     this.setState({
       workoutName: '',
-      workoutCalories: '',
+      workoutCalories: 0,
       workoutDescription: '',
       mode: 'addWorkoutMode',
       workoutToEdit: {},
@@ -346,7 +345,7 @@ class Workouts extends Component {
                     label="Calories"
                     value={workoutCalories}
                     onChange={this.handleCaloriesChange}
-                    placeholder="Calories Burned"
+                    placeholder="Calories"
                     type="number"
                   />
                 </div>

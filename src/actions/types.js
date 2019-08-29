@@ -9,3 +9,4 @@ export const DELETE_MEAL = 'DELETE_MEAL';
 export const ADD_WORKOUT = 'ADD_WORKOUT';
 export const EDIT_WORKOUT = 'EDIT_WORKOUT';
 export const DELETE_WORKOUT = 'DELETE_WORKOUT';
+// export const UPDATE_CALORIES = 'UPDATE_CALORIES';

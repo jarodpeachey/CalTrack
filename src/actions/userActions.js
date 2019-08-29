@@ -12,6 +12,7 @@ import {
   ADD_WORKOUT,
   EDIT_WORKOUT,
   DELETE_WORKOUT,
+  // UPDATE_CALORIES,
 } from './types';
 // import { persistor } from '../Store';
 
@@ -48,44 +49,44 @@ export const deleteUser = id => (dispatch) => {
   });
 };
 
-export const addMeal = meal => (dispatch) => {
+export const addMeal = newMeal => (dispatch) => {
   dispatch({
     type: ADD_MEAL,
-    payload: meal,
-  });
-};
-
-export const editMeal = newMeal => (dispatch) => {
-  dispatch({
-    type: EDIT_MEAL,
     payload: newMeal,
   });
 };
 
-export const deleteMeal = id => (dispatch) => {
+export const editMeal = updatedMeal => (dispatch) => {
+  dispatch({
+    type: EDIT_MEAL,
+    payload: updatedMeal,
+  });
+};
+
+export const deleteMeal = mealToDelete => (dispatch) => {
   dispatch({
     type: DELETE_MEAL,
-    payload: id,
+    payload: mealToDelete,
   });
 };
 
-export const addWorkout = workout => (dispatch) => {
+export const addWorkout = newWorkout => (dispatch) => {
   dispatch({
     type: ADD_WORKOUT,
-    payload: workout,
-  });
-};
-
-export const editWorkout = newWorkout => (dispatch) => {
-  dispatch({
-    type: EDIT_WORKOUT,
     payload: newWorkout,
   });
 };
 
-export const deleteWorkout = workout => (dispatch) => {
+export const editWorkout = updatedWorkout => (dispatch) => {
+  dispatch({
+    type: EDIT_WORKOUT,
+    payload: updatedWorkout,
+  });
+};
+
+export const deleteWorkout = workoutToDelete => (dispatch) => {
   dispatch({
     type: DELETE_WORKOUT,
-    payload: workout,
+    payload: workoutToDelete,
   });
 };

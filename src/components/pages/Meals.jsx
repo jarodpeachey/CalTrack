@@ -39,7 +39,7 @@ class Meals extends Component {
       meals: [],
       // isMobileModeOn: false,
       mealName: '',
-      mealCalories: '',
+      mealCalories: 0,
       mealDescription: '',
       mode: 'addMealMode',
       displayNoMealsNotif: true,
@@ -83,7 +83,7 @@ class Meals extends Component {
 
   handleNameChange (e) {
     this.setState({ mealName: e.target.value });
-    if (this.state.mealCalories !== '' && e.target.value !== '') {
+    if (this.state.mealCalories !== 0 && e.target.value !== '') {
       this.setState({ submitButtonActive: true });
     } else {
       this.setState({ submitButtonActive: false });
@@ -92,7 +92,7 @@ class Meals extends Component {
 
   handleCaloriesChange (e) {
     this.setState({ mealCalories: e.target.value });
-    if (this.state.mealName !== '' && e.target.value !== '') {
+    if (this.state.mealName !== '' && e.target.value !== 0) {
       this.setState({ submitButtonActive: true });
     } else {
       this.setState({ submitButtonActive: false });
@@ -120,22 +120,21 @@ class Meals extends Component {
       id = sortedMeals[sortedMeals.length - 1].id + 1;
     }
 
-    console.log(date);
-
     const meal = {
       id,
       name: mealName,
-      calories: mealCalories,
+      calories: JSON.parse(mealCalories),
       description: mealDescription,
       date,
     };
 
     if (mealName !== '' && mealCalories !== 0) {
       this.props.addMeal(meal);
+      // this.props.updateCalories('add', meal.calories);
 
       this.setState({
         mealName: '',
-        mealCalories: '',
+        mealCalories: 0,
         mealDescription: '',
       });
     } else {
@@ -168,7 +167,7 @@ class Meals extends Component {
   clearEditMode () {
     this.setState({
       mealName: '',
-      mealCalories: '',
+      mealCalories: 0,
       mealDescription: '',
       mode: 'addMealMode',
       mealToEdit: {},
@@ -186,7 +185,7 @@ class Meals extends Component {
     const newMeal = {
       id: mealToEdit.id,
       name: newMealName,
-      calories: newMealCalories,
+      calories: JSON.parse(newMealCalories),
       description: newMealDescription,
       date: mealToEdit.date,
     };
@@ -196,7 +195,7 @@ class Meals extends Component {
 
       this.setState({
         mealName: '',
-        mealCalories: '',
+        mealCalories: 0,
         mealDescription: '',
         mode: 'addMealMode',
         mealToEdit: {},
@@ -211,11 +210,11 @@ class Meals extends Component {
       mealToEdit,
     } = this.state;
 
-    this.props.deleteMeal(mealToEdit.id);
+    this.props.deleteMeal(mealToEdit);
 
     this.setState({
       mealName: '',
-      mealCalories: '',
+      mealCalories: 0,
       mealDescription: '',
       mode: 'addMealMode',
       mealToEdit: {},

@@ -34,7 +34,12 @@ class Signup extends Component {
   }
 
   componentDidMount () {
-    this.setState({ nameValue: 'Name', userNameValue: 'Username', passwordValue: 'Password', confirmValue: 'Confirm' });
+    this.setState({
+      nameValue: 'Name',
+      userNameValue: 'Username',
+      passwordValue: 'Password',
+      confirmValue: 'Confirm',
+    });
 
     console.log('Users: ', this.props.users);
     console.log('Current user: ', this.props.currentUser);
@@ -67,7 +72,11 @@ class Signup extends Component {
   onFormSubmit (e) {
     e.preventDefault();
 
-    if (this.state.nameValue && this.state.userNameValue && (this.state.passwordValue === this.state.confirmValue)) {
+    if (
+      this.state.nameValue &&
+      this.state.userNameValue &&
+      this.state.passwordValue === this.state.confirmValue
+    ) {
       let id = 0;
       if (this.props.users.length) {
         const sortedUsers = sortByUserId(this.props.users);
@@ -82,9 +91,11 @@ class Signup extends Component {
         password: this.state.passwordValue,
         meals: [],
         workouts: [],
-        caloriesBurned: 0,
-        caloriesGained: 0,
-        netCalories: 0,
+        calories: {
+          caloriesBurned: 0,
+          caloriesGained: 0,
+          netCalories: 0,
+        },
       };
 
       console.log('Adding user: ', user);
@@ -105,9 +116,7 @@ class Signup extends Component {
     return (
       <div>
         <FormWrapper>
-          <Heading className="mb-sm">
-            Sign Up
-          </Heading>
+          <Heading className="mb-sm">Sign Up</Heading>
           <form onSubmit={this.onFormSubmit}>
             <TextField
               id="name"
@@ -185,5 +194,9 @@ const Heading = styled.h1`
   color: ${({ theme }) => theme.colors.main};
 `;
 
-export default withRouter(connect(null, { addUser, setCurrentUser })(withStyles(styles)(Signup)));
-
+export default withRouter(
+  connect(
+    null,
+    { addUser, setCurrentUser },
+  )(withStyles(styles)(Signup)),
+);
