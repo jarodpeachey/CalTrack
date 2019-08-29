@@ -2,6 +2,7 @@
   "name": "react-starter",
   "version": "1.0.0",
   "description": "",
+  "homepage": ".",
   "engines": {
     "node": "10.15.1"
   },
