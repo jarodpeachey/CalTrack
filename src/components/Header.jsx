@@ -39,7 +39,7 @@ class Header extends Component {
 
     return (
       <span>
-        {!this.props.currentUser.id && (pathname === '/' ||
+        {!this.props.currentUser && (pathname === '/' ||
         pathname === '/signup' ||
         pathname === '/login' ||
         pathname === '/welcome') ? (
