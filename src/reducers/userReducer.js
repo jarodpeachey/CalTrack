@@ -1,4 +1,3 @@
-import update from 'immutability-helper';
 import {
   GET_USERS,
   ADD_USER,
@@ -15,6 +14,16 @@ import {
 const initialState = {
   users: [],
   currentUser: {},
+};
+
+const addArrayItem = (array, newItem) => {
+  const newArray = [...array];
+
+  newArray.push(newItem);
+
+  return [
+    ...newArray,
+  ];
 };
 
 const updateArrayItem = (array, newItem) => {
@@ -37,6 +46,27 @@ const removeArrayItem = (array, id) => {
 
   return newArray.filter(item => item.id !== id);
 };
+
+const addMealInUsersArray = (state, newItem) => {
+  const newUsersArray = [...state.users];
+
+  const updatedUsersArray = newUsersArray.map((user) => {
+    if (user.id === state.currentUser.id) {
+      return {
+        ...user,
+        meals: addArrayItem(user.meals, newItem),
+      };
+    } else {
+      return {
+        ...user,
+      };
+    };
+  });
+
+  return [
+    ...updatedUsersArray,
+  ];
+}
 
 const updateMealInUsersArray = (state, newItem) => {
   const newUsersArray = [...state.users];
@@ -107,21 +137,29 @@ const userReducer = (state = initialState, action) => {
         currentUser: action.payload,
       };
     case ADD_MEAL:
-      const newUsersMeals = [...state.users];
+      // const newUsersMeals = [...state.users];
 
-      newUsersMeals.forEach((user) => {
-        if (user.id === state.currentUser.id) {
-          user.meals.push(action.payload);
-        }
-      });
+      // newUsersMeals.forEach((user) => {
+      //   if (user.id === state.currentUser.id) {
+      //     user.meals.push(action.payload);
+      //   }
+      // });
 
+      // return {
+      //   ...state,
+      //   currentUser: {
+      //     ...state.currentUser,
+      //     meals: [...state.currentUser.meals, action.payload],
+      //   },
+      //   users: newUsersMeals,
+      // };
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          meals: [...state.currentUser.meals, action.payload],
+          meals: addArrayItem([...state.currentUser.meals], action.payload),
         },
-        users: newUsersMeals,
+        users: addMealInUsersArray(state, action.payload),
       };
     case EDIT_MEAL:
       return {
