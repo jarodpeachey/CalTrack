@@ -39,10 +39,10 @@ class Header extends Component {
 
     return (
       <span>
-        {pathname === '/' ||
+        {!this.props.currentUser && (pathname === '/' ||
         pathname === '/signup' ||
         pathname === '/login' ||
-        pathname === '/welcome' ? (
+        pathname === '/welcome') ? (
           <Wrapper>
             <div className="container py-xxs">
               <Row>

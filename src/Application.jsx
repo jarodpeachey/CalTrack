@@ -28,9 +28,7 @@ class Application extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   componentDidMount () {
@@ -66,13 +64,15 @@ class Application extends Component {
               path="/"
               render={props => (
                 <>
-                  {<Header {...props} pathname={location.pathname} />}
-                  <Wrapper>
-                    <Main
+                  {
+                    <Header
                       {...props}
-                      users={users}
+                      pathname={location.pathname}
                       currentUser={currentUser}
                     />
+                  }
+                  <Wrapper>
+                    <Main {...props} users={users} currentUser={currentUser} />
                   </Wrapper>
                 </>
               )}
@@ -82,13 +82,15 @@ class Application extends Component {
               path="/welcome"
               render={props => (
                 <>
-                  {<Header {...props} pathname={location.pathname} />}
-                  <Wrapper>
-                    <Main
+                  {
+                    <Header
                       {...props}
-                      users={users}
+                      pathname={location.pathname}
                       currentUser={currentUser}
                     />
+                  }
+                  <Wrapper>
+                    <Main {...props} users={users} currentUser={currentUser} />
                   </Wrapper>
                 </>
               )}
@@ -98,13 +100,15 @@ class Application extends Component {
               path="/login"
               render={props => (
                 <>
-                  {<Header {...props} pathname={location.pathname} />}
-                  <Wrapper>
-                    <Login
+                  {
+                    <Header
                       {...props}
-                      users={users}
+                      pathname={location.pathname}
                       currentUser={currentUser}
                     />
+                  }
+                  <Wrapper>
+                    <Login {...props} users={users} currentUser={currentUser} />
                   </Wrapper>
                 </>
               )}
@@ -114,7 +118,13 @@ class Application extends Component {
               path="/signup"
               render={props => (
                 <>
-                  {<Header {...props} pathname={location.pathname} />}
+                  {
+                    <Header
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  }
                   <Wrapper>
                     <Signup
                       {...props}
@@ -130,7 +140,13 @@ class Application extends Component {
               path="/dashboard"
               render={props => (
                 <>
-                  {<Header {...props} pathname={location.pathname} />}
+                  {
+                    <Header
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  }
                   <Wrapper>
                     <Dashboard
                       {...props}
@@ -146,13 +162,15 @@ class Application extends Component {
               path="/meals"
               render={props => (
                 <>
-                  {<Header {...props} pathname={location.pathname} />}
-                  <Wrapper>
-                    <Meals
+                  {
+                    <Header
                       {...props}
-                      users={users}
+                      pathname={location.pathname}
                       currentUser={currentUser}
                     />
+                  }
+                  <Wrapper>
+                    <Meals {...props} users={users} currentUser={currentUser} />
                   </Wrapper>
                 </>
               )}
@@ -162,7 +180,13 @@ class Application extends Component {
               path="/workouts"
               render={props => (
                 <>
-                  {<Header {...props} pathname={location.pathname} />}
+                  {
+                    <Header
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  }
                   <Wrapper>
                     <Workouts
                       {...props}
