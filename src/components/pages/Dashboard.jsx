@@ -6,6 +6,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addMeal, addWorkout } from '../../actions/userActions';
+import { Title } from '../Layout/Title';
+import WorkoutItemCompressed from '../WorkoutItemCompressed';
+import MealItemCompressed from '../MealItemCompressed';
 
 class Dashboard extends Component {
   static propTypes = {
@@ -136,21 +139,12 @@ class Dashboard extends Component {
             <div className="row">
               <div className="col col-6 py-none">
                 <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                  <Title className="title mb-none">Meals</Title>
+                  <Title fullWidth className="title mb-none">Meals</Title>
                   {meals.length ? (
                     <>
-                      <ul className="collection mb-md">
+                      <ul className="collection my-md">
                         {meals.map(meal => (
-                          <div className="collection-item">
-                            <strong>{meal.name}</strong>
-                            <div className="right">
-                              <CaloriesCount>
-                                {meal.calories}
-                                {' '}
-calories
-                              </CaloriesCount>
-                            </div>
-                          </div>
+                          <MealItemCompressed meal={meal} />
                         ))}
                       </ul>
                       <Link to="/meals">
@@ -181,21 +175,12 @@ calories
               </div>
               <div className="col col-6 py-none">
                 <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                  <Title className="title mb-none">Workouts</Title>
+                  <Title fullWidth className="title mb-none">Workouts</Title>
                   {workouts.length ? (
                     <>
-                      <ul className="collection mb-md">
+                      <ul className="collection my-md">
                         {workouts.map(workout => (
-                          <div className="collection-item">
-                            <strong>{workout.name}</strong>
-                            <div className="right">
-                              <CaloriesCount>
-                                {workout.calories}
-                                {' '}
-calories
-                              </CaloriesCount>
-                            </div>
-                          </div>
+                          <WorkoutItemCompressed workout={workout} />
                         ))}
                       </ul>
                       <Link to="/workouts">
@@ -254,10 +239,6 @@ const Wrapper = styled.div`
 const Card = styled.div`
   background: white;
   position: relative;
-`;
-
-const CaloriesCount = styled.em`
-  color: ${({ theme }) => theme.colors.gray5};
 `;
 
 export default connect(

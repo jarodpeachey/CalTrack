@@ -87,6 +87,22 @@ class Header extends Component {
                   </ColumnOne>
                   <ColumnTwo>
                     <Menu className="menu">
+                      <MenuItem className="menu-item" active={pathname === '/dashboard'}>
+                        <Link to="/dashboard">
+                          {/* <Button
+                          color="primary"
+                          variant="contained"
+                          className="mx-none"
+                          classes={
+                            pathname === '/meals' ?
+                              { root: classes.navigationButtonActive } :
+                              { root: classes.navigationButton }
+                          }
+                          > */}
+                        Dashboard
+                          {/* </Button> */}
+                        </Link>
+                      </MenuItem>
                       <MenuItem className="menu-item" active={pathname === '/meals'}>
                         <Link to="/meals">
                           {/* <Button
