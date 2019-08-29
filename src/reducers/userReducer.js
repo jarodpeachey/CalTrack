@@ -30,24 +30,27 @@ const updateArrayItem = (array, newItem) => {
       ...newItem,
     };
   });
+};
 
-  // newMealsArray.forEach((meal) => {
-  //   if (meal.id === newMeal.id) {
-  //     meal.id = newMeal.id;
-  //     meal.name = newMeal.name;
-  //     meal.calories = newMeal.calories;
-  //     meal.description = newMeal.description;
-  //     meal.date = newMeal.date;
-  //   } else {
-  //     meal.id = meal.id;
-  //     meal.name = meal.name;
-  //     meal.calories = meal.calories;
-  //     meal.description = meal.description;
-  //     meal.date = meal.date;
-  //   }
-  // });
+const updateUserMeals = (state, newItem) => {
+  const newUsersArray = [...state.users];
 
-  // return newMealsArray;
+  const updatedUsersArray = newUsersArray.map((user) => {
+    if (user.id === state.currentUser.id) {
+      return {
+        ...user,
+        meals: updateArrayItem(user.meals, newItem),
+      };
+    } else {
+      return {
+        ...user,
+      };
+    }
+  });
+
+  return [
+    ...updatedUsersArray,
+  ];
 };
 
 const userReducer = (state = initialState, action) => {
@@ -121,6 +124,7 @@ const userReducer = (state = initialState, action) => {
           ...state.currentUser,
           meals: updateArrayItem([...state.currentUser.meals], action.payload),
         },
+        users: updateUserMeals(state, action.payload),
       };
     case DELETE_MEAL:
       state.currentUser.meals.filter(meals => meals.id !== action.payload.id);

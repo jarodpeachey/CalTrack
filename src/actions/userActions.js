@@ -61,10 +61,10 @@ export const editMeal = newMeal => (dispatch) => {
   });
 };
 
-export const deleteMeal = meal => (dispatch) => {
+export const deleteMeal = id => (dispatch) => {
   dispatch({
     type: DELETE_MEAL,
-    payload: meal,
+    payload: id,
   });
 };
 

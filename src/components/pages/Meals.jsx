@@ -11,7 +11,7 @@ import {
 import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
-import { addMeal, editMeal } from '../../actions/userActions';
+import { addMeal, editMeal , deleteMeal} from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import MealItem from '../MealItem';
@@ -52,6 +52,7 @@ class Meals extends Component {
     this.switchToEditMealMode = this.switchToEditMealMode.bind(this);
     this.clearEditMode = this.clearEditMode.bind(this);
     this.updateMeal = this.updateMeal.bind(this);
+    this.deleteMeal = this.deleteMeal.bind(this);
   }
 
   componentDidMount () {
@@ -163,11 +164,22 @@ class Meals extends Component {
   }
 
   clearEditMode () {
-    this.setState({ mealName: '', mealCalories: '', mealDescription: '', mode: 'addMealMode', mealToEdit: {} });
+    this.setState({
+      mealName: '',
+      mealCalories: '',
+      mealDescription: '',
+      mode: 'addMealMode',
+      mealToEdit: {},
+    });
   }
 
   updateMeal () {
-    const { mealName: newMealName, mealCalories: newMealCalories, mealDescription: newMealDescription, mealToEdit } = this.state;
+    const {
+      mealName: newMealName,
+      mealCalories: newMealCalories,
+      mealDescription: newMealDescription,
+      mealToEdit,
+    } = this.state;
 
     const newMeal = {
       id: mealToEdit.id,
@@ -190,6 +202,22 @@ class Meals extends Component {
     } else {
       alert('Please fill in all the fields');
     }
+  }
+
+  deleteMeal () {
+    const {
+      mealToEdit,
+    } = this.state;
+
+    this.props.deleteMeal(mealToEdit.id);
+
+    this.setState({
+      mealName: '',
+      mealCalories: '',
+      mealDescription: '',
+      mode: 'addMealMode',
+      mealToEdit: {},
+    });
   }
 
   render () {
@@ -227,25 +255,41 @@ class Meals extends Component {
       case 'editMealMode':
         buttonsGroup = (
           <>
-            <Button variant="contained" color="primary" className="m-none" onClick={this.updateMeal}>
+            <Button
+              variant="contained"
+              color="primary"
+              className="m-none"
+              onClick={this.updateMeal}
+            >
               <MobileUpdateButton className="hidden-above-mobile-lg m-none full-width">
                 <Check />
               </MobileUpdateButton>
-              <span className="hidden-below-mobile-lg">
-                Update Meal
-              </span>
+              <span className="hidden-below-mobile-lg">Update Meal</span>
             </Button>
-            <Button variant="outlined" className="my-none" onClick={this.clearEditMode}>
+            <Button
+              variant="outlined"
+              className="my-none"
+              onClick={this.clearEditMode}
+            >
               Cancel
             </Button>
             <MuiThemeProvider theme={errorTheme}>
               <div className="hidden-above-mobile-lg float-right">
-                <IconButton color="primary" className="m-none" classes={{ root: classes.deleteButton }}>
+                <IconButton
+                  onClick={this.deleteMeal}
+                  color="primary"
+                  className="m-none"
+                  classes={{ root: classes.deleteButton }}
+                >
                   <Delete />
                 </IconButton>
               </div>
               <div className="hidden-below-mobile-lg float-right">
-                <Button color="primary" className="m-none">
+                <Button
+                  onClick={this.deleteMeal}
+                  color="primary"
+                  className="m-none"
+                >
                   Delete Meal
                 </Button>
               </div>
@@ -329,7 +373,10 @@ class Meals extends Component {
               <Title>Meals</Title>
               <ul>
                 {meals.map(meal => (
-                  <MealItem meal={meal} switchToEditMealMode={this.switchToEditMealMode} />
+                  <MealItem
+                    meal={meal}
+                    switchToEditMealMode={this.switchToEditMealMode}
+                  />
                 ))}
               </ul>
             </div>
@@ -404,5 +451,5 @@ const MobileUpdateButton = styled.span`
 
 export default connect(
   null,
-  { addMeal, editMeal },
+  { addMeal, editMeal, deleteMeal },
 )(withStyles(styles)(Meals));
