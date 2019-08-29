@@ -35,11 +35,14 @@ class Header extends Component {
   }
 
   render () {
-    const { classes } = this.props;
+    const { classes, pathname } = this.props;
 
     return (
       <span>
-        {this.props.pathname === '/' || this.props.pathname === '/signup' ? (
+        {pathname === '/' ||
+        pathname === '/signup' ||
+        pathname === '/login' ||
+        pathname === '/welcome' ? (
           <Wrapper>
             <div className="container py-xxs">
               <Row>
@@ -73,52 +76,77 @@ class Header extends Component {
               </Row>
             </div>
           </Wrapper>
-        ) : (
-          <Wrapper>
-            <div className="container py-xxs">
-              <Row>
-                <ColumnOne>
-                  <Link to="/">
-                    <BrandName className="m-none">CalTrack</BrandName>
-                  </Link>
-                </ColumnOne>
-                <ColumnTwo>
-                  <Link to="/meals">
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      className="mx-none"
-                      classes={{ root: classes.navigationButton }}
-                    >
-                      Meals
-                    </Button>
-                  </Link>
-                  <Link to="/workouts">
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      className="mx-none"
-                      classes={{ root: classes.navigationButton }}
-                    >
-                      Workouts
-                    </Button>
-                  </Link>
-                </ColumnTwo>
-              </Row>
-            </div>
-          </Wrapper>
-        )}
+          ) : (
+            <Wrapper>
+              <div className="container py-xxs">
+                <Row>
+                  <ColumnOne>
+                    <Link to="/">
+                      <BrandName className="m-none">CalTrack</BrandName>
+                    </Link>
+                  </ColumnOne>
+                  <ColumnTwo>
+                    <Menu className="menu">
+                      <MenuItem className="menu-item" active={pathname === '/meals'}>
+                        <Link to="/meals">
+                          {/* <Button
+                          color="primary"
+                          variant="contained"
+                          className="mx-none"
+                          classes={
+                            pathname === '/meals' ?
+                              { root: classes.navigationButtonActive } :
+                              { root: classes.navigationButton }
+                          }
+                          > */}
+                        Meals
+                          {/* </Button> */}
+                        </Link>
+                      </MenuItem>
+                      <MenuItem className="menu-item" active={pathname === '/workouts'}>
+                        <Link to="/workouts">
+                          {/* <Button
+                          color="primary"
+                          variant="contained"
+                          className="mx-none"
+                          classes={
+                            pathname === '/workouts' ?
+                              { root: classes.navigationButtonActive } :
+                              { root: classes.navigationButton }
+                          }
+                          > */}
+                        Workouts
+                          {/* </Button> */}
+                        </Link>
+                      </MenuItem>
+                    </Menu>
+                  </ColumnTwo>
+                </Row>
+              </div>
+            </Wrapper>
+          )}
       </span>
     );
   }
 }
 
-const styles = () => ({
-  navigationButton: {
-    color: 'white',
-    boxShadow: 'none !important',
-  },
-});
+const styles = () => ({});
+
+const Menu = styled.ul`
+  list-style: none;
+  border-radius: 10px;
+`;
+
+const MenuItem = styled.li`
+  // padding: 12px !important;
+  border-bottom: 1px solid transparent;
+  :hover {
+    border-bottom: 1px solid white;
+    background: #037dd0;
+    transition-duration: 0.25s;
+  }
+  font-weight: ${props => (props.active ? 'bold' : 400)};
+`;
 
 const Wrapper = styled.div`
   position: absolute;
