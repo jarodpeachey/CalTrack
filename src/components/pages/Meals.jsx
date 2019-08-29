@@ -11,7 +11,7 @@ import {
 import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
-import { addMeal, editMeal , deleteMeal} from '../../actions/userActions';
+import { addMeal, editMeal, deleteMeal } from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import MealItem from '../MealItem';
@@ -29,6 +29,8 @@ class Meals extends Component {
     currentUser: PropTypes.object,
     classes: PropTypes.object,
     addMeal: PropTypes.func,
+    editMeal: PropTypes.func,
+    deleteMeal: PropTypes.func,
   };
 
   constructor (props) {
@@ -63,7 +65,7 @@ class Meals extends Component {
     this.setState({ meals: nextProps.currentUser.meals });
   }
 
-  shouldComponentUpdate (nextState, nextProps) {
+  shouldComponentUpdate (nextState) {
     if (this.state.mealName !== nextState.mealName) {
       return true;
     }

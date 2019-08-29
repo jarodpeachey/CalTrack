@@ -9,7 +9,9 @@ import {
   createMuiTheme,
 } from '@material-ui/core/styles';
 import Close from '@material-ui/icons/Close';
-import { addWorkout } from '../../actions/userActions';
+import Delete from '@material-ui/icons/Delete';
+import Check from '@material-ui/icons/Check';
+import { addWorkout, editWorkout, deleteWorkout } from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import WorkoutItem from '../WorkoutItem';
@@ -27,6 +29,8 @@ class Workouts extends Component {
     currentUser: PropTypes.object,
     classes: PropTypes.object,
     addWorkout: PropTypes.func,
+    editWorkout: PropTypes.func,
+    deleteWorkout: PropTypes.func,
   };
 
   constructor (props) {
@@ -40,25 +44,25 @@ class Workouts extends Component {
       mode: 'addWorkoutMode',
       displayNoWorkoutsNotif: true,
       submitButtonActive: false,
+      workoutToEdit: {},
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCaloriesChange = this.handleCaloriesChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    this.clearNoWorkoutsNotification = this.clearNoWorkoutsNotification.bind(
-      this,
-    );
-    this.editWorkout = this.editWorkout.bind(this);
+    this.clearNoWorkoutsNotification = this.clearNoWorkoutsNotification.bind(this);
+    this.switchToEditWorkoutMode = this.switchToEditWorkoutMode.bind(this);
+    this.clearEditMode = this.clearEditMode.bind(this);
+    this.updateWorkout = this.updateWorkout.bind(this);
+    this.deleteWorkout = this.deleteWorkout.bind(this);
   }
 
   componentDidMount () {
     this.setState({ workouts: this.props.currentUser.workouts });
   }
 
-  componentWillReceiveProps (prevProps) {
-    if (prevProps.currentUser.workouts !== this.props.currentUser.workouts) {
-      this.setState({ workouts: this.props.currentUser.workouts });
-    }
+  componentWillReceiveProps (nextProps) {
+    this.setState({ workouts: nextProps.currentUser.workouts });
   }
 
   shouldComponentUpdate (nextState) {
@@ -109,7 +113,7 @@ class Workouts extends Component {
       year: date.getFullYear(),
     };
 
-    let id = 1;
+    let id = 0;
     if (workouts.length) {
       const sortedWorkouts = sortByUserId(workouts);
 
@@ -129,11 +133,7 @@ class Workouts extends Component {
     if (workoutName !== '' && workoutCalories !== 0) {
       this.props.addWorkout(workout);
 
-      const newWorkoutsArray = workouts;
-
-      newWorkoutsArray.push(workout);
       this.setState({
-        workouts: newWorkoutsArray,
         workoutName: '',
         workoutCalories: '',
         workoutDescription: '',
@@ -147,7 +147,7 @@ class Workouts extends Component {
     this.setState({ displayNoWorkoutsNotif: false });
   }
 
-  editWorkout (id) {
+  switchToEditWorkoutMode (id) {
     let workoutToEdit = {};
 
     this.state.workouts.forEach((workout) => {
@@ -161,6 +161,64 @@ class Workouts extends Component {
       workoutCalories: workoutToEdit.calories,
       workoutDescription: workoutToEdit.description,
       mode: 'editWorkoutMode',
+      workoutToEdit,
+    });
+  }
+
+  clearEditMode () {
+    this.setState({
+      workoutName: '',
+      workoutCalories: '',
+      workoutDescription: '',
+      mode: 'addWorkoutMode',
+      workoutToEdit: {},
+    });
+  }
+
+  updateWorkout () {
+    const {
+      workoutName: newWorkoutName,
+      workoutCalories: newWorkoutCalories,
+      workoutDescription: newWorkoutDescription,
+      workoutToEdit,
+    } = this.state;
+
+    const newWorkout = {
+      id: workoutToEdit.id,
+      name: newWorkoutName,
+      calories: newWorkoutCalories,
+      description: newWorkoutDescription,
+      date: workoutToEdit.date,
+    };
+
+    if (newWorkoutName !== '' && newWorkoutCalories !== 0) {
+      this.props.editWorkout(newWorkout);
+
+      this.setState({
+        workoutName: '',
+        workoutCalories: '',
+        workoutDescription: '',
+        mode: 'addWorkoutMode',
+        workoutToEdit: {},
+      });
+    } else {
+      alert('Please fill in all the fields');
+    }
+  }
+
+  deleteWorkout () {
+    const {
+      workoutToEdit,
+    } = this.state;
+
+    this.props.deleteWorkout(workoutToEdit.id);
+
+    this.setState({
+      workoutName: '',
+      workoutCalories: '',
+      workoutDescription: '',
+      mode: 'addWorkoutMode',
+      workoutToEdit: {},
     });
   }
 
@@ -199,16 +257,44 @@ class Workouts extends Component {
       case 'editWorkoutMode':
         buttonsGroup = (
           <>
-            <Button variant="contained" color="primary" className="m-none">
-              Update Workout
+            <Button
+              variant="contained"
+              color="primary"
+              className="m-none"
+              onClick={this.updateWorkout}
+            >
+              <MobileUpdateButton className="hidden-above-mobile-lg m-none full-width">
+                <Check />
+              </MobileUpdateButton>
+              <span className="hidden-below-mobile-lg">Update Workout</span>
             </Button>
-            <Button variant="outlined" className="my-none">
+            <Button
+              variant="outlined"
+              className="my-none"
+              onClick={this.clearEditMode}
+            >
               Cancel
             </Button>
             <MuiThemeProvider theme={errorTheme}>
-              <Button color="primary" className="m-none float-right">
-                Delete Workout
-              </Button>
+              <div className="hidden-above-mobile-lg float-right">
+                <IconButton
+                  onClick={this.deleteWorkout}
+                  color="primary"
+                  className="m-none"
+                  classes={{ root: classes.deleteButton }}
+                >
+                  <Delete />
+                </IconButton>
+              </div>
+              <div className="hidden-below-mobile-lg float-right">
+                <Button
+                  onClick={this.deleteWorkout}
+                  color="primary"
+                  className="m-none"
+                >
+                  Delete Workout
+                </Button>
+              </div>
             </MuiThemeProvider>
           </>
         );
@@ -291,7 +377,7 @@ class Workouts extends Component {
                 {workouts.map(workout => (
                   <WorkoutItem
                     workout={workout}
-                    editWorkout={this.editWorkout}
+                    switchToEditWorkoutMode={this.switchToEditWorkoutMode}
                   />
                 ))}
               </ul>
@@ -351,13 +437,21 @@ const styles = theme => ({
     position: 'relative',
     bottom: 16,
   },
+  deleteButton: {
+    position: 'relative',
+    bottom: 5,
+  },
 });
 
 const Card = styled.div`
   border: 1px solid #ddd;
 `;
 
+const MobileUpdateButton = styled.span`
+  height: 24px !important;
+`;
+
 export default connect(
   null,
-  { addWorkout },
+  { addWorkout, editWorkout, deleteWorkout },
 )(withStyles(styles)(Workouts));
