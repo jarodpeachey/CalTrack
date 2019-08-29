@@ -10,6 +10,7 @@ import {
   EDIT_MEAL,
   DELETE_MEAL,
   ADD_WORKOUT,
+  EDIT_WORKOUT,
   DELETE_WORKOUT,
 } from './types';
 // import { persistor } from '../Store';
@@ -72,6 +73,13 @@ export const addWorkout = workout => (dispatch) => {
   dispatch({
     type: ADD_WORKOUT,
     payload: workout,
+  });
+};
+
+export const editWorkout = newWorkout => (dispatch) => {
+  dispatch({
+    type: EDIT_WORKOUT,
+    payload: newWorkout,
   });
 };
 
