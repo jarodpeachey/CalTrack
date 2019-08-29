@@ -32,7 +32,13 @@ const updateArrayItem = (array, newItem) => {
   });
 };
 
-const updateUserMeals = (state, newItem) => {
+const removeArrayItem = (array, id) => {
+  const newArray = [...array];
+
+  return newArray.filter(item => item.id !== id);
+};
+
+const updateMealInUsersArray = (state, newItem) => {
   const newUsersArray = [...state.users];
 
   const updatedUsersArray = newUsersArray.map((user) => {
@@ -40,6 +46,26 @@ const updateUserMeals = (state, newItem) => {
       return {
         ...user,
         meals: updateArrayItem(user.meals, newItem),
+      };
+    } else {
+      return {
+        ...user,
+      };
+    }
+  });
+
+  return [
+    ...updatedUsersArray,
+  ];
+};
+
+const removeMealInUsersArray = (state, id) => {
+  const newUsersArray = [...state.users];
+  const updatedUsersArray = newUsersArray.map((user) => {
+    if (user.id === state.currentUser.id) {
+      return {
+        ...user,
+        meals: removeArrayItem(user.meals, id),
       };
     } else {
       return {
@@ -98,45 +124,22 @@ const userReducer = (state = initialState, action) => {
         users: newUsersMeals,
       };
     case EDIT_MEAL:
-      // const newUsersMealsEditMeal = [...state.users];
-      // newUsersMealsEditMeal.forEach((user) => {
-      //   if (user.id === state.currentUser.id) {
-      //     user.meals.forEach((meal) => {
-      //       if (meal.id === action.payload.id) {
-      //         meal.id = action.payload.id;
-      //         meal.name = action.payload.name;
-      //         meal.calories = action.payload.calories;
-      //         meal.description = action.payload.description;
-      //         meal.date = action.payload.date;
-      //       }
-      //     });
-      //   }
-      // });
-
-      // const updatedCurrentUserMealsEditMeal = {
-      //   ...state.currentUser,
-      //   meals: newCurrentUserMealsEditMode,
-      // };
-
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
           meals: updateArrayItem([...state.currentUser.meals], action.payload),
         },
-        users: updateUserMeals(state, action.payload),
+        users: updateMealInUsersArray(state, action.payload),
       };
     case DELETE_MEAL:
-      state.currentUser.meals.filter(meals => meals.id !== action.payload.id);
-      state.users.forEach((user) => {
-        if (user.id === state.currentUser.id) {
-          user.meals.filter(meals => meals.id !== action.payload.id);
-        }
-      });
       return {
         ...state,
-        users: state.users,
-        currentUser: state.currentUser,
+        currentUser: {
+          ...state.currentUser,
+          meals: removeArrayItem([...state.currentUser.meals], action.payload),
+        },
+        users: removeMealInUsersArray(state, action.payload),
       };
     case ADD_WORKOUT:
       const newCurrentUserWorkouts = [...state.currentUser.workouts];
