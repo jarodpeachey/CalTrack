@@ -63,9 +63,9 @@ class Workouts extends Component {
     if (this.props.location.state) {
       const { workoutToEdit } = this.props.location.state;
       this.setState({
-        mealName: workoutToEdit.name,
-        mealCalories: workoutToEdit.calories,
-        mealDescription: workoutToEdit.description,
+        workoutName: workoutToEdit.name,
+        workoutCalories: workoutToEdit.calories,
+        workoutDescription: workoutToEdit.description,
         mode: 'editWorkoutMode',
         workoutToEdit,
       });
