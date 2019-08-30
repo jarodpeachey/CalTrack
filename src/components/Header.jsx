@@ -5,6 +5,8 @@ import Button from '@material-ui/core/Button';
 import { Link, withRouter } from 'react-router-dom';
 import { withStyles, Popover, MenuItem, Menu } from '@material-ui/core';
 import Person from '@material-ui/icons/Person';
+import { connect } from 'react-redux';
+import { removeCurrentUser, deleteUser } from '../actions/userActions';
 
 class Header extends Component {
   static propTypes = {
@@ -21,6 +23,8 @@ class Header extends Component {
     this.redirectToSignUpPage = this.redirectToSignUpPage.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.deleteAccount = this.deleteAccount.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount () {}
@@ -50,17 +54,25 @@ class Header extends Component {
     this.setState({ anchorEl: null, open: false });
   }
 
+  logout () {
+    this.props.removeCurrentUser();
+    this.handleClose();
+    history.push('/login');
+  }
+
+  deleteAccount () {
+    this.props.deleteUser(this.props.currentUser.id);
+    this.handleClose();
+    history.push('/signup');
+  }
+
   render () {
     const { classes, pathname } = this.props;
     const { anchorEl } = this.state;
 
     return (
       <span>
-        {!this.props.currentUser &&
-        (pathname === '/' ||
-          pathname === '/signup' ||
-          pathname === '/login' ||
-          pathname === '/welcome') ? (
+        {!this.props.currentUser.id ? (
             <Wrapper>
               <div className="container py-xxs">
                 <Row>
@@ -189,8 +201,8 @@ class Header extends Component {
                         }}
                         getContentAnchorEl={null}
                       >
-                        <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-                        <MenuItem onClick={this.handleClose}>Delete Account</MenuItem>
+                        <MenuItem onClick={this.logout}>Logout</MenuItem>
+                        <MenuItem onClick={this.deleteAccount}>Delete Account</MenuItem>
                       </Menu>
                     </CustomMenu>
                   </ColumnTwo>
@@ -265,4 +277,4 @@ const IconContainer = styled.div`
   }
 `;
 
-export default withRouter(withStyles(styles)(Header));
+export default connect(null, { removeCurrentUser, deleteUser })(withRouter(withStyles(styles)(Header)));

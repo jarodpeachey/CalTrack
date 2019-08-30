@@ -10,6 +10,7 @@ import {
   ADD_WORKOUT,
   EDIT_WORKOUT,
   DELETE_WORKOUT,
+  REMOVE_CURRENT_USER,
   // UPDATE_CALORIES,
 } from '../actions/types';
 
@@ -207,7 +208,8 @@ const userReducer = (state = initialState, action) => {
     case DELETE_USER:
       return {
         ...state,
-        users: state.filter(users => users.id !== action.payload),
+        users: removeArrayItem([...state.users], action.payload),
+        currentUser: {},
       };
     case GET_CURRENT_USER:
       return {
@@ -219,6 +221,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: action.payload,
       };
+    case REMOVE_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: {},
+      }
     case ADD_MEAL:
       return {
         ...state,

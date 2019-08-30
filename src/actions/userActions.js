@@ -12,6 +12,7 @@ import {
   ADD_WORKOUT,
   EDIT_WORKOUT,
   DELETE_WORKOUT,
+  REMOVE_CURRENT_USER,
   // UPDATE_CALORIES,
 } from './types';
 // import { persistor } from '../Store';
@@ -34,6 +35,12 @@ export const setCurrentUser = user => (dispatch) => {
     payload: user,
   });
 };
+
+export const removeCurrentUser = () => (dispatch) => {
+  dispatch({
+    type: REMOVE_CURRENT_USER,
+  })
+}
 
 export const addUser = user => (dispatch) => {
   dispatch({

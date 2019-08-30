@@ -3,6 +3,7 @@ export const ADD_USER = 'ADD_USER';
 export const DELETE_USER = 'DELETE_USER';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER';
 export const ADD_MEAL = 'ADD_MEAL';
 export const EDIT_MEAL = 'EDIT_MEAL';
 export const DELETE_MEAL = 'DELETE_MEAL';

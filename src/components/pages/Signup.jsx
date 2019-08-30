@@ -72,15 +72,27 @@ class Signup extends Component {
   onFormSubmit (e) {
     e.preventDefault();
 
+    let userNameTaken = false;
+
+    this.props.users.forEach(user => {
+      if (user.username === this.state.userNameValue) {
+        userNameTaken = true;
+        return;
+      } else {
+        userNameTaken = false;
+      }
+    });
+
+    console.log(userNameTaken);
+
     if (
       this.state.nameValue &&
       this.state.userNameValue &&
-      this.state.passwordValue === this.state.confirmValue
+      this.state.passwordValue === this.state.confirmValue && !userNameTaken
     ) {
       let id = 0;
       if (this.props.users.length) {
         const sortedUsers = sortByUserId(this.props.users);
-
         id = sortedUsers[sortedUsers.length - 1].id + 1;
       }
 
@@ -106,7 +118,12 @@ class Signup extends Component {
       // this.setState({ redirect: true });
       window.location.href = '/dashboard';
     } else {
-      /* Error message component */
+      if (userNameTaken) {
+        alert('Please choose a different username');
+      } else {
+        alert('Please fill in all the fields');      
+      }
+
     }
   }
 
