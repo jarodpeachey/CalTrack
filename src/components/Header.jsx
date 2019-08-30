@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import { Link, withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Popover, MenuItem, Menu } from '@material-ui/core';
+import Person from '@material-ui/icons/Person';
 
 class Header extends Component {
   static propTypes = {
@@ -18,15 +19,22 @@ class Header extends Component {
       // user: null,
     };
     this.redirectToSignUpPage = this.redirectToSignUpPage.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount () {}
 
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate (nextProps, nextState) {
     if (this.props.pathname !== nextProps.pathname) {
       return true;
     }
-
+    if (this.state.open !== nextState.open) {
+      return true;
+    }
+    if (this.state.anchorEl != nextState.anchorEl) {
+      return true;
+    }
     return false;
   }
 
@@ -34,48 +42,58 @@ class Header extends Component {
     this.props.history.push('/signup');
   }
 
+  handleClick (event) {
+    this.setState({ anchorEl: event.currentTarget, open: true });
+  }
+
+  handleClose () {
+    this.setState({ anchorEl: null, open: false });
+  }
+
   render () {
     const { classes, pathname } = this.props;
+    const { anchorEl } = this.state;
 
     return (
       <span>
-        {!this.props.currentUser && (pathname === '/' ||
-        pathname === '/signup' ||
-        pathname === '/login' ||
-        pathname === '/welcome') ? (
-          <Wrapper>
-            <div className="container py-xxs">
-              <Row>
-                <ColumnOne>
-                  <Link to="/">
-                    <BrandName className="m-none">CalTrack</BrandName>
-                  </Link>
-                </ColumnOne>
-                <ColumnTwo>
-                  <Link to="/signup">
-                    <Button
+        {!this.props.currentUser &&
+        (pathname === '/' ||
+          pathname === '/signup' ||
+          pathname === '/login' ||
+          pathname === '/welcome') ? (
+            <Wrapper>
+              <div className="container py-xxs">
+                <Row>
+                  <ColumnOne>
+                    <Link to="/">
+                      <BrandName className="m-none">CalTrack</BrandName>
+                    </Link>
+                  </ColumnOne>
+                  <ColumnTwo>
+                    <Link to="/signup">
+                      <Button
                       color="primary"
                       variant="contained"
                       className="mx-none"
                       classes={{ root: classes.navigationButton }}
-                    >
+                      >
                       Sign Up
-                    </Button>
-                  </Link>
-                  <Link to="/login">
-                    <Button
+                      </Button>
+                    </Link>
+                    <Link to="/login">
+                      <Button
                       color="primary"
                       variant="contained"
                       className="mx-none"
                       classes={{ root: classes.navigationButton }}
-                    >
+                      >
                       Log In
-                    </Button>
-                  </Link>
-                </ColumnTwo>
-              </Row>
-            </div>
-          </Wrapper>
+                      </Button>
+                    </Link>
+                  </ColumnTwo>
+                </Row>
+              </div>
+            </Wrapper>
           ) : (
             <Wrapper>
               <div className="container py-xxs">
@@ -86,8 +104,11 @@ class Header extends Component {
                     </Link>
                   </ColumnOne>
                   <ColumnTwo>
-                    <Menu className="menu">
-                      <MenuItem className="menu-item" active={pathname === '/dashboard'}>
+                    <CustomMenu className="menu">
+                      <CustomMenuItem
+                      className="menu-item"
+                      active={pathname === '/dashboard'}
+                      >
                         <Link to="/dashboard">
                           {/* <Button
                           color="primary"
@@ -102,8 +123,11 @@ class Header extends Component {
                         Dashboard
                           {/* </Button> */}
                         </Link>
-                      </MenuItem>
-                      <MenuItem className="menu-item" active={pathname === '/meals'}>
+                      </CustomMenuItem>
+                      <CustomMenuItem
+                      className="menu-item"
+                      active={pathname === '/meals'}
+                      >
                         <Link to="/meals">
                           {/* <Button
                           color="primary"
@@ -118,8 +142,11 @@ class Header extends Component {
                         Meals
                           {/* </Button> */}
                         </Link>
-                      </MenuItem>
-                      <MenuItem className="menu-item" active={pathname === '/workouts'}>
+                      </CustomMenuItem>
+                      <CustomMenuItem
+                      className="menu-item"
+                      active={pathname === '/workouts'}
+                      >
                         <Link to="/workouts">
                           {/* <Button
                           color="primary"
@@ -134,8 +161,38 @@ class Header extends Component {
                         Workouts
                           {/* </Button> */}
                         </Link>
-                      </MenuItem>
-                    </Menu>
+                      </CustomMenuItem>
+                      <CustomMenuItem
+                        noBorderOnHover
+                        aria-controls="simple-menu"
+                        onClick={this.handleClick}
+                        aria-haspopup="true"
+                      >
+                        <IconContainer>
+                          <Person />
+                        </IconContainer>
+                      </CustomMenuItem>
+                      <Menu
+                        id="simple-menu"
+                        // keepMounted
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        elevation={1}
+                        getContentAnchorEl={null}
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "right"
+                        }}
+                        transformOrigin={{
+                          horizontal: "right",
+                        }}
+                        getContentAnchorEl={null}
+                      >
+                        <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                        <MenuItem onClick={this.handleClose}>Delete Account</MenuItem>
+                      </Menu>
+                    </CustomMenu>
                   </ColumnTwo>
                 </Row>
               </div>
@@ -153,16 +210,16 @@ const styles = () => ({
   },
 });
 
-const Menu = styled.ul`
+const CustomMenu = styled.ul`
   list-style: none;
   border-radius: 10px;
 `;
 
-const MenuItem = styled.li`
+const CustomMenuItem = styled.li`
   // padding: 12px !important;
   border-bottom: 1px solid transparent;
   :hover {
-    border-bottom: 1px solid white;
+    border-bottom: ${props => (props.noBorderOnHover ? '1px solid transparent' : '1px solid white')};
     background: #037dd0;
     transition-duration: 0.25s;
   }
@@ -198,6 +255,14 @@ const ColumnTwo = styled.div`
 
 const BrandName = styled.h1`
   color: white !important;
+`;
+
+const IconContainer = styled.div`
+  background: #077ccb;
+  padding: 5px 7px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export default withRouter(withStyles(styles)(Header));
