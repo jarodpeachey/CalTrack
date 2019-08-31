@@ -123,7 +123,6 @@ class Signup extends Component {
       } else {
         alert('Please fill in all the fields');      
       }
-
     }
   }
 

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import { Link, withRouter } from 'react-router-dom';
-import { withStyles, Popover, MenuItem, Menu } from '@material-ui/core';
+import { Link, withRouter, Redirect } from 'react-router-dom';
+import { withStyles, MenuItem, Menu } from '@material-ui/core';
 import Person from '@material-ui/icons/Person';
 import { connect } from 'react-redux';
 import { removeCurrentUser, deleteUser } from '../actions/userActions';
@@ -56,14 +56,14 @@ class Header extends Component {
 
   logout () {
     this.props.removeCurrentUser();
-    this.handleClose();
-    history.push('/login');
+
+    window.location.href = '/login';
   }
 
   deleteAccount () {
     this.props.deleteUser(this.props.currentUser.id);
-    this.handleClose();
-    history.push('/signup');
+
+    window.location.href = '/signup';
   }
 
   render () {
@@ -72,57 +72,57 @@ class Header extends Component {
 
     return (
       <span>
-        {!this.props.currentUser.id ? (
-            <Wrapper>
-              <div className="container py-xxs">
-                <Row>
-                  <ColumnOne>
-                    <Link to="/">
-                      <BrandName className="m-none">CalTrack</BrandName>
-                    </Link>
-                  </ColumnOne>
-                  <ColumnTwo>
-                    <Link to="/signup">
-                      <Button
+        {!this.props.currentUser.username ? (
+          <Wrapper>
+            <div className="container py-xxs">
+              <Row>
+                <ColumnOne>
+                  <Link to="/">
+                    <BrandName className="m-none">CalTrack</BrandName>
+                  </Link>
+                </ColumnOne>
+                <ColumnTwo>
+                  <Link to="/signup">
+                    <Button
                       color="primary"
                       variant="contained"
                       className="mx-none"
                       classes={{ root: classes.navigationButton }}
-                      >
+                    >
                       Sign Up
-                      </Button>
-                    </Link>
-                    <Link to="/login">
-                      <Button
+                    </Button>
+                  </Link>
+                  <Link to="/login">
+                    <Button
                       color="primary"
                       variant="contained"
                       className="mx-none"
                       classes={{ root: classes.navigationButton }}
-                      >
+                    >
                       Log In
-                      </Button>
-                    </Link>
-                  </ColumnTwo>
-                </Row>
-              </div>
-            </Wrapper>
-          ) : (
-            <Wrapper>
-              <div className="container py-xxs">
-                <Row>
-                  <ColumnOne>
-                    <Link to="/">
-                      <BrandName className="m-none">CalTrack</BrandName>
-                    </Link>
-                  </ColumnOne>
-                  <ColumnTwo>
-                    <CustomMenu className="menu">
-                      <CustomMenuItem
+                    </Button>
+                  </Link>
+                </ColumnTwo>
+              </Row>
+            </div>
+          </Wrapper>
+        ) : (
+          <Wrapper>
+            <div className="container py-xxs">
+              <Row>
+                <ColumnOne>
+                  <Link to="/">
+                    <BrandName className="m-none">CalTrack</BrandName>
+                  </Link>
+                </ColumnOne>
+                <ColumnTwo>
+                  <CustomMenu className="menu">
+                    <CustomMenuItem
                       className="menu-item"
                       active={pathname === '/dashboard'}
-                      >
-                        <Link to="/dashboard">
-                          {/* <Button
+                    >
+                      <Link to="/dashboard">
+                        {/* <Button
                           color="primary"
                           variant="contained"
                           className="mx-none"
@@ -133,15 +133,15 @@ class Header extends Component {
                           }
                           > */}
                         Dashboard
-                          {/* </Button> */}
-                        </Link>
-                      </CustomMenuItem>
-                      <CustomMenuItem
+                        {/* </Button> */}
+                      </Link>
+                    </CustomMenuItem>
+                    <CustomMenuItem
                       className="menu-item"
                       active={pathname === '/meals'}
-                      >
-                        <Link to="/meals">
-                          {/* <Button
+                    >
+                      <Link to="/meals">
+                        {/* <Button
                           color="primary"
                           variant="contained"
                           className="mx-none"
@@ -152,15 +152,15 @@ class Header extends Component {
                           }
                           > */}
                         Meals
-                          {/* </Button> */}
-                        </Link>
-                      </CustomMenuItem>
-                      <CustomMenuItem
+                        {/* </Button> */}
+                      </Link>
+                    </CustomMenuItem>
+                    <CustomMenuItem
                       className="menu-item"
                       active={pathname === '/workouts'}
-                      >
-                        <Link to="/workouts">
-                          {/* <Button
+                    >
+                      <Link to="/workouts">
+                        {/* <Button
                           color="primary"
                           variant="contained"
                           className="mx-none"
@@ -171,45 +171,47 @@ class Header extends Component {
                           }
                           > */}
                         Workouts
-                          {/* </Button> */}
-                        </Link>
-                      </CustomMenuItem>
-                      <CustomMenuItem
-                        noBorderOnHover
-                        aria-controls="simple-menu"
-                        onClick={this.handleClick}
-                        aria-haspopup="true"
-                      >
-                        <IconContainer>
-                          <Person />
-                        </IconContainer>
-                      </CustomMenuItem>
-                      <Menu
-                        id="simple-menu"
-                        // keepMounted
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        elevation={1}
-                        getContentAnchorEl={null}
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                          vertical: "bottom",
-                          horizontal: "right"
-                        }}
-                        transformOrigin={{
-                          horizontal: "right",
-                        }}
-                        getContentAnchorEl={null}
-                      >
-                        <MenuItem onClick={this.logout}>Logout</MenuItem>
-                        <MenuItem onClick={this.deleteAccount}>Delete Account</MenuItem>
-                      </Menu>
-                    </CustomMenu>
-                  </ColumnTwo>
-                </Row>
-              </div>
-            </Wrapper>
-          )}
+                        {/* </Button> */}
+                      </Link>
+                    </CustomMenuItem>
+                    <CustomMenuItem
+                      noBorderOnHover
+                      aria-controls="simple-menu"
+                      onClick={this.handleClick}
+                      aria-haspopup="true"
+                    >
+                      <IconContainer>
+                        <Person />
+                      </IconContainer>
+                    </CustomMenuItem>
+                    <Menu
+                      id="simple-menu"
+                      // keepMounted
+                      open={this.state.open}
+                      onClose={this.handleClose}
+                      elevation={1}
+                      getContentAnchorEl={null}
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                      }}
+                      transformOrigin={{
+                        horizontal: 'right',
+                      }}
+                      getContentAnchorEl={null}
+                    >
+                      <MenuItem onClick={this.logout}>Logout</MenuItem>
+                      <MenuItem onClick={this.deleteAccount}>
+                        Delete Account
+                      </MenuItem>
+                    </Menu>
+                  </CustomMenu>
+                </ColumnTwo>
+              </Row>
+            </div>
+          </Wrapper>
+        )}
       </span>
     );
   }
@@ -277,4 +279,7 @@ const IconContainer = styled.div`
   }
 `;
 
-export default connect(null, { removeCurrentUser, deleteUser })(withRouter(withStyles(styles)(Header)));
+export default connect(
+  null,
+  { removeCurrentUser, deleteUser },
+)(withRouter(withStyles(styles)(Header)));

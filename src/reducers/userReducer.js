@@ -225,7 +225,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: {},
-      }
+      };
     case ADD_MEAL:
       return {
         ...state,
