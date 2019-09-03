@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 class Main extends Component {
   static propTypes = {
@@ -21,21 +21,18 @@ class Main extends Component {
       <Wrapper>
         <div className="container py-none">
           <Title>CalTrack App</Title>
-          <SubTitle>CalTrack is the number one fitness and calorie tracking app on the market. Over 1,000,000 people don't lie.</SubTitle>
+          <SubTitle>CalTrack is a simple, easy app to track your calories gained and burned. Try it today!</SubTitle>
         </div>
         <ButtonContainer>
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Try It
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Learn More
-          </Button>
+          <Link to="/signup">
+            <Button
+              color="primary"
+              variant="contained"
+              className="mx-none"
+            >
+              Try It
+            </Button>
+          </Link>
         </ButtonContainer>
       </Wrapper>
     );

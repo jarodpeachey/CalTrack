@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
@@ -136,6 +136,11 @@ class Login extends Component {
               Log In
             </Button>
           </form>
+          <div className="mt-xs">
+            Don't have an account?
+            {' '}
+            <Link to="/signup">Signup</Link>
+          </div>
         </FormWrapper>
       </div>
     );

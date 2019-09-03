@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
@@ -74,10 +74,9 @@ class Signup extends Component {
 
     let userNameTaken = false;
 
-    this.props.users.forEach(user => {
+    this.props.users.forEach((user) => {
       if (user.username === this.state.userNameValue) {
         userNameTaken = true;
-        return;
       } else {
         userNameTaken = false;
       }
@@ -88,7 +87,8 @@ class Signup extends Component {
     if (
       this.state.nameValue &&
       this.state.userNameValue &&
-      this.state.passwordValue === this.state.confirmValue && !userNameTaken
+      this.state.passwordValue === this.state.confirmValue &&
+      !userNameTaken
     ) {
       let id = 0;
       if (this.props.users.length) {
@@ -117,12 +117,10 @@ class Signup extends Component {
 
       // this.setState({ redirect: true });
       window.location.href = '/dashboard';
+    } else if (userNameTaken) {
+      alert('Please choose a different username');
     } else {
-      if (userNameTaken) {
-        alert('Please choose a different username');
-      } else {
-        alert('Please fill in all the fields');      
-      }
+      alert('Please fill in all the fields');
     }
   }
 
@@ -184,6 +182,11 @@ class Signup extends Component {
               Sign Up
             </Button>
           </form>
+          <div className="mt-xs">
+            Already have an account?
+            {' '}
+            <Link to="/login">Login</Link>
+          </div>
         </FormWrapper>
       </div>
     );
