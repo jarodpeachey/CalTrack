@@ -33,10 +33,11 @@ export const sortByDate = (array) => {
 };
 
 export const limitArrayItems = (num, array) => {
-  let newArray = [];
-  for (let i = 0; i < num; i++) {
-    newArray.push(array[i]);
-  }
+  const newArray = array.forEach((item, index) => {
+    if (index <= 3) {
+      newArray.push(item);
+    }
+  });
 
   return newArray;
 };
