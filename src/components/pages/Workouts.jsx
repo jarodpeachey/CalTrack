@@ -12,7 +12,7 @@ import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
 import { addWorkout, editWorkout, deleteWorkout } from '../../actions/userActions';
-import { sortByUserId } from '../../utils/arrayFormat';
+import { sortByUserId, sortByDate } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import WorkoutItem from '../WorkoutItem';
 
@@ -58,7 +58,7 @@ class Workouts extends Component {
   }
 
   componentDidMount () {
-    this.setState({ workouts: this.props.currentUser.workouts });
+    this.setState({ workouts: sortByDate(this.props.currentUser.workouts) });
 
     if (this.props.location.state) {
       const { workoutToEdit } = this.props.location.state;
@@ -122,6 +122,7 @@ class Workouts extends Component {
       day: date.getDay(),
       date: date.getDate(),
       year: date.getFullYear(),
+      UTC: date.getTime(),
     };
 
     let id = 0;

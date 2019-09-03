@@ -12,7 +12,7 @@ import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
 import { addMeal, editMeal, deleteMeal } from '../../actions/userActions';
-import { sortByUserId } from '../../utils/arrayFormat';
+import { sortByUserId, sortByDate } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import MealItem from '../MealItem';
 
@@ -58,7 +58,7 @@ class Meals extends Component {
   }
 
   componentDidMount () {
-    this.setState({ meals: this.props.currentUser.meals });
+    this.setState({ meals: sortByDate(this.props.currentUser.meals) });
 
     if (this.props.location.state) {
       const { mealToEdit } = this.props.location.state;
@@ -122,6 +122,7 @@ class Meals extends Component {
       day: date.getDay(),
       date: date.getDate(),
       year: date.getFullYear(),
+      UTC: date.getTime(),
     };
 
     let id = 0;

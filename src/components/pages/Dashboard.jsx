@@ -9,6 +9,7 @@ import { addMeal, addWorkout } from '../../actions/userActions';
 import { Title } from '../Layout/Title';
 import WorkoutItemCompressed from '../WorkoutItemCompressed';
 import MealItemCompressed from '../MealItemCompressed';
+import { sortByDate } from '../../utils/arrayFormat';
 
 class Dashboard extends Component {
   static propTypes = {
@@ -31,8 +32,8 @@ class Dashboard extends Component {
 
   componentDidMount () {
     this.setState({
-      meals: this.props.currentUser.meals,
-      workouts: this.props.currentUser.workouts,
+      meals: sortByDate(this.props.currentUser.meals),
+      workouts: sortByDate(this.props.currentUser.workouts),
     });
   }
 
