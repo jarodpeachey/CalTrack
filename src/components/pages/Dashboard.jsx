@@ -9,7 +9,7 @@ import { addMeal, addWorkout } from '../../actions/userActions';
 import { Title } from '../Layout/Title';
 import WorkoutItemCompressed from '../WorkoutItemCompressed';
 import MealItemCompressed from '../MealItemCompressed';
-import { sortByDate } from '../../utils/arrayFormat';
+import { sortByDate, limitArrayItems } from '../../utils/arrayFormat';
 
 class Dashboard extends Component {
   static propTypes = {
@@ -32,8 +32,8 @@ class Dashboard extends Component {
 
   componentDidMount () {
     this.setState({
-      meals: sortByDate(this.props.currentUser.meals),
-      workouts: sortByDate(this.props.currentUser.workouts),
+      meals: sortByDate(limitArrayItems(3, this.props.currentUser.meals)),
+      workouts: sortByDate(limitArrayItems(3, this.props.currentUser.workouts)),
     });
   }
 
@@ -45,54 +45,6 @@ class Dashboard extends Component {
       this.setState({ workouts: this.props.currentUser.workouts });
     }
   }
-
-  shouldComponentUpdate (nextState) {
-    if (this.state.meals !== nextState.meals) {
-      return true;
-    }
-    if (this.state.workouts !== nextState.workouts) {
-      return true;
-    }
-    return false;
-  }
-
-  switchToEditMeal () {
-    
-  }
-
-  // addMealToLocalState () {
-  //   const meal = {
-  //     id: 1,
-  //     name: 'Chicken and Rice',
-  //     calories: 350,
-  //   };
-
-  //   this.props.addMeal(meal);
-
-  //   const newMealsArray = this.state.meals;
-
-  //   newMealsArray.push(meal);
-  //   this.setState({ meals: newMealsArray });
-
-  //   console.log('New meal is added: ', meal);
-  // }
-
-  // addWorkoutToLocalState () {
-  //   const workout = {
-  //     id: 1,
-  //     name: 'Pushups',
-  //     calories: -500,
-  //   };
-
-  //   this.props.addWorkout(workout);
-
-  //   const newWorkoutsArray = this.state.workouts;
-
-  //   newWorkoutsArray.push(workout);
-  //   this.setState({ workouts: newWorkoutsArray });
-
-  //   console.log('New workout is added: ', workout);
-  // }
 
   render () {
     const { classes, currentUser } = this.props;

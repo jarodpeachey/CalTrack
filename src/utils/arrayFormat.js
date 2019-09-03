@@ -30,4 +30,13 @@ export const sortByUserId = (array) => {
 
 export const sortByDate = (array) => {
   return array.sort(compareDate);
-}
+};
+
+export const limitArrayItems = (num, array) => {
+  let newArray = [];
+  for (let i = 0; i < num; i++) {
+    newArray.push(array[i]);
+  }
+
+  return newArray;
+};
