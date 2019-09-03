@@ -39,7 +39,7 @@ class Meals extends Component {
       meals: [],
       // isMobileModeOn: false,
       mealName: '',
-      mealCalories: 0,
+      mealCalories: '',
       mealDescription: '',
       mode: 'addMealMode',
       displayNoMealsNotif: true,
@@ -94,7 +94,7 @@ class Meals extends Component {
 
   handleNameChange (e) {
     this.setState({ mealName: e.target.value });
-    if (this.state.mealCalories !== 0 && e.target.value !== '') {
+    if (this.state.mealCalories !== '' && e.target.value !== '') {
       this.setState({ submitButtonActive: true });
     } else {
       this.setState({ submitButtonActive: false });
@@ -103,7 +103,7 @@ class Meals extends Component {
 
   handleCaloriesChange (e) {
     this.setState({ mealCalories: e.target.value });
-    if (this.state.mealName !== '' && e.target.value !== 0) {
+    if (this.state.mealName !== '' && e.target.value !== '') {
       this.setState({ submitButtonActive: true });
     } else {
       this.setState({ submitButtonActive: false });
@@ -139,13 +139,13 @@ class Meals extends Component {
       date,
     };
 
-    if (mealName !== '' && mealCalories !== 0) {
+    if (mealName !== '' && mealCalories !== '') {
       this.props.addMeal(meal);
       // this.props.updateCalories('add', meal.calories);
 
       this.setState({
         mealName: '',
-        mealCalories: 0,
+        mealCalories: '',
         mealDescription: '',
       });
     } else {
@@ -178,7 +178,7 @@ class Meals extends Component {
   clearEditMode () {
     this.setState({
       mealName: '',
-      mealCalories: 0,
+      mealCalories: '',
       mealDescription: '',
       mode: 'addMealMode',
       mealToEdit: {},
@@ -201,12 +201,12 @@ class Meals extends Component {
       date: mealToEdit.date,
     };
 
-    if (newMealName !== '' && newMealCalories !== 0) {
+    if (newMealName !== '' && newMealCalories !== '') {
       this.props.editMeal(newMeal);
 
       this.setState({
         mealName: '',
-        mealCalories: 0,
+        mealCalories: '',
         mealDescription: '',
         mode: 'addMealMode',
         mealToEdit: {},
@@ -223,7 +223,7 @@ class Meals extends Component {
 
     this.setState({
       mealName: '',
-      mealCalories: 0,
+      mealCalories: '',
       mealDescription: '',
       mode: 'addMealMode',
       mealToEdit: {},
@@ -441,7 +441,6 @@ const styles = theme => ({
     marginLeft: 'auto',
   },
   toolTip: {
-    // transform: 'translateY(10)',
     position: 'relative',
     bottom: 16,
   },

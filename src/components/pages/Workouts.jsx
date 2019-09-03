@@ -39,7 +39,7 @@ class Workouts extends Component {
       workouts: [],
       // isMobileModeOn: false,
       workoutName: '',
-      workoutCalories: 0,
+      workoutCalories: '',
       workoutDescription: '',
       mode: 'addWorkoutMode',
       displayNoWorkoutsNotif: true,
@@ -94,7 +94,7 @@ class Workouts extends Component {
 
   handleNameChange (e) {
     this.setState({ workoutName: e.target.value });
-    if (this.state.workoutCalories !== 0 && e.target.value !== '') {
+    if (this.state.workoutCalories !== '' && e.target.value !== '') {
       this.setState({ submitButtonActive: true });
     } else {
       this.setState({ submitButtonActive: false });
@@ -103,7 +103,7 @@ class Workouts extends Component {
 
   handleCaloriesChange (e) {
     this.setState({ workoutCalories: e.target.value });
-    if (this.state.workoutName !== '' && e.target.value !== 0) {
+    if (this.state.workoutName !== '' && e.target.value !== '') {
       this.setState({ submitButtonActive: true });
     } else {
       this.setState({ submitButtonActive: false });
@@ -139,13 +139,13 @@ class Workouts extends Component {
       date,
     };
 
-    if (workoutName !== '' && workoutCalories !== 0) {
+    if (workoutName !== '' && workoutCalories !== '') {
       this.props.addWorkout(workout);
       // this.props.updateCalories('add', workout.calories);
 
       this.setState({
         workoutName: '',
-        workoutCalories: 0,
+        workoutCalories: '',
         workoutDescription: '',
       });
     } else {
@@ -178,7 +178,7 @@ class Workouts extends Component {
   clearEditMode () {
     this.setState({
       workoutName: '',
-      workoutCalories: 0,
+      workoutCalories: '',
       workoutDescription: '',
       mode: 'addWorkoutMode',
       workoutToEdit: {},
@@ -201,12 +201,12 @@ class Workouts extends Component {
       date: workoutToEdit.date,
     };
 
-    if (newWorkoutName !== '' && newWorkoutCalories !== 0) {
+    if (newWorkoutName !== '' && newWorkoutCalories !== '') {
       this.props.editWorkout(newWorkout);
 
       this.setState({
         workoutName: '',
-        workoutCalories: 0,
+        workoutCalories: '',
         workoutDescription: '',
         mode: 'addWorkoutMode',
         workoutToEdit: {},
@@ -217,15 +217,13 @@ class Workouts extends Component {
   }
 
   deleteWorkout () {
-    const {
-      workoutToEdit,
-    } = this.state;
+    const { workoutToEdit } = this.state;
 
     this.props.deleteWorkout(workoutToEdit);
 
     this.setState({
       workoutName: '',
-      workoutCalories: 0,
+      workoutCalories: '',
       workoutDescription: '',
       mode: 'addWorkoutMode',
       workoutToEdit: {},
@@ -443,7 +441,6 @@ const styles = theme => ({
     marginLeft: 'auto',
   },
   toolTip: {
-    // transform: 'translateY(10)',
     position: 'relative',
     bottom: 16,
   },
