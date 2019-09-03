@@ -15,8 +15,6 @@ class Dashboard extends Component {
   static propTypes = {
     currentUser: PropTypes.object,
     classes: PropTypes.object,
-    // addMeal: PropTypes.func,
-    // addWorkout: PropTypes.func,
   };
 
   constructor (props) {
@@ -25,9 +23,6 @@ class Dashboard extends Component {
       workouts: [],
       meals: [],
     };
-
-    // this.addMealToLocalState = this.addMealToLocalState.bind(this);
-    // this.addWorkoutToLocalState = this.addWorkoutToLocalState.bind(this);
   }
 
   componentDidMount () {
