@@ -385,6 +385,7 @@ class Workouts extends Component {
               <ul>
                 {workouts.map(workout => (
                   <WorkoutItem
+                    key={`workoutItem-${workout.id}`}
                     workout={workout}
                     switchToEditWorkoutMode={this.switchToEditWorkoutMode}
                   />

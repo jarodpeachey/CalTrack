@@ -385,6 +385,7 @@ class Meals extends Component {
               <ul>
                 {meals.map(meal => (
                   <MealItem
+                    key={`mealItem-${meal.id}`}
                     meal={meal}
                     switchToEditMealMode={this.switchToEditMealMode}
                   />

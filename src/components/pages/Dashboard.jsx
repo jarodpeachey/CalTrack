@@ -9,7 +9,6 @@ import { addMeal, addWorkout } from '../../actions/userActions';
 import { Title } from '../Layout/Title';
 import WorkoutItemCompressed from '../WorkoutItemCompressed';
 import MealItemCompressed from '../MealItemCompressed';
-import { sortByDate, limitArrayItems } from '../../utils/arrayFormat';
 
 class Dashboard extends Component {
   static propTypes = {
@@ -94,7 +93,7 @@ class Dashboard extends Component {
                       <ul className="collection my-md">
                         {meals.map((meal, index) => {
                           if (index <= 2) {
-                            return <MealItemCompressed meal={meal} />;
+                            return <MealItemCompressed key={`mealItem-${meal.id}`} meal={meal} />;
                           }
                         })}
                       </ul>
@@ -132,7 +131,7 @@ class Dashboard extends Component {
                       <ul className="collection my-md">
                         {workouts.map((workout, index) => {
                           if (index <= 2) {
-                            return <WorkoutItemCompressed workout={workout} />;
+                            return <WorkoutItemCompressed key={`workoutItem-${workout.id}`} workout={workout} />;
                           }
                         })}
                       </ul>

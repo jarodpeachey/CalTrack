@@ -27,7 +27,3 @@ const compareDate = (a, b) => {
 export const sortByUserId = array => array.sort(compare);
 
 export const sortByDate = array => array.sort(compareDate);
-
-export const limitArrayItems = (num, array) => {
-  
-};
