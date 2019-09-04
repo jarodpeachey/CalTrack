@@ -35,32 +35,4 @@ const renderApp = () => {
   );
 };
 
-// history.listen(() => {
-//   renderApp();
-// });
-
-// window.addEventListener('locationchange', () => {
-//   console.log('Location changed to: ', window.location.pathname);
-//   renderApp();
-// });
-
-// /* These are the modifications: */
-// history.pushState = (f => function pushState () {
-//   const ret = f.apply(this, arguments);
-//   window.dispatchEvent(new Event('pushState'));
-//   window.dispatchEvent(new Event('locationchange'));
-//   return ret;
-// })(history.pushState);
-
-// history.replaceState = (f => function replaceState () {
-//   const ret = f.apply(this, arguments);
-//   window.dispatchEvent(new Event('replaceState'));
-//   window.dispatchEvent(new Event('locationchange'));
-//   return ret;
-// })(history.replaceState);
-
-// window.addEventListener('popstate', () => {
-//   window.dispatchEvent(new Event('locationchange'));
-// });
-
 renderApp();

@@ -27,8 +27,8 @@ class Dashboard extends Component {
 
   componentDidMount () {
     this.setState({
-      meals: sortByDate(limitArrayItems(3, this.props.currentUser.meals)),
-      workouts: sortByDate(limitArrayItems(3, this.props.currentUser.workouts)),
+      meals: this.props.currentUser.meals,
+      workouts: this.props.currentUser.workouts,
     });
   }
 
@@ -44,9 +44,6 @@ class Dashboard extends Component {
   render () {
     const { classes, currentUser } = this.props;
     const { meals, workouts } = this.state;
-
-    console.log('Meals: ', meals);
-    console.log('Workouts: ', workouts);
 
     return (
       <Wrapper>
@@ -95,9 +92,11 @@ class Dashboard extends Component {
                   {meals.length ? (
                     <>
                       <ul className="collection my-md">
-                        {meals.map(meal => (
-                          <MealItemCompressed meal={meal} />
-                        ))}
+                        {meals.map((meal, index) => {
+                          if (index <= 2) {
+                            return <MealItemCompressed meal={meal} />;
+                          }
+                        })}
                       </ul>
                       <Link to="/meals">
                         <Button
@@ -131,9 +130,11 @@ class Dashboard extends Component {
                   {workouts.length ? (
                     <>
                       <ul className="collection my-md">
-                        {workouts.map(workout => (
-                          <WorkoutItemCompressed workout={workout} />
-                        ))}
+                        {workouts.map((workout, index) => {
+                          if (index <= 2) {
+                            return <WorkoutItemCompressed workout={workout} />;
+                          }
+                        })}
                       </ul>
                       <Link to="/workouts">
                         <Button

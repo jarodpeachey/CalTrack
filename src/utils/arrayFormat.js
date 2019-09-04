@@ -24,20 +24,10 @@ const compareDate = (a, b) => {
   return comparison;
 };
 
-export const sortByUserId = (array) => {
-  return array.sort(compare);
-};
+export const sortByUserId = array => array.sort(compare);
 
-export const sortByDate = (array) => {
-  return array.sort(compareDate);
-};
+export const sortByDate = array => array.sort(compareDate);
 
 export const limitArrayItems = (num, array) => {
-  const newArray = array.forEach((item, index) => {
-    if (index <= 3) {
-      newArray.push(item);
-    }
-  });
-
-  return newArray;
+  
 };

@@ -40,9 +40,6 @@ class Signup extends Component {
       passwordValue: 'Password',
       confirmValue: 'Confirm',
     });
-
-    console.log('Users: ', this.props.users);
-    console.log('Current user: ', this.props.currentUser);
   }
 
   shouldComponentUpdate () {
@@ -50,22 +47,18 @@ class Signup extends Component {
   }
 
   onNameInputChange (e) {
-    console.log('Name Input Change');
     this.setState({ nameValue: e.target.value });
   }
 
   onUsernameInputChange (e) {
-    console.log('Username Input Change');
     this.setState({ userNameValue: e.target.value });
   }
 
   onPasswordInputChange (e) {
-    console.log('Password Input Change');
     this.setState({ passwordValue: e.target.value });
   }
 
   onConfirmInputChange (e) {
-    console.log('Confirm Input Change');
     this.setState({ confirmValue: e.target.value });
   }
 
@@ -81,8 +74,6 @@ class Signup extends Component {
         userNameTaken = false;
       }
     });
-
-    console.log(userNameTaken);
 
     if (
       this.state.nameValue &&
@@ -109,8 +100,6 @@ class Signup extends Component {
           netCalories: 0,
         },
       };
-
-      console.log('Adding user: ', user);
 
       this.props.addUser(user);
       this.props.setCurrentUser(user);

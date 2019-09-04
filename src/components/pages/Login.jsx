@@ -53,19 +53,15 @@ class Login extends Component {
   }
 
   onUsernameInputChange (e) {
-    console.log('Username Input Change');
     this.setState({ userNameValue: e.target.value });
   }
 
   onPasswordInputChange (e) {
-    console.log('Password Input Change');
     this.setState({ passwordValue: e.target.value });
   }
 
   onFormSubmit (e) {
     e.preventDefault();
-
-    console.log('Form submit');
 
     const usersWithSameUsername = this.props.users.filter(
       user => user.username === this.state.userNameValue,
@@ -88,7 +84,6 @@ class Login extends Component {
         user.username === this.state.userNameValue &&
         user.password === this.state.passwordValue
       ) {
-        console.log('Match');
         this.props.setCurrentUser(user);
         window.location.href = '/dashboard';
       }
