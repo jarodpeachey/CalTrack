@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { ConnectedRouter } from 'connected-react-router';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faHamburger, faThLarge, faDumbbell } from '@fortawesome/free-solid-svg-icons';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from './mui-theme';
@@ -16,6 +18,9 @@ import Dashboard from './components/pages/Dashboard';
 import Meals from './components/pages/Meals';
 import Workouts from './components/pages/Workouts';
 import { getUsers, getCurrentUser } from './actions/userActions';
+import FooterBar from './components/FooterBar';
+
+library.add(faHamburger, faThLarge, faDumbbell);
 
 class Application extends Component {
   static propTypes = {
@@ -28,32 +33,39 @@ class Application extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showFooterBar: false,
+    };
+
+    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount () {
     this.props.getUsers();
     this.props.getCurrentUser();
+
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
   }
 
-  // componentWillReceiveProps (nextProps) {
-  //   this.setState({ users: nextProps.users, currentUser: nextProps.currentUser });
-  // }
+  shouldComponentUpdate (nextState) {
+    if (this.state.showFooterBar !== nextState.showFooterBar) return true;
+    return false;
+  }
 
-  // shouldComponentUpdate (nextProps) {
-  //   if (this.props.users !== nextProps.users) {
-  //     return true;
-  //   }
-  //   if (this.props.currentUser !== nextProps.currentUser) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  handleResize () {
+    if (window.innerWidth < 569) {
+      this.setState({ showFooterBar: true });
+    } else {
+      this.setState({ showFooterBar: false });
+    }
+  }
 
   render () {
     const { users, currentUser } = this.props;
     console.log('Users: ', users);
     console.log('Current user: ', currentUser);
+    console.log('showFooterBar: ', this.state.showFooterBar);
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -69,11 +81,19 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
                     <Main {...props} users={users} currentUser={currentUser} />
                   </Wrapper>
+                  {this.state.showFooterBar && (
+                    <FooterBar
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  )}
                 </>
               )}
             />
@@ -87,11 +107,19 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
                     <Main {...props} users={users} currentUser={currentUser} />
                   </Wrapper>
+                  {this.state.showFooterBar && (
+                    <FooterBar
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  )}
                 </>
               )}
             />
@@ -145,6 +173,7 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
@@ -154,6 +183,13 @@ class Application extends Component {
                       currentUser={currentUser}
                     />
                   </Wrapper>
+                  {this.state.showFooterBar && (
+                    <FooterBar
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  )}
                 </>
               )}
             />
@@ -167,11 +203,19 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
                     <Meals {...props} users={users} currentUser={currentUser} />
                   </Wrapper>
+                  {this.state.showFooterBar && (
+                    <FooterBar
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  )}
                 </>
               )}
             />
@@ -185,6 +229,7 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
@@ -194,6 +239,13 @@ class Application extends Component {
                       currentUser={currentUser}
                     />
                   </Wrapper>
+                  {this.state.showFooterBar && (
+                    <FooterBar
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  )}
                 </>
               )}
             />

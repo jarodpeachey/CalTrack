@@ -92,23 +92,23 @@ class Dashboard extends Component {
                     <Title fullWidth className="title mb-none">
                       Calories
                     </Title>
-                    <div className="mt-sm row collection">
+                    <div className="mt-sm row mobile-lg collection">
                       <div className="col col-4">
                         <CollectionItem>
-                          Calories Gained
-                          <div className="float-right">{calories.net}</div>
+                          <CalorieNumber>{calories.gained}</CalorieNumber>
+                          <CalorieTitle>Calories Gained</CalorieTitle>
                         </CollectionItem>
                       </div>
                       <div className="col col-4">
                         <CollectionItem>
-                          Calories Lost
-                          <div className="float-right">{calories.net}</div>
+                          <CalorieNumber>{calories.lost}</CalorieNumber>
+                          <CalorieTitle>Calories Lost</CalorieTitle>
                         </CollectionItem>
                       </div>
                       <div className="col col-4">
                         <CollectionItem>
-                          Net Calories
-                          <div className="float-right">{calories.net}</div>
+                          <CalorieNumber>{calories.net}</CalorieNumber>
+                          <CalorieTitle>Net Calories</CalorieTitle>
                         </CollectionItem>
                       </div>
                     </div>
@@ -242,6 +242,44 @@ const CollectionItem = styled.div`
   border-radius: 0px !important;
   margin: 0 !important;
   padding: 16px !important;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  @media(min-width: 540px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-top: 36px !important;
+    padding-bottom: 36px !important;
+    height: 100%;
+  }
+`;
+
+const CalorieTitle = styled.h4`
+  text-align: left;
+  margin: 0;
+  font-weight: bold;
+  margin-right: auto;
+  font-size: 16px;
+  @media (min-width: 540px) {
+    text-align: center;
+    font-weight: normal;
+    font-size: 14px;
+    margin: 0 !important;
+  }
+`;
+
+const CalorieNumber = styled.div`
+  margin-left: auto;
+  font-size: 16px;
+  @media (min-width: 540px) {
+    text-align: center;
+    font-size: 38px;
+    font-weight: normal;
+    margin-left: 0;
+    margin-bottom: 12px;
+  }
 `;
 
 export default connect(
