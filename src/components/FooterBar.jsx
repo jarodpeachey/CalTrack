@@ -58,9 +58,9 @@ class FooterBar extends Component {
         showLabels
         classes={{ root: classes.root }}
       >
-        <BottomNavigationAction classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="th-large" />} />
-        <BottomNavigationAction classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="hamburger" />} />
-        <BottomNavigationAction classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="dumbbell" />} />
+        <BottomNavigationAction title="Dashboard" classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="th-large" />} />
+        <BottomNavigationAction title="Meals"  classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="hamburger" />} />
+        <BottomNavigationAction title="Workous"  classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="dumbbell" />} />
       </BottomNavigation>
     );
   }
@@ -70,14 +70,15 @@ const styles = theme => ({
   root: {
     position: 'absolute',
     bottom: 0,
-    background: [theme.palette.primary.main],
+    // background: [theme.palette.primary.main],
     width: '100%',
-    boxShadow: '0 -20px 40px -25px #666',
+    // boxShadow: '0 -10px 20px -12.5px #ccc',
+    borderTop: '2px solid #ddd',
     zIndex: '999 !important',
     padding: '0',
   },
   actionItem: {
-    color: 'white !important',
+    // color: 'white !important',
     fontSize: 20,
   },
 });
