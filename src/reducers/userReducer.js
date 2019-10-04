@@ -25,55 +25,55 @@ const updateCalories = (state, type, actionPayload) => {
   const currentUserMeals = [...state.currentUser.meals];
   const currentUserWorkouts = [...state.currentUser.workouts];
 
-  let { caloriesGained, caloriesBurned, netCalories } = currentUserCalories;
+  let { gained, lost, net } = currentUserCalories;
 
   switch (type) {
     case 'addMeal':
-      caloriesGained += actionPayload.calories;
+      gained += actionPayload.calories;
       break;
     case 'editMeal':
       currentUserMeals.forEach((meal) => {
         if (meal.id === actionPayload.id) {
-          caloriesGained -= meal.calories;
+          gained -= meal.calories;
         }
       });
-      caloriesGained += actionPayload.calories;
+      gained += actionPayload.calories;
       break;
     case 'deleteMeal':
       currentUserMeals.forEach((meal) => {
         if (meal.id === actionPayload.id) {
-          caloriesGained -= meal.calories;
+          gained -= meal.calories;
         }
       });
       break;
     case 'addWorkout':
-      caloriesBurned += actionPayload.calories;
+      lost += actionPayload.calories;
       break;
     case 'editWorkout':
       currentUserWorkouts.forEach((workout) => {
         if (workout.id === actionPayload.id) {
-          caloriesBurned -= workout.calories;
+          lost -= workout.calories;
         }
       });
-      caloriesBurned += actionPayload.calories;
+      lost += actionPayload.calories;
       break;
     case 'deleteWorkout':
       currentUserWorkouts.forEach((workout) => {
         if (workout.id === actionPayload.id) {
-          caloriesBurned -= workout.calories;
+          lost -= workout.calories;
         }
       });
       break;
     default:
-      caloriesGained = caloriesGained;
+      gained = gained;
   }
 
-  netCalories = caloriesGained - caloriesBurned;
+  net = gained - lost;
 
   currentUserCalories = {
-    netCalories,
-    caloriesGained,
-    caloriesBurned,
+    net,
+    gained,
+    lost,
   };
 
   return {

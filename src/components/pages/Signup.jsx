@@ -95,9 +95,9 @@ class Signup extends Component {
         meals: [],
         workouts: [],
         calories: {
-          caloriesBurned: 0,
-          caloriesGained: 0,
-          netCalories: 0,
+          lost: 0,
+          gained: 0,
+          net: 0,
         },
       };
 

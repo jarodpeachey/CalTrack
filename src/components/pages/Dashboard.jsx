@@ -28,6 +28,7 @@ class Dashboard extends Component {
     this.setState({
       meals: this.props.currentUser.meals,
       workouts: this.props.currentUser.workouts,
+      calories: this.props.currentUser.calories,
     });
   }
 
@@ -42,7 +43,7 @@ class Dashboard extends Component {
 
   render () {
     const { classes, currentUser } = this.props;
-    const { meals, workouts } = this.state;
+    const { meals, workouts, calories } = this.state;
 
     return (
       <Wrapper>
@@ -85,15 +86,51 @@ class Dashboard extends Component {
             </Card>
           ) : (
             <div className="row">
+              {calories && (
+                <div className="col col-12">
+                  <Card className="card border px-sm pt-lg pb-xxs mb-sm no-shadow position-relative">
+                    <Title fullWidth className="title mb-none">
+                      Calories
+                    </Title>
+                    <div className="mt-sm row collection">
+                      <div className="col col-4">
+                        <CollectionItem>
+                          Calories Gained
+                          <div className="float-right">{calories.net}</div>
+                        </CollectionItem>
+                      </div>
+                      <div className="col col-4">
+                        <CollectionItem>
+                          Calories Lost
+                          <div className="float-right">{calories.net}</div>
+                        </CollectionItem>
+                      </div>
+                      <div className="col col-4">
+                        <CollectionItem>
+                          Net Calories
+                          <div className="float-right">{calories.net}</div>
+                        </CollectionItem>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              )}
               <div className="col col-6 py-none">
                 <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                  <Title fullWidth className="title mb-none">Meals</Title>
+                  <Title fullWidth className="title mb-none">
+                    Meals
+                  </Title>
                   {meals.length ? (
                     <>
                       <ul className="collection my-md">
                         {meals.map((meal, index) => {
                           if (index <= 2) {
-                            return <MealItemCompressed key={`mealItem-${meal.id}`} meal={meal} />;
+                            return (
+                              <MealItemCompressed
+                                key={`mealItem-${meal.id}`}
+                                meal={meal}
+                              />
+                            );
                           }
                         })}
                       </ul>
@@ -125,13 +162,20 @@ class Dashboard extends Component {
               </div>
               <div className="col col-6 py-none">
                 <Card className="card border px-sm pt-lg pb-md mb-sm no-shadow position-relative">
-                  <Title fullWidth className="title mb-none">Workouts</Title>
+                  <Title fullWidth className="title mb-none">
+                    Workouts
+                  </Title>
                   {workouts.length ? (
                     <>
                       <ul className="collection my-md">
                         {workouts.map((workout, index) => {
                           if (index <= 2) {
-                            return <WorkoutItemCompressed key={`workoutItem-${workout.id}`} workout={workout} />;
+                            return (
+                              <WorkoutItemCompressed
+                                key={`workoutItem-${workout.id}`}
+                                workout={workout}
+                              />
+                            );
                           }
                         })}
                       </ul>
@@ -191,6 +235,13 @@ const Wrapper = styled.div`
 const Card = styled.div`
   background: white;
   position: relative;
+`;
+
+const CollectionItem = styled.div`
+  background: ${({ theme }) => theme.colors.gray1} !important;
+  border-radius: 0px !important;
+  margin: 0 !important;
+  padding: 16px !important;
 `;
 
 export default connect(
