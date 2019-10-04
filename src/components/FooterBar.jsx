@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -58,9 +57,24 @@ class FooterBar extends Component {
         showLabels
         classes={{ root: classes.root }}
       >
-        <BottomNavigationAction title="Dashboard" classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="th-large" />} />
-        <BottomNavigationAction title="Meals"  classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="hamburger" />} />
-        <BottomNavigationAction title="Workous"  classes={{ root: classes.actionItem }} showLabel icon={<FontAwesomeIcon icon="dumbbell" />} />
+        <BottomNavigationAction
+          title="Dashboard"
+          classes={{ root: classes.actionItem }}
+          showLabel
+          icon={<FontAwesomeIcon icon="th-large" />}
+        />
+        <BottomNavigationAction
+          title="Meals"
+          classes={{ root: classes.actionItem }}
+          showLabel
+          icon={<FontAwesomeIcon icon="hamburger" />}
+        />
+        <BottomNavigationAction
+          title="Workous"
+          classes={{ root: classes.actionItem }}
+          showLabel
+          icon={<FontAwesomeIcon icon="dumbbell" />}
+        />
       </BottomNavigation>
     );
   }
