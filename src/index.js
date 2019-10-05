@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import Application from './Application';
 import { persistor, store } from './Store';
+import './style.css';
 
 const history = createBrowserHistory({
   // forceRefresh: true,
