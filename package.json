@@ -9,7 +9,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && echo '/* /index.html  200' | cat >build/_redirects",
     "start": "webpack --mode development && webpack-dev-server --mode development --open",
     "heroku-postbuild": "webpack -p",
     "test": "npm run eslint"
