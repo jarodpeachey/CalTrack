@@ -1,12 +1,6 @@
 /* LAYOUT AND GRID SYSTEM
 --------------------------------------------------------------- */
 
-*::before,
-*::after,
-* {
-  box-sizing: inherit;
-}
-
 .bg-primary {
   background: var(--primary);
   color: white !important;
@@ -40,17 +34,15 @@ body {
   margin: 0;
   padding: 0;
   overflow-y: auto;
+  height: 100% !important;
+  background: #f7f7f7;
 }
 
 html {
   box-sizing: border-box;
   overflow: auto;
   height: 100% !important;
-}
-
-body {
-  height: 100% !important;
-  background: #f7f7f7;
+  box-sizing: inherit;
 }
 
 #app {
