@@ -113,65 +113,67 @@ class Header extends Component {
                 </ColumnOne>
                 <ColumnTwo>
                   <CustomMenu className="menu">
-                    <>
-                      <CustomMenuItem
-                        className="menu-item hidden-below-mobile-lg"
-                        active={pathname === '/dashboard'}
-                      >
-                        <Link to="/dashboard">
-                          {/* <Button
-                            color="primary"
-                            variant="contained"
-                            className="mx-none"
-                            classes={
-                              pathname === '/meals' ?
-                                { root: classes.navigationButtonActive } :
-                                { root: classes.navigationButton }
-                            }
-                            > */}
-                          Dashboard
-                          {/* </Button> */}
-                        </Link>
-                      </CustomMenuItem>
-                      <CustomMenuItem
-                        className="menu-item hidden-below-mobile-lg"
-                        active={pathname === '/meals'}
-                      >
-                        <Link to="/meals">
-                          {/* <Button
-                            color="primary"
-                            variant="contained"
-                            className="mx-none"
-                            classes={
-                              pathname === '/meals' ?
-                                { root: classes.navigationButtonActive } :
-                                { root: classes.navigationButton }
-                            }
-                            > */}
-                          Meals
-                          {/* </Button> */}
-                        </Link>
-                      </CustomMenuItem>
-                      <CustomMenuItem
-                        className="menu-item hidden-below-mobile-lg"
-                        active={pathname === '/workouts'}
-                      >
-                        <Link to="/workouts">
-                          {/* <Button
-                            color="primary"
-                            variant="contained"
-                            className="mx-none"
-                            classes={
-                              pathname === '/workouts' ?
-                                { root: classes.navigationButtonActive } :
-                                { root: classes.navigationButton }
-                            }
-                            > */}
-                          Workouts
-                          {/* </Button> */}
-                        </Link>
-                      </CustomMenuItem>
-                    </>
+                    {!this.props.showFooterBar && (
+                      <>
+                        <CustomMenuItem
+                          className="menu-item"
+                          active={pathname === '/dashboard'}
+                        >
+                          <Link to="/dashboard">
+                            {/* <Button
+                              color="primary"
+                              variant="contained"
+                              className="mx-none"
+                              classes={
+                                pathname === '/meals' ?
+                                  { root: classes.navigationButtonActive } :
+                                  { root: classes.navigationButton }
+                              }
+                              > */}
+                            Dashboard
+                            {/* </Button> */}
+                          </Link>
+                        </CustomMenuItem>
+                        <CustomMenuItem
+                          className="menu-item"
+                          active={pathname === '/meals'}
+                        >
+                          <Link to="/meals">
+                            {/* <Button
+                              color="primary"
+                              variant="contained"
+                              className="mx-none"
+                              classes={
+                                pathname === '/meals' ?
+                                  { root: classes.navigationButtonActive } :
+                                  { root: classes.navigationButton }
+                              }
+                              > */}
+                            Meals
+                            {/* </Button> */}
+                          </Link>
+                        </CustomMenuItem>
+                        <CustomMenuItem
+                          className="menu-item"
+                          active={pathname === '/workouts'}
+                        >
+                          <Link to="/workouts">
+                            {/* <Button
+                              color="primary"
+                              variant="contained"
+                              className="mx-none"
+                              classes={
+                                pathname === '/workouts' ?
+                                  { root: classes.navigationButtonActive } :
+                                  { root: classes.navigationButton }
+                              }
+                              > */}
+                            Workouts
+                            {/* </Button> */}
+                          </Link>
+                        </CustomMenuItem>
+                      </>
+                    )}
                     <CustomMenuItem
                       noBorderOnHover
                       aria-controls="simple-menu"

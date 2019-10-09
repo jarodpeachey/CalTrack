@@ -56,7 +56,6 @@ class FooterBar extends Component {
         onChange={this.handleChange}
         showLabels
         classes={{ root: classes.root }}
-        className="hidden-above-mobile-lg"
       >
         <BottomNavigationAction
           title="Dashboard"
