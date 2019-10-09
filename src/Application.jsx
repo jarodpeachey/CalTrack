@@ -315,7 +315,7 @@ class Application extends Component {
 const Wrapper = styled.div`
   // background: ${({ theme }) => theme.colors.gray1};
   height: 100% !important;
-  padding: 0 0 24px 0;
+  padding: 0 0 48px 0;
 `;
 
 const mapStateToProps = state => ({
