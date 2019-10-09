@@ -19,7 +19,6 @@ import Meals from './components/pages/Meals';
 import Workouts from './components/pages/Workouts';
 import { getUsers, getCurrentUser } from './actions/userActions';
 import FooterBar from './components/FooterBar';
-import {isNullOrUndefined} from 'util';
 
 library.add(faHamburger, faThLarge, faDumbbell);
 
@@ -35,32 +34,18 @@ class Application extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      showFooterBar: false,
+      showFooterBar: true,
     };
-
-    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount () {
     this.props.getUsers();
     this.props.getCurrentUser();
-
-    this.handleResize();
-    window.addEventListener('resize', this.handleResize);
   }
 
   shouldComponentUpdate (nextState) {
     if (this.state.showFooterBar !== nextState.showFooterBar) return true;
     return false;
-  }
-
-  handleResize () {
-    console.log(this.state.currentUser);
-    if (window.innerWidth < 569 && !this.state.currentUser) {
-      this.setState({ showFooterBar: true });
-    } else {
-      this.setState({ showFooterBar: false });
-    }
   }
 
   render () {
