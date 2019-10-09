@@ -5,7 +5,11 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { ConnectedRouter } from 'connected-react-router';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faHamburger, faThLarge, faDumbbell } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHamburger,
+  faThLarge,
+  faDumbbell,
+} from '@fortawesome/free-solid-svg-icons';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from './mui-theme';
@@ -75,7 +79,7 @@ class Application extends Component {
               exact
               path="/"
               render={props => (
-                <Wrapper>
+                <>
                   {
                     <Header
                       {...props}
@@ -84,24 +88,26 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Main {...props} users={users} currentUser={currentUser} />
-                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
-                    null
-                  ) : (
-                    <FooterBar
+                  <Wrapper>
+                    <Main {...props} users={users} currentUser={currentUser} />
+                  </Wrapper>
+                  {!this.state.showFooterBar ||
+                  (Object.keys(currentUser).length === 0 &&
+                    currentUser.constructor === Object) ? null : (
+                      <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                    />
-                  )}
-                </Wrapper>
+                      />
+                    )}
+                </>
               )}
             />
             <Route
               exact
               path="/welcome"
               render={props => (
-                <Wrapper>
+                <>
                   {
                     <Header
                       {...props}
@@ -110,24 +116,26 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Main {...props} users={users} currentUser={currentUser} />
-                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
-                    null
-                  ) : (
-                    <FooterBar
+                  <Wrapper>
+                    <Main {...props} users={users} currentUser={currentUser} />
+                  </Wrapper>
+                  {!this.state.showFooterBar ||
+                  (Object.keys(currentUser).length === 0 &&
+                    currentUser.constructor === Object) ? null : (
+                      <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                    />
-                  )}
-                </Wrapper>
+                      />
+                    )}
+                </>
               )}
             />
             <Route
               exact
               path="/login"
               render={props => (
-                <Wrapper>
+                <>
                   {
                     <Header
                       {...props}
@@ -136,24 +144,26 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Login {...props} users={users} currentUser={currentUser} />
-                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
-                    null
-                  ) : (
-                    <FooterBar
+                  <Wrapper>
+                    <Login {...props} users={users} currentUser={currentUser} />
+                  </Wrapper>
+                  {!this.state.showFooterBar ||
+                  (Object.keys(currentUser).length === 0 &&
+                    currentUser.constructor === Object) ? null : (
+                      <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                    />
-                  )}
-                </Wrapper>
+                      />
+                    )}
+                </>
               )}
             />
             <Route
               exact
               path="/signup"
               render={props => (
-                <Wrapper>
+                <>
                   {
                     <Header
                       {...props}
@@ -162,24 +172,30 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Signup {...props} users={users} currentUser={currentUser} />
-                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
-                    null
-                  ) : (
-                    <FooterBar
+                  <Wrapper>
+                    <Signup
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </Wrapper>
+                  {!this.state.showFooterBar ||
+                  (Object.keys(currentUser).length === 0 &&
+                    currentUser.constructor === Object) ? null : (
+                      <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                    />
-                  )}
-                </Wrapper>
+                      />
+                    )}
+                </>
               )}
             />
             <Route
               exact
               path="/dashboard"
               render={props => (
-                <Wrapper>
+                <>
                   {
                     <Header
                       {...props}
@@ -188,24 +204,30 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Dashboard {...props} users={users} currentUser={currentUser} />
-                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
-                    null
-                  ) : (
-                    <FooterBar
+                  <Wrapper>
+                    <Dashboard
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </Wrapper>
+                  {!this.state.showFooterBar ||
+                  (Object.keys(currentUser).length === 0 &&
+                    currentUser.constructor === Object) ? null : (
+                      <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                    />
-                  )}
-                </Wrapper>
+                      />
+                    )}
+                </>
               )}
             />
             <Route
               exact
               path="/meals"
               render={props => (
-                <Wrapper>
+                <>
                   {
                     <Header
                       {...props}
@@ -214,24 +236,26 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Meals {...props} users={users} currentUser={currentUser} />
-                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
-                    null
-                  ) : (
-                    <FooterBar
+                  <Wrapper>
+                    <Meals {...props} users={users} currentUser={currentUser} />
+                  </Wrapper>
+                  {!this.state.showFooterBar ||
+                  (Object.keys(currentUser).length === 0 &&
+                    currentUser.constructor === Object) ? null : (
+                      <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                    />
-                  )}
-                </Wrapper>
+                      />
+                    )}
+                </>
               )}
             />
             <Route
               exact
               path="/workouts"
               render={props => (
-                <Wrapper>
+                <>
                   {
                     <Header
                       {...props}
@@ -240,17 +264,23 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Workouts {...props} users={users} currentUser={currentUser} />
-                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
-                    null
-                  ) : (
-                    <FooterBar
+                  <Wrapper>
+                    <Workouts
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </Wrapper>
+                  {!this.state.showFooterBar ||
+                  (Object.keys(currentUser).length === 0 &&
+                    currentUser.constructor === Object) ? null : (
+                      <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                    />
-                  )}
-                </Wrapper>
+                      />
+                    )}
+                </>
               )}
             />
           </Switch>
@@ -263,7 +293,7 @@ class Application extends Component {
 const Wrapper = styled.div`
   // background: ${({ theme }) => theme.colors.gray1};
   height: 100% !important;
-  padding: 68px 0;
+  padding: 60px 0 120px;
 `;
 
 const mapStateToProps = state => ({

@@ -76,8 +76,8 @@ class Signup extends Component {
     });
 
     if (
-      this.state.nameValue &&
-      this.state.userNameValue &&
+      this.state.nameValue !== '' &&
+      this.state.userNameValue !== '' &&
       this.state.passwordValue === this.state.confirmValue &&
       !userNameTaken
     ) {
