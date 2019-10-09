@@ -36,6 +36,8 @@ body {
   overflow-y: auto;
   height: 100% !important;
   background: #f7f7f7;
+  position: fixed;
+  overflow: hidden;
 }
 
 html {
@@ -43,10 +45,15 @@ html {
   overflow: auto;
   height: 100% !important;
   box-sizing: inherit;
+  position: fixed;
+  overflow: hidden;
 }
 
 #app {
   height: 100% !important;
+  width: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 :root {
