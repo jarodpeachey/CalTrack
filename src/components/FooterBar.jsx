@@ -83,7 +83,7 @@ class FooterBar extends Component {
 
 const styles = theme => ({
   root: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 0,
     // background: [theme.palette.primary.main],
     width: '100%',
