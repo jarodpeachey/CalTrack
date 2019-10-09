@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { Card, CircularProgress } from '@material-ui/core';
 
 class PageNotFound extends Component {
@@ -32,6 +33,7 @@ class PageNotFound extends Component {
           <div className="container">
             <div className="center-text">
               <Card className="card border no-shadow px-sm py-sm mb-sm">
+                <Warning>404</Warning>
                 <h3>
                   {"We're sorry, we can't find this page."}
                 </h3>
@@ -47,5 +49,9 @@ class PageNotFound extends Component {
     );
   }
 }
+
+const Warning = styled.h1`
+  font-size: 56px;
+`;
 
 export default PageNotFound;
