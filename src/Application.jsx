@@ -23,6 +23,7 @@ import Meals from './components/pages/Meals';
 import Workouts from './components/pages/Workouts';
 import { getUsers, getCurrentUser } from './actions/userActions';
 import FooterBar from './components/FooterBar';
+import PageNotFound from './components/pages/PageNotFound';
 
 library.add(faHamburger, faThLarge, faDumbbell);
 
@@ -280,6 +281,27 @@ class Application extends Component {
                       currentUser={currentUser}
                       />
                     )}
+                </>
+              )}
+            />
+            <Route
+              render={props => (
+                <>
+                  {
+                    <Header
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                      showFooterBar={this.state.showFooterBar}
+                    />
+                  }
+                  <Wrapper>
+                    <PageNotFound
+                      {...props}
+                      users={users}
+                      currentUser={currentUser}
+                    />
+                  </Wrapper>
                 </>
               )}
             />
