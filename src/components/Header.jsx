@@ -238,8 +238,6 @@ const CustomMenuItem = styled.li`
 `;
 
 const Wrapper = styled.div`
-  position: absolute;
-  top: 0;
   background: ${({ theme }) => theme.colors.primary} !important;
   color: white !important;
   width: 100%;
