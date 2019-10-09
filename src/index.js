@@ -23,7 +23,6 @@ const renderApp = () => {
               render={props => (
                 <Application
                   {...props}
-                  testProp="TEST"
                 />
               )}
             />

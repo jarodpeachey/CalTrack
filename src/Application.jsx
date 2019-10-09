@@ -19,6 +19,7 @@ import Meals from './components/pages/Meals';
 import Workouts from './components/pages/Workouts';
 import { getUsers, getCurrentUser } from './actions/userActions';
 import FooterBar from './components/FooterBar';
+import {isNullOrUndefined} from 'util';
 
 library.add(faHamburger, faThLarge, faDumbbell);
 
@@ -54,7 +55,8 @@ class Application extends Component {
   }
 
   handleResize () {
-    if (window.innerWidth < 569) {
+    console.log(this.state.currentUser);
+    if (window.innerWidth < 569 && !this.state.currentUser) {
       this.setState({ showFooterBar: true });
     } else {
       this.setState({ showFooterBar: false });
@@ -75,7 +77,7 @@ class Application extends Component {
               exact
               path="/"
               render={props => (
-                <>
+                <Wrapper>
                   {
                     <Header
                       {...props}
@@ -84,9 +86,7 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Wrapper>
-                    <Main {...props} users={users} currentUser={currentUser} />
-                  </Wrapper>
+                  <Main {...props} users={users} currentUser={currentUser} />
                   {this.state.showFooterBar && (
                     <FooterBar
                       {...props}
@@ -94,14 +94,14 @@ class Application extends Component {
                       currentUser={currentUser}
                     />
                   )}
-                </>
+                </Wrapper>
               )}
             />
             <Route
               exact
               path="/welcome"
               render={props => (
-                <>
+                <Wrapper>
                   {
                     <Header
                       {...props}
@@ -110,9 +110,7 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Wrapper>
-                    <Main {...props} users={users} currentUser={currentUser} />
-                  </Wrapper>
+                  <Main {...props} users={users} currentUser={currentUser} />
                   {this.state.showFooterBar && (
                     <FooterBar
                       {...props}
@@ -120,54 +118,62 @@ class Application extends Component {
                       currentUser={currentUser}
                     />
                   )}
-                </>
+                </Wrapper>
               )}
             />
             <Route
               exact
               path="/login"
               render={props => (
-                <>
+                <Wrapper>
                   {
                     <Header
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Wrapper>
-                    <Login {...props} users={users} currentUser={currentUser} />
-                  </Wrapper>
-                </>
+                  <Login {...props} users={users} currentUser={currentUser} />
+                  {this.state.showFooterBar && (
+                    <FooterBar
+                      {...props}
+                      pathname={location.pathname}
+                      currentUser={currentUser}
+                    />
+                  )}
+                </Wrapper>
               )}
             />
             <Route
               exact
               path="/signup"
               render={props => (
-                <>
+                <Wrapper>
                   {
                     <Header
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Wrapper>
-                    <Signup
+                  <Signup {...props} users={users} currentUser={currentUser} />
+                  {this.state.showFooterBar && (
+                    <FooterBar
                       {...props}
-                      users={users}
+                      pathname={location.pathname}
                       currentUser={currentUser}
                     />
-                  </Wrapper>
-                </>
+                  )}
+                </Wrapper>
               )}
             />
             <Route
               exact
               path="/dashboard"
               render={props => (
-                <>
+                <Wrapper>
                   {
                     <Header
                       {...props}
@@ -176,13 +182,7 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Wrapper>
-                    <Dashboard
-                      {...props}
-                      users={users}
-                      currentUser={currentUser}
-                    />
-                  </Wrapper>
+                  <Dashboard {...props} users={users} currentUser={currentUser} />
                   {this.state.showFooterBar && (
                     <FooterBar
                       {...props}
@@ -190,14 +190,14 @@ class Application extends Component {
                       currentUser={currentUser}
                     />
                   )}
-                </>
+                </Wrapper>
               )}
             />
             <Route
               exact
               path="/meals"
               render={props => (
-                <>
+                <Wrapper>
                   {
                     <Header
                       {...props}
@@ -206,9 +206,7 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Wrapper>
-                    <Meals {...props} users={users} currentUser={currentUser} />
-                  </Wrapper>
+                  <Meals {...props} users={users} currentUser={currentUser} />
                   {this.state.showFooterBar && (
                     <FooterBar
                       {...props}
@@ -216,14 +214,14 @@ class Application extends Component {
                       currentUser={currentUser}
                     />
                   )}
-                </>
+                </Wrapper>
               )}
             />
             <Route
               exact
               path="/workouts"
               render={props => (
-                <>
+                <Wrapper>
                   {
                     <Header
                       {...props}
@@ -232,13 +230,7 @@ class Application extends Component {
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
-                  <Wrapper>
-                    <Workouts
-                      {...props}
-                      users={users}
-                      currentUser={currentUser}
-                    />
-                  </Wrapper>
+                  <Workouts {...props} users={users} currentUser={currentUser} />
                   {this.state.showFooterBar && (
                     <FooterBar
                       {...props}
@@ -246,7 +238,7 @@ class Application extends Component {
                       currentUser={currentUser}
                     />
                   )}
-                </>
+                </Wrapper>
               )}
             />
           </Switch>
@@ -259,7 +251,7 @@ class Application extends Component {
 const Wrapper = styled.div`
   // background: ${({ theme }) => theme.colors.gray1};
   height: 100% !important;
-  padding-top: 68px;
+  padding: 68px 0;
 `;
 
 const mapStateToProps = state => ({
