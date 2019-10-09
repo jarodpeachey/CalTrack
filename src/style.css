@@ -2529,45 +2529,49 @@ h1 strong, h2 strong, h3 strong, h4 strong, h5 strong {
 
 /* Visibility Modifiers 
 ---------------------------------------------*/
+.hidden {
+  display: none !important;
+}
+
 @media (min-width: 540px) {
   .hidden-above-mobile-lg {
-    display: none;
+    display: none !important;
   }
 }
 
 @media (min-width: 769px) {
   .hidden-above-tablet {
-    display: none;
+    display: none !important;
   }
 }
 
 @media (min-width: 1024px) {
   .hidden-above-desktop {
-    display: none;
+    display: none !important;
   }
 }
 
 @media (max-width: 1219px) {
   .hidden-below-widescreen {
-    display: none;
+    display: none !important;
   }
 }
 
 @media (max-width: 1023px) {
   .hidden-below-desktop {
-    display: none;
+    display: none !important;
   }
 }
 
 @media (max-width: 768px) {
   .hidden-below-tablet {
-    display: none;
+    display: none !important;
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 539px) {
   .hidden-below-mobile-lg {
-    display: none;
+    display: none !important;
   }
 }
 
