@@ -34,18 +34,31 @@ class Application extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      showFooterBar: true,
+      showFooterBar: false,
     };
+
+    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount () {
     this.props.getUsers();
     this.props.getCurrentUser();
+
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
   }
 
   shouldComponentUpdate (nextState) {
     if (this.state.showFooterBar !== nextState.showFooterBar) return true;
     return false;
+  }
+
+  handleResize () {
+    if (window.innerWidth < 569) {
+      this.setState({ showFooterBar: true });
+    } else {
+      this.setState({ showFooterBar: false });
+    }
   }
 
   render () {
@@ -72,7 +85,9 @@ class Application extends Component {
                     />
                   }
                   <Main {...props} users={users} currentUser={currentUser} />
-                  {this.state.showFooterBar && (
+                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
+                    null
+                  ) : (
                     <FooterBar
                       {...props}
                       pathname={location.pathname}
@@ -96,7 +111,9 @@ class Application extends Component {
                     />
                   }
                   <Main {...props} users={users} currentUser={currentUser} />
-                  {this.state.showFooterBar && (
+                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
+                    null
+                  ) : (
                     <FooterBar
                       {...props}
                       pathname={location.pathname}
@@ -120,7 +137,9 @@ class Application extends Component {
                     />
                   }
                   <Login {...props} users={users} currentUser={currentUser} />
-                  {this.state.showFooterBar && (
+                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
+                    null
+                  ) : (
                     <FooterBar
                       {...props}
                       pathname={location.pathname}
@@ -144,7 +163,9 @@ class Application extends Component {
                     />
                   }
                   <Signup {...props} users={users} currentUser={currentUser} />
-                  {this.state.showFooterBar && (
+                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
+                    null
+                  ) : (
                     <FooterBar
                       {...props}
                       pathname={location.pathname}
@@ -168,7 +189,9 @@ class Application extends Component {
                     />
                   }
                   <Dashboard {...props} users={users} currentUser={currentUser} />
-                  {this.state.showFooterBar && (
+                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
+                    null
+                  ) : (
                     <FooterBar
                       {...props}
                       pathname={location.pathname}
@@ -192,7 +215,9 @@ class Application extends Component {
                     />
                   }
                   <Meals {...props} users={users} currentUser={currentUser} />
-                  {this.state.showFooterBar && (
+                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
+                    null
+                  ) : (
                     <FooterBar
                       {...props}
                       pathname={location.pathname}
@@ -216,7 +241,9 @@ class Application extends Component {
                     />
                   }
                   <Workouts {...props} users={users} currentUser={currentUser} />
-                  {this.state.showFooterBar && (
+                  {!this.state.showFooterBar || (Object.keys(currentUser).length === 0 && currentUser.constructor === Object) ? (
+                    null
+                  ) : (
                     <FooterBar
                       {...props}
                       pathname={location.pathname}
