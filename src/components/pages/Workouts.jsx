@@ -58,7 +58,11 @@ class Workouts extends Component {
   }
 
   componentDidMount () {
-    this.setState({ workouts: sortByDate(this.props.currentUser.workouts) });
+    if (Object.keys(this.props.currentUser).length === 0 && this.props.currentUser.constructor === Object) {
+      this.setState({ workouts: []});
+    } else {
+      this.setState({ workouts: sortByDate(this.props.currentUser.workouts) });
+    }
 
     if (this.props.location.state) {
       const { workoutToEdit } = this.props.location.state;
@@ -231,6 +235,10 @@ class Workouts extends Component {
     });
   }
 
+  pushToPage (path) {
+    this.props.history.push(`${path}`);
+  }
+
   render () {
     const {
       // isMobileModeOn,
@@ -241,7 +249,7 @@ class Workouts extends Component {
       workouts,
       submitButtonActive,
     } = this.state;
-    const { classes } = this.props;
+    const { classes, currentUser } = this.props;
 
     let buttonsGroup = '';
 
@@ -323,99 +331,124 @@ class Workouts extends Component {
 
     return (
       <>
-        <div className="container p-none mt-md">
-          <div className="card p-md mb-md border no-shadow bg-white">
-            <h3 className="title m-none">
-              {mode === 'addWorkoutMode' ? 'Add Workout' : 'Edit Workout'}
-            </h3>
-            <form action="">
-              <div className="row">
-                <div className="col col-6">
-                  <Input
-                    classes={{
-                      root: classes.input,
-                      focused: classes.focusedInput,
-                    }}
-                    disableUnderline
-                    fullWidth
-                    label="Workout Name"
-                    value={workoutName}
-                    onChange={this.handleNameChange}
-                    placeholder="Workout name..."
-                  />
-                </div>
-                <div className="col col-6">
-                  <Input
-                    classes={{
-                      root: classes.input,
-                      focused: classes.focusedInput,
-                    }}
-                    disableUnderline
-                    fullWidth
-                    label="Calories"
-                    value={workoutCalories}
-                    onChange={this.handleCaloriesChange}
-                    placeholder="Calories"
-                    type="number"
-                  />
-                </div>
-                <div className="col col-12">
-                  <Input
-                    classes={{
-                      root: classes.textField,
-                      focused: classes.focusedInput,
-                    }}
-                    fullWidth
-                    label="Comments and description"
-                    value={workoutDescription}
-                    onChange={this.handleDescriptionChange}
-                    placeholder="Comments and description"
-                    multiline
-                    disableUnderline
-                    rows="4"
-                  />
-                </div>
-              </div>
-              {buttonsGroup}
-            </form>
-          </div>
-          {this.state.workouts.length ? (
-            <div className="card p-md mb-md border no-shadow bg-white">
-              <Title>Workouts</Title>
-              <ul>
-                {workouts.map(workout => (
-                  <WorkoutItem
-                    key={`workoutItem-${workout.id}`}
-                    workout={workout}
-                    switchToEditWorkoutMode={this.switchToEditWorkoutMode}
-                  />
-                ))}
-              </ul>
+        {Object.keys(currentUser).length === 0 &&
+        currentUser.constructor === Object ? (
+          <div className="container">
+            <div className="center-text">
+              <Card className="card border no-shadow px-sm py-sm mb-sm">
+                <h3>You must be logged in to access this page.</h3>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.pushToPage('/login')}
+                >
+                  Go To Login
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.pushToPage('/signup')}
+                >
+                  Go To Signup
+                </Button>
+              </Card>
             </div>
+          </div>
           ) : (
-            <>
-              {this.state.displayNoWorkoutsNotif && (
-                <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
-                  <h4 className="m-none">
-                    There are no workouts yet, add a workout!
-                  </h4>
-                  <Tooltip
-                    classes={{ tooltip: classes.toolTip }}
-                    title="Dismiss"
-                    TransitionComponent={Grow}
-                  >
-                    <IconButton
-                      onClick={this.clearNoWorkoutsNotification}
-                      classes={{ root: classes.iconButton }}
+            <div className="container p-none mt-md">
+              <div className="card p-md mb-md border no-shadow bg-white">
+                <h3 className="title m-none">
+                  {mode === 'addWorkoutMode' ? 'Add Workout' : 'Edit Workout'}
+                </h3>
+                <form action="">
+                  <div className="row">
+                    <div className="col col-6">
+                      <Input
+                      classes={{
+                        root: classes.input,
+                        focused: classes.focusedInput,
+                      }}
+                      disableUnderline
+                      fullWidth
+                      label="Workout Name"
+                      value={workoutName}
+                      onChange={this.handleNameChange}
+                      placeholder="Workout name..."
+                      />
+                    </div>
+                    <div className="col col-6">
+                      <Input
+                      classes={{
+                        root: classes.input,
+                        focused: classes.focusedInput,
+                      }}
+                      disableUnderline
+                      fullWidth
+                      label="Calories"
+                      value={workoutCalories}
+                      onChange={this.handleCaloriesChange}
+                      placeholder="Calories"
+                      type="number"
+                      />
+                    </div>
+                    <div className="col col-12">
+                      <Input
+                      classes={{
+                        root: classes.textField,
+                        focused: classes.focusedInput,
+                      }}
+                      fullWidth
+                      label="Comments and description"
+                      value={workoutDescription}
+                      onChange={this.handleDescriptionChange}
+                      placeholder="Comments and description"
+                      multiline
+                      disableUnderline
+                      rows="4"
+                      />
+                    </div>
+                  </div>
+                  {buttonsGroup}
+                </form>
+              </div>
+              {this.state.workouts.length ? (
+                <div className="card p-md mb-md border no-shadow bg-white">
+                  <Title>Workouts</Title>
+                  <ul>
+                    {workouts.map(workout => (
+                      <WorkoutItem
+                      key={`workoutItem-${workout.id}`}
+                      workout={workout}
+                      switchToEditWorkoutMode={this.switchToEditWorkoutMode}
+                      />
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <>
+                  {this.state.displayNoWorkoutsNotif && (
+                  <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
+                    <h4 className="m-none">
+                      There are no workouts yet, add a workout!
+                    </h4>
+                    <Tooltip
+                      classes={{ tooltip: classes.toolTip }}
+                      title="Dismiss"
+                      TransitionComponent={Grow}
                     >
-                      <Close />
-                    </IconButton>
-                  </Tooltip>
-                </Card>
+                      <IconButton
+                        onClick={this.clearNoWorkoutsNotification}
+                        classes={{ root: classes.iconButton }}
+                      >
+                        <Close />
+                      </IconButton>
+                    </Tooltip>
+                  </Card>
+                  )}
+                </>
               )}
-            </>
+            </div>
           )}
-        </div>
       </>
     );
   }

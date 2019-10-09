@@ -58,7 +58,11 @@ class Meals extends Component {
   }
 
   componentDidMount () {
-    this.setState({ meals: sortByDate(this.props.currentUser.meals) });
+    if (Object.keys(this.props.currentUser).length === 0 && this.props.currentUser.constructor === Object) {
+      this.setState({ meals: []});
+    } else {
+      this.setState({ meals: sortByDate(this.props.currentUser.meals) });
+    }
 
     if (this.props.location.state) {
       const { mealToEdit } = this.props.location.state;
@@ -231,6 +235,10 @@ class Meals extends Component {
     });
   }
 
+  pushToPage (path) {
+    this.props.history.push(`${path}`);
+  }
+
   render () {
     const {
       // isMobileModeOn,
@@ -241,7 +249,7 @@ class Meals extends Component {
       meals,
       submitButtonActive,
     } = this.state;
-    const { classes } = this.props;
+    const { classes, currentUser } = this.props;
 
     let buttonsGroup = '';
 
@@ -323,99 +331,124 @@ class Meals extends Component {
 
     return (
       <>
-        <div className="container p-none mt-md">
-          <div className="card p-md mb-md border no-shadow bg-white">
-            <h3 className="title m-none">
-              {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
-            </h3>
-            <form action="">
-              <div className="row">
-                <div className="col col-6">
-                  <Input
-                    classes={{
-                      root: classes.input,
-                      focused: classes.focusedInput,
-                    }}
-                    disableUnderline
-                    fullWidth
-                    label="Meal Name"
-                    value={mealName}
-                    onChange={this.handleNameChange}
-                    placeholder="Meal name..."
-                  />
-                </div>
-                <div className="col col-6">
-                  <Input
-                    classes={{
-                      root: classes.input,
-                      focused: classes.focusedInput,
-                    }}
-                    disableUnderline
-                    fullWidth
-                    label="Calories"
-                    value={mealCalories}
-                    onChange={this.handleCaloriesChange}
-                    placeholder="Calories"
-                    type="number"
-                  />
-                </div>
-                <div className="col col-12">
-                  <Input
-                    classes={{
-                      root: classes.textField,
-                      focused: classes.focusedInput,
-                    }}
-                    fullWidth
-                    label="Comments and description"
-                    value={mealDescription}
-                    onChange={this.handleDescriptionChange}
-                    placeholder="Comments and description"
-                    multiline
-                    disableUnderline
-                    rows="4"
-                  />
-                </div>
-              </div>
-              {buttonsGroup}
-            </form>
-          </div>
-          {this.state.meals.length ? (
-            <div className="card p-md mb-md border no-shadow bg-white">
-              <Title>Meals</Title>
-              <ul>
-                {meals.map(meal => (
-                  <MealItem
-                    key={`mealItem-${meal.id}`}
-                    meal={meal}
-                    switchToEditMealMode={this.switchToEditMealMode}
-                  />
-                ))}
-              </ul>
+        {Object.keys(currentUser).length === 0 &&
+        currentUser.constructor === Object ? (
+          <div className="container">
+            <div className="center-text">
+              <Card className="card border no-shadow px-sm py-sm mb-sm">
+                <h3>You must be logged in to access this page.</h3>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.pushToPage('/login')}
+                >
+                  Go To Login
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.pushToPage('/signup')}
+                >
+                  Go To Signup
+                </Button>
+              </Card>
             </div>
+          </div>
           ) : (
-            <>
-              {this.state.displayNoMealsNotif && (
-                <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
-                  <h4 className="m-none">
-                    There are no meals yet, add a meal!
-                  </h4>
-                  <Tooltip
-                    classes={{ tooltip: classes.toolTip }}
-                    title="Dismiss"
-                    TransitionComponent={Grow}
-                  >
-                    <IconButton
-                      onClick={this.clearNoMealsNotification}
-                      classes={{ root: classes.iconButton }}
+            <div className="container p-none mt-md">
+              <div className="card p-md mb-md border no-shadow bg-white">
+                <h3 className="title m-none">
+                  {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
+                </h3>
+                <form action="">
+                  <div className="row">
+                    <div className="col col-6">
+                      <Input
+                      classes={{
+                        root: classes.input,
+                        focused: classes.focusedInput,
+                      }}
+                      disableUnderline
+                      fullWidth
+                      label="Meal Name"
+                      value={mealName}
+                      onChange={this.handleNameChange}
+                      placeholder="Meal name..."
+                      />
+                    </div>
+                    <div className="col col-6">
+                      <Input
+                      classes={{
+                        root: classes.input,
+                        focused: classes.focusedInput,
+                      }}
+                      disableUnderline
+                      fullWidth
+                      label="Calories"
+                      value={mealCalories}
+                      onChange={this.handleCaloriesChange}
+                      placeholder="Calories"
+                      type="number"
+                      />
+                    </div>
+                    <div className="col col-12">
+                      <Input
+                      classes={{
+                        root: classes.textField,
+                        focused: classes.focusedInput,
+                      }}
+                      fullWidth
+                      label="Comments and description"
+                      value={mealDescription}
+                      onChange={this.handleDescriptionChange}
+                      placeholder="Comments and description"
+                      multiline
+                      disableUnderline
+                      rows="4"
+                      />
+                    </div>
+                  </div>
+                  {buttonsGroup}
+                </form>
+              </div>
+              {this.state.meals.length ? (
+                <div className="card p-md mb-md border no-shadow bg-white">
+                  <Title>Meals</Title>
+                  <ul>
+                    {meals.map(meal => (
+                      <MealItem
+                      key={`mealItem-${meal.id}`}
+                      meal={meal}
+                      switchToEditMealMode={this.switchToEditMealMode}
+                      />
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <>
+                  {this.state.displayNoMealsNotif && (
+                  <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
+                    <h4 className="m-none">
+                      There are no meals yet, add a meal!
+                    </h4>
+                    <Tooltip
+                      classes={{ tooltip: classes.toolTip }}
+                      title="Dismiss"
+                      TransitionComponent={Grow}
                     >
-                      <Close />
-                    </IconButton>
-                  </Tooltip>
-                </Card>
+                      <IconButton
+                        onClick={this.clearNoMealsNotification}
+                        classes={{ root: classes.iconButton }}
+                      >
+                        <Close />
+                      </IconButton>
+                    </Tooltip>
+                  </Card>
+                  )}
+                </>
               )}
-            </>
+            </div>
           )}
-        </div>
       </>
     );
   }
