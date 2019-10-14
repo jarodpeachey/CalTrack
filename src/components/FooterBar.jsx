@@ -95,6 +95,7 @@ const styles = theme => ({
   actionItem: {
     // color: 'white !important',
     fontSize: 20,
+    fontWeight: 'normal',
   },
 });
 
