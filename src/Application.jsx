@@ -1,64 +1,62 @@
 /* eslint-disable no-restricted-globals */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
 // import { ConnectedRouter } from 'connected-react-router';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHamburger,
   faThLarge,
-  faDumbbell,
-} from '@fortawesome/free-solid-svg-icons';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import styled, { ThemeProvider } from 'styled-components';
-import theme from './mui-theme';
-import styledTheme from './styled-theme';
-import Header from './components/Header';
-import Main from './components/pages/Main';
-import Login from './components/pages/Login';
-import Signup from './components/pages/Signup';
-import Dashboard from './components/pages/Dashboard';
-import Meals from './components/pages/Meals';
-import Workouts from './components/pages/Workouts';
-import { getUsers, getCurrentUser } from './actions/userActions';
-import FooterBar from './components/FooterBar';
-import PageNotFound from './components/pages/PageNotFound';
+  faDumbbell
+} from "@fortawesome/free-solid-svg-icons";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import styled, { ThemeProvider } from "styled-components";
+import theme from "./mui-theme";
+import styledTheme from "./styled-theme";
+import Header from "./components/Header";
+import Main from "./components/pages/Main";
+import Login from "./components/pages/Login";
+import Signup from "./components/pages/Signup";
+import Dashboard from "./components/pages/Dashboard";
+import Meals from "./components/pages/Meals";
+import Workouts from "./components/pages/Workouts";
+import { getUsers, getCurrentUser } from "./actions/userActions";
+import FooterBar from "./components/FooterBar";
+import PageNotFound from "./components/pages/PageNotFound";
 
 library.add(faHamburger, faThLarge, faDumbbell);
 
 class Application extends Component {
   static propTypes = {
-    users: PropTypes.array,
-    getUsers: PropTypes.func,
     currentUser: PropTypes.object,
     getCurrentUser: PropTypes.func,
-    history: PropTypes.object,
+    history: PropTypes.object
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
-      showFooterBar: false,
+      showFooterBar: false
     };
 
     this.handleResize = this.handleResize.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getUsers();
     this.props.getCurrentUser();
 
     this.handleResize();
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener("resize", this.handleResize);
   }
 
-  shouldComponentUpdate (nextState) {
+  shouldComponentUpdate(nextState) {
     if (this.state.showFooterBar !== nextState.showFooterBar) return true;
     return false;
   }
 
-  handleResize () {
+  handleResize() {
     if (window.innerWidth < 569) {
       this.setState({ showFooterBar: true });
     } else {
@@ -66,11 +64,10 @@ class Application extends Component {
     }
   }
 
-  render () {
-    const { users, currentUser } = this.props;
-    console.log('Users: ', users);
-    console.log('Current user: ', currentUser);
-    console.log('showFooterBar: ', this.state.showFooterBar);
+  render() {
+    const { currentUser } = this.props;
+    console.log("Current user: ", currentUser);
+    console.log("showFooterBar: ", this.state.showFooterBar);
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -90,17 +87,17 @@ class Application extends Component {
                     />
                   }
                   <Wrapper>
-                    <Main {...props} users={users} currentUser={currentUser} />
+                    <Main {...props} currentUser={currentUser} />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                    />
+                  )}
                 </>
               )}
             />
@@ -118,17 +115,17 @@ class Application extends Component {
                     />
                   }
                   <Wrapper>
-                    <Main {...props} users={users} currentUser={currentUser} />
+                    <Main {...props} currentUser={currentUser} />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                    />
+                  )}
                 </>
               )}
             />
@@ -146,17 +143,17 @@ class Application extends Component {
                     />
                   }
                   <Wrapper>
-                    <Login {...props} users={users} currentUser={currentUser} />
+                    <Login {...props} currentUser={currentUser} />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                    />
+                  )}
                 </>
               )}
             />
@@ -174,21 +171,17 @@ class Application extends Component {
                     />
                   }
                   <Wrapper>
-                    <Signup
-                      {...props}
-                      users={users}
-                      currentUser={currentUser}
-                    />
+                    <Signup {...props} currentUser={currentUser} />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                    />
+                  )}
                 </>
               )}
             />
@@ -206,21 +199,17 @@ class Application extends Component {
                     />
                   }
                   <Wrapper>
-                    <Dashboard
-                      {...props}
-                      users={users}
-                      currentUser={currentUser}
-                    />
+                    <Dashboard {...props} currentUser={currentUser} />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                    />
+                  )}
                 </>
               )}
             />
@@ -238,17 +227,17 @@ class Application extends Component {
                     />
                   }
                   <Wrapper>
-                    <Meals {...props} users={users} currentUser={currentUser} />
+                    <Meals {...props} currentUser={currentUser} />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                    />
+                  )}
                 </>
               )}
             />
@@ -266,19 +255,15 @@ class Application extends Component {
                     />
                   }
                   <Wrapper>
-                    <Workouts
-                      {...props}
-                      users={users}
-                      currentUser={currentUser}
-                    />
+                    <Workouts {...props} currentUser={currentUser} />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
                       <FooterBar
-                      {...props}
-                      pathname={location.pathname}
-                      currentUser={currentUser}
+                        {...props}
+                        pathname={location.pathname}
+                        currentUser={currentUser}
                       />
                     )}
                 </>
@@ -296,11 +281,7 @@ class Application extends Component {
                     />
                   }
                   <Wrapper>
-                    <PageNotFound
-                      {...props}
-                      users={users}
-                      currentUser={currentUser}
-                    />
+                    <PageNotFound {...props} currentUser={currentUser} />
                   </Wrapper>
                 </>
               )}
@@ -319,11 +300,7 @@ const Wrapper = styled.div`
 `;
 
 const mapStateToProps = state => ({
-  users: state.userReducer.users,
-  currentUser: state.userReducer.currentUser,
+  currentUser: state.userReducer.currentUser
 });
 
-export default connect(
-  mapStateToProps,
-  { getUsers, getCurrentUser },
-)(Application);
+export default connect(mapStateToProps, { getCurrentUser })(Application);

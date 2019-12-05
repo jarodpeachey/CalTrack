@@ -1,5 +1,4 @@
 import {
-  GET_USERS,
   ADD_USER,
   DELETE_USER,
   GET_CURRENT_USER,
@@ -15,7 +14,6 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  users: [],
   currentUser: {},
 };
 
@@ -110,96 +108,8 @@ const removeArrayItem = (array, id) => {
   return newArray.filter(item => item.id !== id);
 };
 
-const addMealOrWorkoutToUser = (state, newItem, type) => {
-  const newUsersArray = [...state.users];
-
-  const updatedUsersArray = newUsersArray.map((user) => {
-    if (user.id === state.currentUser.id) {
-      if (type === 'meals') {
-        return {
-          ...user,
-          meals: addArrayItem(user.meals, newItem),
-          calories: updateCalories(state, 'addMeal', newItem),
-        };
-      } else {
-        return {
-          ...user,
-          workouts: addArrayItem(user.workouts, newItem),
-          calories: updateCalories(state, 'addWorkout', newItem),
-        };
-      }
-    } else {
-      return {
-        ...user,
-      };
-    }
-  });
-
-  return [...updatedUsersArray];
-};
-
-const updateMealOrWorkoutInUser = (state, updatedItem, type) => {
-  const newUsersArray = [...state.users];
-
-  const updatedUsersArray = newUsersArray.map((user) => {
-    if (user.id === state.currentUser.id) {
-      if (type === 'meals') {
-        return {
-          ...user,
-          meals: updateArrayItem(user.meals, updatedItem),
-          calories: updateCalories(state, 'editMeal', updatedItem),
-        };
-      } else {
-        return {
-          ...user,
-          workouts: updateArrayItem(user.workouts, updatedItem),
-          calories: updateCalories(state, 'editWorkout', updatedItem),
-        };
-      }
-    } else {
-      return {
-        ...user,
-      };
-    }
-  });
-
-  return [...updatedUsersArray];
-};
-
-const removeMealOrWorkoutInUser = (state, id, type, itemToRemove) => {
-  const newUsersArray = [...state.users];
-  const updatedUsersArray = newUsersArray.map((user) => {
-    if (user.id === state.currentUser.id) {
-      if (type === 'meals') {
-        return {
-          ...user,
-          meals: removeArrayItem(user.meals, id),
-          calories: updateCalories(state, 'deleteMeal', itemToRemove),
-        };
-      } else {
-        return {
-          ...user,
-          workouts: removeArrayItem(user.workouts, id),
-          calories: updateCalories(state, 'deleteWorkout', itemToRemove),
-        };
-      }
-    } else {
-      return {
-        ...user,
-      };
-    }
-  });
-
-  return [...updatedUsersArray];
-};
-
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_USERS:
-      return {
-        ...state,
-        users: state.users,
-      };
     case ADD_USER:
       return {
         ...state,
@@ -208,7 +118,6 @@ const userReducer = (state = initialState, action) => {
     case DELETE_USER:
       return {
         ...state,
-        users: removeArrayItem([...state.users], action.payload),
         currentUser: {},
       };
     case GET_CURRENT_USER:
@@ -234,7 +143,6 @@ const userReducer = (state = initialState, action) => {
           meals: addArrayItem([...state.currentUser.meals], action.payload),
           calories: updateCalories(state, 'addMeal', action.payload),
         },
-        users: addMealOrWorkoutToUser(state, action.payload, 'meals'),
       };
     case EDIT_MEAL:
       return {
@@ -244,7 +152,6 @@ const userReducer = (state = initialState, action) => {
           meals: updateArrayItem([...state.currentUser.meals], action.payload),
           calories: updateCalories(state, 'editMeal', action.payload),
         },
-        users: updateMealOrWorkoutInUser(state, action.payload, 'meals'),
       };
     case DELETE_MEAL:
       return {
@@ -254,7 +161,6 @@ const userReducer = (state = initialState, action) => {
           meals: removeArrayItem([...state.currentUser.meals], action.payload.id),
           calories: updateCalories(state, 'deleteMeal', action.payload),
         },
-        users: removeMealOrWorkoutInUser(state, action.payload.id, 'meals', action.payload),
       };
     case ADD_WORKOUT:
       return {
@@ -264,7 +170,6 @@ const userReducer = (state = initialState, action) => {
           workouts: addArrayItem([...state.currentUser.workouts], action.payload),
           calories: updateCalories(state, 'addWorkout', action.payload),
         },
-        users: addMealOrWorkoutToUser(state, action.payload, 'workouts'),
       };
     case EDIT_WORKOUT:
       return {
@@ -274,7 +179,6 @@ const userReducer = (state = initialState, action) => {
           workouts: updateArrayItem([...state.currentUser.workouts], action.payload),
           calories: updateCalories(state, 'editWorkout', action.payload),
         },
-        users: updateMealOrWorkoutInUser(state, action.payload, 'workouts'),
       };
     case DELETE_WORKOUT:
       return {
@@ -284,7 +188,6 @@ const userReducer = (state = initialState, action) => {
           workouts: removeArrayItem([...state.currentUser.workouts], action.payload.id),
           calories: updateCalories(state, 'deleteWorkout', action.payload),
         },
-        users: removeMealOrWorkoutInUser(state, action.payload.id, 'workouts', action.payload),
       };
     default:
       return state;
