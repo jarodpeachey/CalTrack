@@ -29,7 +29,7 @@ export const getCurrentUser = () => (dispatch) => {
   });
 };
 
-export const setCurrentUser = user => (dispatch) => {
+export const setCurrentUser = (user) => (dispatch) => {
   dispatch({
     type: SET_CURRENT_USER,
     payload: user,
@@ -39,59 +39,59 @@ export const setCurrentUser = user => (dispatch) => {
 export const removeCurrentUser = () => (dispatch) => {
   dispatch({
     type: REMOVE_CURRENT_USER,
-  })
-}
+  });
+};
 
-export const addUser = user => (dispatch) => {
+export const addUser = (user) => (dispatch) => {
   dispatch({
     type: ADD_USER,
     payload: user,
   });
 };
 
-export const deleteUser = id => (dispatch) => {
+export const deleteUser = (id) => (dispatch) => {
   dispatch({
     type: DELETE_USER,
     payload: id,
   });
 };
 
-export const addMeal = newMeal => (dispatch) => {
+export const addMeal = (newMeal) => (dispatch) => {
   dispatch({
     type: ADD_MEAL,
     payload: newMeal,
   });
 };
 
-export const editMeal = updatedMeal => (dispatch) => {
+export const editMeal = (updatedMeal) => (dispatch) => {
   dispatch({
     type: EDIT_MEAL,
     payload: updatedMeal,
   });
 };
 
-export const deleteMeal = mealToDelete => (dispatch) => {
+export const deleteMeal = (mealToDelete) => (dispatch) => {
   dispatch({
     type: DELETE_MEAL,
     payload: mealToDelete,
   });
 };
 
-export const addWorkout = newWorkout => (dispatch) => {
+export const addWorkout = (newWorkout) => (dispatch) => {
   dispatch({
     type: ADD_WORKOUT,
     payload: newWorkout,
   });
 };
 
-export const editWorkout = updatedWorkout => (dispatch) => {
+export const editWorkout = (updatedWorkout) => (dispatch) => {
   dispatch({
     type: EDIT_WORKOUT,
     payload: updatedWorkout,
   });
 };
 
-export const deleteWorkout = workoutToDelete => (dispatch) => {
+export const deleteWorkout = (workoutToDelete) => (dispatch) => {
   dispatch({
     type: DELETE_WORKOUT,
     payload: workoutToDelete,

@@ -58,8 +58,11 @@ class Meals extends Component {
   }
 
   componentDidMount () {
-    if (Object.keys(this.props.currentUser).length === 0 && this.props.currentUser.constructor === Object) {
-      this.setState({ meals: []});
+    if (
+      Object.keys(this.props.currentUser).length === 0 &&
+      this.props.currentUser.constructor === Object
+    ) {
+      this.setState({ meals: [] });
     } else {
       this.setState({ meals: sortByDate(this.props.currentUser.meals) });
     }
@@ -354,16 +357,16 @@ class Meals extends Component {
               </Card>
             </div>
           </div>
-          ) : (
-            <div className="container p-none mt-md">
-              <div className="card p-md mb-md border no-shadow bg-white">
-                <h3 className="title m-none">
-                  {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
-                </h3>
-                <form action="">
-                  <div className="row">
-                    <div className="col col-6">
-                      <Input
+        ) : (
+          <div className="container p-none mt-md">
+            <div className="card p-md mb-md border no-shadow bg-white">
+              <h3 className="title m-none">
+                {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
+              </h3>
+              <form action="">
+                <div className="row">
+                  <div className="col col-6">
+                    <Input
                       classes={{
                         root: classes.input,
                         focused: classes.focusedInput,
@@ -374,10 +377,10 @@ class Meals extends Component {
                       value={mealName}
                       onChange={this.handleNameChange}
                       placeholder="Meal name..."
-                      />
-                    </div>
-                    <div className="col col-6">
-                      <Input
+                    />
+                  </div>
+                  <div className="col col-6">
+                    <Input
                       classes={{
                         root: classes.input,
                         focused: classes.focusedInput,
@@ -389,10 +392,10 @@ class Meals extends Component {
                       onChange={this.handleCaloriesChange}
                       placeholder="Calories"
                       type="number"
-                      />
-                    </div>
-                    <div className="col col-12">
-                      <Input
+                    />
+                  </div>
+                  <div className="col col-12">
+                    <Input
                       classes={{
                         root: classes.textField,
                         focused: classes.focusedInput,
@@ -405,28 +408,28 @@ class Meals extends Component {
                       multiline
                       disableUnderline
                       rows="4"
-                      />
-                    </div>
+                    />
                   </div>
-                  {buttonsGroup}
-                </form>
-              </div>
-              {this.state.meals.length ? (
-                <div className="card p-md mb-md border no-shadow bg-white">
-                  <Title>Meals</Title>
-                  <ul>
-                    {meals.map(meal => (
-                      <MealItem
+                </div>
+                {buttonsGroup}
+              </form>
+            </div>
+            {this.state.meals.length ? (
+              <div className="card p-md mb-md border no-shadow bg-white">
+                <Title>Meals</Title>
+                <ul>
+                  {meals.map((meal) => (
+                    <MealItem
                       key={`mealItem-${meal.id}`}
                       meal={meal}
                       switchToEditMealMode={this.switchToEditMealMode}
-                      />
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <>
-                  {this.state.displayNoMealsNotif && (
+                    />
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <>
+                {this.state.displayNoMealsNotif && (
                   <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
                     <h4 className="m-none">
                       There are no meals yet, add a meal!
@@ -444,17 +447,17 @@ class Meals extends Component {
                       </IconButton>
                     </Tooltip>
                   </Card>
-                  )}
-                </>
-              )}
-            </div>
-          )}
+                )}
+              </>
+            )}
+          </div>
+        )}
       </>
     );
   }
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   input: {
     background: '#f7f7f7',
     padding: theme.spacing(2, 3),
@@ -493,7 +496,6 @@ const MobileUpdateButton = styled.span`
   height: 24px !important;
 `;
 
-export default connect(
-  null,
-  { addMeal, editMeal, deleteMeal },
-)(withStyles(styles)(Meals));
+export default connect(null, { addMeal, editMeal, deleteMeal })(
+  withStyles(styles)(Meals),
+);

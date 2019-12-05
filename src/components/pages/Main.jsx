@@ -11,9 +11,7 @@ class Main extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   render () {
@@ -21,15 +19,14 @@ class Main extends Component {
       <Wrapper>
         <div className="container py-none">
           <Title>CalTrack App</Title>
-          <SubTitle>CalTrack is a simple, easy app to track your calories gained and burned. Try it today!</SubTitle>
+          <SubTitle>
+            CalTrack is a simple, easy app to track your calories gained and
+            burned. Try it today!
+          </SubTitle>
         </div>
         <ButtonContainer>
-          <Link to="/signup">
-            <Button
-              color="primary"
-              variant="contained"
-              className="mx-none"
-            >
+          <Link to={`${this.props.basename}signup`}>
+            <Button color="primary" variant="contained" className="mx-none">
               Try It
             </Button>
           </Link>
@@ -74,4 +71,3 @@ const ButtonContainer = styled.div`
 `;
 
 export default withRouter(Main);
-

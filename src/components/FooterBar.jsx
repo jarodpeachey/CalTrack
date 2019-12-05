@@ -81,7 +81,7 @@ class FooterBar extends Component {
   }
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     position: 'fixed',
     bottom: 0,

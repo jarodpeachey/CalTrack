@@ -64,11 +64,11 @@ class Login extends Component {
     e.preventDefault();
 
     const usersWithSameUsername = this.props.users.filter(
-      user => user.username === this.state.userNameValue,
+      (user) => user.username === this.state.userNameValue,
     );
 
     const usersWithSamePassword = this.props.users.filter(
-      user => user.password === this.state.passwordValue,
+      (user) => user.password === this.state.passwordValue,
     );
 
     if (!usersWithSameUsername.length) {
@@ -85,7 +85,7 @@ class Login extends Component {
         user.password === this.state.passwordValue
       ) {
         this.props.setCurrentUser(user);
-        window.location.href = '/dashboard';
+        window.location.href = `${this.props.basename}dashboard`;
       }
     });
   }
@@ -132,9 +132,7 @@ class Login extends Component {
             </Button>
           </form>
           <div className="mt-xs">
-            Don't have an account?
-            {' '}
-            <Link to="/signup">Signup</Link>
+            Don't have an account? <Link to={`${this.props.basename}signup`}>Signup</Link>
           </div>
         </FormWrapper>
       </div>
@@ -163,8 +161,5 @@ const Heading = styled.h1`
 `;
 
 export default withRouter(
-  connect(
-    null,
-    { setCurrentUser },
-  )(withStyles(styles)(Login)),
+  connect(null, { setCurrentUser })(withStyles(styles)(Login)),
 );

@@ -11,7 +11,11 @@ import {
 import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
-import { addWorkout, editWorkout, deleteWorkout } from '../../actions/userActions';
+import {
+  addWorkout,
+  editWorkout,
+  deleteWorkout,
+} from '../../actions/userActions';
 import { sortByUserId, sortByDate } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import WorkoutItem from '../WorkoutItem';
@@ -50,7 +54,9 @@ class Workouts extends Component {
     this.handleCaloriesChange = this.handleCaloriesChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.submitForm = this.submitForm.bind(this);
-    this.clearNoWorkoutsNotification = this.clearNoWorkoutsNotification.bind(this);
+    this.clearNoWorkoutsNotification = this.clearNoWorkoutsNotification.bind(
+      this,
+    );
     this.switchToEditWorkoutMode = this.switchToEditWorkoutMode.bind(this);
     this.clearEditMode = this.clearEditMode.bind(this);
     this.updateWorkout = this.updateWorkout.bind(this);
@@ -58,8 +64,11 @@ class Workouts extends Component {
   }
 
   componentDidMount () {
-    if (Object.keys(this.props.currentUser).length === 0 && this.props.currentUser.constructor === Object) {
-      this.setState({ workouts: []});
+    if (
+      Object.keys(this.props.currentUser).length === 0 &&
+      this.props.currentUser.constructor === Object
+    ) {
+      this.setState({ workouts: [] });
     } else {
       this.setState({ workouts: sortByDate(this.props.currentUser.workouts) });
     }
@@ -119,7 +128,12 @@ class Workouts extends Component {
   }
 
   submitForm () {
-    const { workoutName, workoutCalories, workoutDescription, workouts } = this.state;
+    const {
+      workoutName,
+      workoutCalories,
+      workoutDescription,
+      workouts,
+    } = this.state;
     let date = new Date();
     date = {
       month: date.getMonth(),
@@ -354,16 +368,16 @@ class Workouts extends Component {
               </Card>
             </div>
           </div>
-          ) : (
-            <div className="container p-none mt-md">
-              <div className="card p-md mb-md border no-shadow bg-white">
-                <h3 className="title m-none">
-                  {mode === 'addWorkoutMode' ? 'Add Workout' : 'Edit Workout'}
-                </h3>
-                <form action="">
-                  <div className="row">
-                    <div className="col col-6">
-                      <Input
+        ) : (
+          <div className="container p-none mt-md">
+            <div className="card p-md mb-md border no-shadow bg-white">
+              <h3 className="title m-none">
+                {mode === 'addWorkoutMode' ? 'Add Workout' : 'Edit Workout'}
+              </h3>
+              <form action="">
+                <div className="row">
+                  <div className="col col-6">
+                    <Input
                       classes={{
                         root: classes.input,
                         focused: classes.focusedInput,
@@ -374,10 +388,10 @@ class Workouts extends Component {
                       value={workoutName}
                       onChange={this.handleNameChange}
                       placeholder="Workout name..."
-                      />
-                    </div>
-                    <div className="col col-6">
-                      <Input
+                    />
+                  </div>
+                  <div className="col col-6">
+                    <Input
                       classes={{
                         root: classes.input,
                         focused: classes.focusedInput,
@@ -389,10 +403,10 @@ class Workouts extends Component {
                       onChange={this.handleCaloriesChange}
                       placeholder="Calories"
                       type="number"
-                      />
-                    </div>
-                    <div className="col col-12">
-                      <Input
+                    />
+                  </div>
+                  <div className="col col-12">
+                    <Input
                       classes={{
                         root: classes.textField,
                         focused: classes.focusedInput,
@@ -405,28 +419,28 @@ class Workouts extends Component {
                       multiline
                       disableUnderline
                       rows="4"
-                      />
-                    </div>
+                    />
                   </div>
-                  {buttonsGroup}
-                </form>
-              </div>
-              {this.state.workouts.length ? (
-                <div className="card p-md mb-md border no-shadow bg-white">
-                  <Title>Workouts</Title>
-                  <ul>
-                    {workouts.map(workout => (
-                      <WorkoutItem
+                </div>
+                {buttonsGroup}
+              </form>
+            </div>
+            {this.state.workouts.length ? (
+              <div className="card p-md mb-md border no-shadow bg-white">
+                <Title>Workouts</Title>
+                <ul>
+                  {workouts.map((workout) => (
+                    <WorkoutItem
                       key={`workoutItem-${workout.id}`}
                       workout={workout}
                       switchToEditWorkoutMode={this.switchToEditWorkoutMode}
-                      />
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <>
-                  {this.state.displayNoWorkoutsNotif && (
+                    />
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <>
+                {this.state.displayNoWorkoutsNotif && (
                   <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
                     <h4 className="m-none">
                       There are no workouts yet, add a workout!
@@ -444,17 +458,17 @@ class Workouts extends Component {
                       </IconButton>
                     </Tooltip>
                   </Card>
-                  )}
-                </>
-              )}
-            </div>
-          )}
+                )}
+              </>
+            )}
+          </div>
+        )}
       </>
     );
   }
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   input: {
     background: '#f7f7f7',
     padding: theme.spacing(2, 3),
@@ -493,7 +507,6 @@ const MobileUpdateButton = styled.span`
   height: 24px !important;
 `;
 
-export default connect(
-  null,
-  { addWorkout, editWorkout, deleteWorkout },
-)(withStyles(styles)(Workouts));
+export default connect(null, { addWorkout, editWorkout, deleteWorkout })(
+  withStyles(styles)(Workouts),
+);

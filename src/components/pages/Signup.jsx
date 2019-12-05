@@ -5,14 +5,13 @@ import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { addUser, setCurrentUser } from '../../actions/userActions';
-import { sortByUserId } from '../../utils/arrayFormat';
 
 class Signup extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    users: PropTypes.array,
     currentUser: PropTypes.object,
     addUser: PropTypes.func,
     setCurrentUser: PropTypes.func,
@@ -65,52 +64,49 @@ class Signup extends Component {
   onFormSubmit (e) {
     e.preventDefault();
 
-    let userNameTaken = false;
+    const bodyFormData = new FormData();
+    bodyFormData.set('name', this.state.nameValue);
+    bodyFormData.set('email', this.state.emailValue);
+    bodyFormData.set('password', this.state.passwordValue);
 
-    this.props.users.forEach((user) => {
-      if (user.username === this.state.userNameValue) {
-        userNameTaken = true;
-      } else {
-        userNameTaken = false;
-      }
-    });
-
-    if (
-      this.state.nameValue !== '' &&
-      this.state.userNameValue !== '' &&
-      this.state.passwordValue === this.state.confirmValue &&
-      !userNameTaken
-    ) {
-      let id = 0;
-      if (this.props.users.length) {
-        const sortedUsers = sortByUserId(this.props.users);
-        id = sortedUsers[sortedUsers.length - 1].id + 1;
-      }
-
-      const user = {
-        id,
-        name: this.state.nameValue,
-        username: this.state.userNameValue,
-        password: this.state.passwordValue,
-        meals: [],
-        workouts: [],
-        calories: {
-          lost: 0,
-          gained: 0,
-          net: 0,
-        },
-      };
-
-      this.props.addUser(user);
-      this.props.setCurrentUser(user);
-
-      // this.setState({ redirect: true });
-      window.location.href = '/dashboard';
-    } else if (userNameTaken) {
-      alert('Please choose a different username');
-    } else {
-      alert('Please fill in all the fields');
-    }
+    axios({
+      method: 'POST',
+      url: `${this.props.basename}api/users/create.php`,
+      config: {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      },
+      data: bodyFormData,
+    })
+      .then((res) => {
+        console.log('Sent! Response: ', res);
+        if (res.data.email_used) {
+          this.setState({
+            mainMessageType: 'error',
+            mainMessage: (
+              <span>
+                This email is already connected to an account. You can log in{' '}
+                <Link to={`${this.props.basename}login`}>here.</Link>
+              </span>
+            ),
+          });
+        } else if (res.data.success) {
+          this.setState({
+            mainMessageType: 'success',
+            mainMessage: 'Success! You are now registered.',
+          });
+          this.clearFields();
+          this.props.history.push('/samex-login/login');
+        } else {
+          this.setState({
+            mainMessageType: 'error',
+            mainMessage: 'There was a problem adding you. Please try again',
+          });
+        }
+      })
+      .catch(() => {
+        console.log('Error.');
+      });
+    window.location.href = `${this.props.basename}dashboard`;
   }
 
   render () {
@@ -172,9 +168,7 @@ class Signup extends Component {
             </Button>
           </form>
           <div className="mt-xs">
-            Already have an account?
-            {' '}
-            <Link to="/login">Login</Link>
+            Already have an account? <Link to={`${this.props.basename}login`}>Login</Link>
           </div>
         </FormWrapper>
       </div>
@@ -203,8 +197,5 @@ const Heading = styled.h1`
 `;
 
 export default withRouter(
-  connect(
-    null,
-    { addUser, setCurrentUser },
-  )(withStyles(styles)(Signup)),
+  connect(null, { addUser, setCurrentUser })(withStyles(styles)(Signup)),
 );

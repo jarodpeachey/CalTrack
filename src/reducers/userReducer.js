@@ -105,7 +105,7 @@ const updateArrayItem = (array, updatedItem) => {
 const removeArrayItem = (array, id) => {
   const newArray = [...array];
 
-  return newArray.filter(item => item.id !== id);
+  return newArray.filter((item) => item.id !== id);
 };
 
 const userReducer = (state = initialState, action) => {
@@ -158,7 +158,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: {
           ...state.currentUser,
-          meals: removeArrayItem([...state.currentUser.meals], action.payload.id),
+          meals: removeArrayItem(
+            [...state.currentUser.meals],
+            action.payload.id,
+          ),
           calories: updateCalories(state, 'deleteMeal', action.payload),
         },
       };
@@ -167,7 +170,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: {
           ...state.currentUser,
-          workouts: addArrayItem([...state.currentUser.workouts], action.payload),
+          workouts: addArrayItem(
+            [...state.currentUser.workouts],
+            action.payload,
+          ),
           calories: updateCalories(state, 'addWorkout', action.payload),
         },
       };
@@ -176,7 +182,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: {
           ...state.currentUser,
-          workouts: updateArrayItem([...state.currentUser.workouts], action.payload),
+          workouts: updateArrayItem(
+            [...state.currentUser.workouts],
+            action.payload,
+          ),
           calories: updateCalories(state, 'editWorkout', action.payload),
         },
       };
@@ -185,7 +194,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: {
           ...state.currentUser,
-          workouts: removeArrayItem([...state.currentUser.workouts], action.payload.id),
+          workouts: removeArrayItem(
+            [...state.currentUser.workouts],
+            action.payload.id,
+          ),
           calories: updateCalories(state, 'deleteWorkout', action.payload),
         },
       };

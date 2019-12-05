@@ -64,7 +64,7 @@ class Application extends Component {
   }
 
   render () {
-    const { currentUser } = this.props;
+    const { currentUser, basename } = this.props;
     console.log('Current user: ', currentUser);
     console.log('showFooterBar: ', this.state.showFooterBar);
 
@@ -74,8 +74,8 @@ class Application extends Component {
           <Switch>
             <Route
               exact
-              path="/"
-              render={props => (
+              path={`${basename}`}
+              render={(props) => (
                 <>
                   {
                     <Header
@@ -83,27 +83,33 @@ class Application extends Component {
                       pathname={location.pathname}
                       currentUser={currentUser}
                       showFooterBar={this.state.showFooterBar}
+                      basename={basename}
                     />
                   }
                   <Wrapper>
-                    <Main {...props} currentUser={currentUser} />
+                    <Main
+                      {...props}
+                      currentUser={currentUser}
+                      basename={basename}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      basename={basename}
                     />
-                    )}
+                  )}
                 </>
               )}
             />
             <Route
               exact
-              path="/welcome"
-              render={props => (
+              path={`${basename}welcome`}
+              render={(props) => (
                 <>
                   {
                     <Header
@@ -111,27 +117,33 @@ class Application extends Component {
                       pathname={location.pathname}
                       currentUser={currentUser}
                       showFooterBar={this.state.showFooterBar}
+                      basename={basename}
                     />
                   }
                   <Wrapper>
-                    <Main {...props} currentUser={currentUser} />
+                    <Main
+                      {...props}
+                      currentUser={currentUser}
+                      basename={basename}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      basename={basename}
                     />
-                    )}
+                  )}
                 </>
               )}
             />
             <Route
               exact
-              path="/login"
-              render={props => (
+              path={`${basename}login`}
+              render={(props) => (
                 <>
                   {
                     <Header
@@ -139,27 +151,33 @@ class Application extends Component {
                       pathname={location.pathname}
                       currentUser={currentUser}
                       showFooterBar={this.state.showFooterBar}
+                      basename={basename}
                     />
                   }
                   <Wrapper>
-                    <Login {...props} currentUser={currentUser} />
+                    <Login
+                      {...props}
+                      currentUser={currentUser}
+                      basename={basename}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      basename={basename}
                     />
-                    )}
+                  )}
                 </>
               )}
             />
             <Route
               exact
-              path="/signup"
-              render={props => (
+              path={`${basename}signup`}
+              render={(props) => (
                 <>
                   {
                     <Header
@@ -167,27 +185,33 @@ class Application extends Component {
                       pathname={location.pathname}
                       currentUser={currentUser}
                       showFooterBar={this.state.showFooterBar}
+                      basename={basename}
                     />
                   }
                   <Wrapper>
-                    <Signup {...props} currentUser={currentUser} />
+                    <Signup
+                      {...props}
+                      currentUser={currentUser}
+                      basename={basename}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      basename={basename}
                     />
-                    )}
+                  )}
                 </>
               )}
             />
             <Route
               exact
-              path="/dashboard"
-              render={props => (
+              path={`${basename}dashboard`}
+              render={(props) => (
                 <>
                   {
                     <Header
@@ -195,27 +219,33 @@ class Application extends Component {
                       pathname={location.pathname}
                       currentUser={currentUser}
                       showFooterBar={this.state.showFooterBar}
+                      basename={basename}
                     />
                   }
                   <Wrapper>
-                    <Dashboard {...props} currentUser={currentUser} />
+                    <Dashboard
+                      {...props}
+                      currentUser={currentUser}
+                      basename={basename}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      basename={basename}
                     />
-                    )}
+                  )}
                 </>
               )}
             />
             <Route
               exact
-              path="/meals"
-              render={props => (
+              path={`${basename}meals`}
+              render={(props) => (
                 <>
                   {
                     <Header
@@ -223,27 +253,33 @@ class Application extends Component {
                       pathname={location.pathname}
                       currentUser={currentUser}
                       showFooterBar={this.state.showFooterBar}
+                      basename={basename}
                     />
                   }
                   <Wrapper>
-                    <Meals {...props} currentUser={currentUser} />
+                    <Meals
+                      {...props}
+                      currentUser={currentUser}
+                      basename={basename}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      basename={basename}
                     />
-                    )}
+                  )}
                 </>
               )}
             />
             <Route
               exact
-              path="/workouts"
-              render={props => (
+              path={`${basename}workouts`}
+              render={(props) => (
                 <>
                   {
                     <Header
@@ -251,25 +287,31 @@ class Application extends Component {
                       pathname={location.pathname}
                       currentUser={currentUser}
                       showFooterBar={this.state.showFooterBar}
+                      basename={basename}
                     />
                   }
                   <Wrapper>
-                    <Workouts {...props} currentUser={currentUser} />
+                    <Workouts
+                      {...props}
+                      currentUser={currentUser}
+                      basename={basename}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      basename={basename}
                     />
-                    )}
+                  )}
                 </>
               )}
             />
             <Route
-              render={props => (
+              render={(props) => (
                 <>
                   {
                     <Header
@@ -277,10 +319,15 @@ class Application extends Component {
                       pathname={location.pathname}
                       currentUser={currentUser}
                       showFooterBar={this.state.showFooterBar}
+                      basename={basename}
                     />
                   }
                   <Wrapper>
-                    <PageNotFound {...props} currentUser={currentUser} />
+                    <PageNotFound
+                      {...props}
+                      currentUser={currentUser}
+                      basename={basename}
+                    />
                   </Wrapper>
                 </>
               )}
@@ -298,7 +345,8 @@ const Wrapper = styled.div`
   padding: 0 0 48px 0;
 `;
 
-const mapStateToProps = state => ({
+// eslint-disable-next-line arrow-parens
+const mapStateToProps = (state) => ({
   currentUser: state.userReducer.currentUser,
 });
 

@@ -51,15 +51,24 @@ class Dashboard extends Component {
 
     return (
       <>
-        {Object.keys(currentUser).length === 0 && currentUser.constructor === Object ? (
+        {Object.keys(currentUser).length === 0 &&
+        currentUser.constructor === Object ? (
           <div className="container">
             <div className="center-text">
               <Card className="card border no-shadow px-sm py-sm mb-sm">
                 <h3>You must be logged in to access this page.</h3>
-                <Button variant="contained" color="primary" onClick={() => this.pushToPage('/login')}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.pushToPage('/login')}
+                >
                   Go To Login
                 </Button>
-                <Button variant="contained" color="primary" onClick={() => this.pushToPage('/signup')}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.pushToPage('/signup')}
+                >
                   Go To Signup
                 </Button>
               </Card>
@@ -79,7 +88,7 @@ class Dashboard extends Component {
                   </p>
                   <div className="row mobile">
                     <div className="col col-6">
-                      <Link to="/meals">
+                      <Link to={`${this.props.basename}meals`}>
                         <Button
                           fullWidth
                           variant="contained"
@@ -91,7 +100,7 @@ class Dashboard extends Component {
                       </Link>
                     </div>
                     <div className="col col-6">
-                      <Link to="/workouts">
+                      <Link to={`${this.props.basename}workouts`}>
                         <Button
                           fullWidth
                           variant="contained"
@@ -154,7 +163,7 @@ class Dashboard extends Component {
                               }
                             })}
                           </ul>
-                          <Link to="/meals">
+                          <Link to={`${this.props.basename}meals`}>
                             <Button
                               classes={{ root: classes.button }}
                               color="primary"
@@ -167,7 +176,7 @@ class Dashboard extends Component {
                       ) : (
                         <div className="center-text">
                           <h4 className="mt-sm">There are no meals! Eat up!</h4>
-                          <Link to="/meals">
+                          <Link to={`${this.props.basename}meals`}>
                             <Button
                               variant="contained"
                               color="primary"
@@ -199,7 +208,7 @@ class Dashboard extends Component {
                               }
                             })}
                           </ul>
-                          <Link to="/workouts">
+                          <Link to={`${this.props.basename}workouts`}>
                             <Button
                               classes={{ root: classes.button }}
                               color="primary"
@@ -214,7 +223,7 @@ class Dashboard extends Component {
                           <h4 className="mt-sm">
                             There are no workouts! Get cracking!!
                           </h4>
-                          <Link to="/workouts">
+                          <Link to={`${this.props.basename}workouts`}>
                             <Button
                               variant="contained"
                               color="primary"
@@ -233,7 +242,6 @@ class Dashboard extends Component {
           </Wrapper>
         )}
       </>
-
     );
   }
 }
@@ -268,7 +276,7 @@ const CollectionItem = styled.div`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  @media(min-width: 540px) {
+  @media (min-width: 540px) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -305,7 +313,6 @@ const CalorieNumber = styled.div`
   }
 `;
 
-export default connect(
-  null,
-  { addMeal, addWorkout },
-)(withStyles(styles)(Dashboard));
+export default connect(null, { addMeal, addWorkout })(
+  withStyles(styles)(Dashboard),
+);

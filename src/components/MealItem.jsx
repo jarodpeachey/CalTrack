@@ -74,11 +74,7 @@ class MealItem extends Component {
             <MealContainer>
               <FlexContainer>
                 <Name>{meal.name}</Name>
-                <CaloriesCount>
-                  {meal.calories}
-                  {' '}
-calories
-                </CaloriesCount>
+                <CaloriesCount>{meal.calories} calories</CaloriesCount>
                 {meal.description !== '' ? (
                   <IconButton
                     onClick={this.toggleMealInformation}
@@ -109,11 +105,7 @@ calories
             <MealContainerOutlined>
               <FlexContainer>
                 <Name>{meal.name}</Name>
-                <CaloriesCount>
-                  {meal.calories}
-                  {' '}
-calories
-                </CaloriesCount>
+                <CaloriesCount>{meal.calories} calories</CaloriesCount>
                 {meal.description !== '' ? (
                   <IconButton
                     onClick={this.toggleMealInformation}
@@ -290,7 +282,4 @@ const CollectionItem = styled.div`
   justify-content: flex-start;
 `;
 
-export default connect(
-  null,
-  { deleteMeal },
-)(withStyles(styles)(MealItem));
+export default connect(null, { deleteMeal })(withStyles(styles)(MealItem));

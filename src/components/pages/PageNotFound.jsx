@@ -27,16 +27,12 @@ class PageNotFound extends Component {
   render () {
     return (
       <>
-        {this.state.blankPage ? (
-          null
-        ) : (
+        {this.state.blankPage ? null : (
           <div className="container">
             <div className="center-text">
               <Card className="card border no-shadow px-sm py-sm mb-sm">
                 <Warning>404</Warning>
-                <h3>
-                  {"We're sorry, we can't find this page."}
-                </h3>
+                <h3>{"We're sorry, we can't find this page."}</h3>
                 <h5 className="subtitle">
                   Please wait while we redirect you to the homepage.
                 </h5>

@@ -85,11 +85,7 @@ class MealItemCompressed extends Component {
                 },
               }}
             >
-              <CaloriesCount>
-                {meal.calories}
-                {' '}
-calories
-              </CaloriesCount>
+              <CaloriesCount>{meal.calories} calories</CaloriesCount>
             </Link>
           )}
         </div>
@@ -118,7 +114,6 @@ const CollectionItem = styled.li`
   justify-content: flex-start !important;
 `;
 
-export default connect(
-  null,
-  { deleteMeal },
-)(withStyles(styles)(MealItemCompressed));
+export default connect(null, { deleteMeal })(
+  withStyles(styles)(MealItemCompressed),
+);

@@ -33,9 +33,7 @@ module.exports = {
       },
       {
         test: /\.php$/,
-        loaders: [
-          'php-loader',
-        ]
+        loaders: ['php-loader'],
       },
     ],
   },

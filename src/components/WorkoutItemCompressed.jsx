@@ -85,11 +85,7 @@ class WorkoutItemCompressed extends Component {
                 },
               }}
             >
-              <CaloriesCount>
-                {workout.calories}
-                {' '}
-calories
-              </CaloriesCount>
+              <CaloriesCount>{workout.calories} calories</CaloriesCount>
             </Link>
           )}
         </div>
@@ -118,7 +114,6 @@ const CollectionItem = styled.li`
   justify-content: flex-start !important;
 `;
 
-export default connect(
-  null,
-  { deleteWorkout },
-)(withStyles(styles)(WorkoutItemCompressed));
+export default connect(null, { deleteWorkout })(
+  withStyles(styles)(WorkoutItemCompressed),
+);

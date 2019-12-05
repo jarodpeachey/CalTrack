@@ -9,22 +9,24 @@ import Application from './Application';
 import { persistor, store } from './Store';
 import './style.css';
 
+// Create history object for React
 const history = createBrowserHistory({
-  // forceRefresh: true,
+  basename: process.env.PUBLIC_URL,
 });
+
+console.log("Window location host: ", window.location.host);
+console.log(process.env.NODE_ENV);
+
+const baseURL = window.location.host === 'localhost' ? '/CalTrackReact/' : '/';
 
 const renderApp = () => {
   ReactDOM.render(
     <>
       <Provider store={store}>
         <PersistGate loading={<h1>Loading...</h1>} persistor={persistor}>
-          <Router history={history}>
+          <Router history={history} basename={baseURL}>
             <Route
-              render={props => (
-                <Application
-                  {...props}
-                />
-              )}
+              render={(props) => <Application {...props} basename={baseURL} />}
             />
           </Router>
           {/* <Application /> */}

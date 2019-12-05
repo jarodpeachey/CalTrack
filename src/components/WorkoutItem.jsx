@@ -74,11 +74,7 @@ class WorkoutItem extends Component {
             <WorkoutContainer>
               <FlexContainer>
                 <Name>{workout.name}</Name>
-                <CaloriesCount>
-                  {workout.calories}
-                  {' '}
-calories
-                </CaloriesCount>
+                <CaloriesCount>{workout.calories} calories</CaloriesCount>
                 {workout.description !== '' ? (
                   <IconButton
                     onClick={this.toggleWorkoutInformation}
@@ -109,11 +105,7 @@ calories
             <WorkoutContainerOutlined>
               <FlexContainer>
                 <Name>{workout.name}</Name>
-                <CaloriesCount>
-                  {workout.calories}
-                  {' '}
-calories
-                </CaloriesCount>
+                <CaloriesCount>{workout.calories} calories</CaloriesCount>
                 {workout.description !== '' ? (
                   <IconButton
                     onClick={this.toggleWorkoutInformation}
@@ -290,7 +282,6 @@ const CollectionItem = styled.div`
   justify-content: flex-start;
 `;
 
-export default connect(
-  null,
-  { deleteWorkout },
-)(withStyles(styles)(WorkoutItem));
+export default connect(null, { deleteWorkout })(
+  withStyles(styles)(WorkoutItem),
+);

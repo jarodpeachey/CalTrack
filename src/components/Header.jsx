@@ -53,13 +53,13 @@ class Header extends Component {
   logout () {
     this.props.removeCurrentUser();
 
-    window.location.href = '/login';
+    window.location.href = `${this.props.basename}login`;
   }
 
   deleteAccount () {
     this.props.deleteUser(this.props.currentUser.id);
 
-    window.location.href = '/signup';
+    window.location.href = `${this.props.basename}signup`;
   }
 
   render () {
@@ -73,12 +73,12 @@ class Header extends Component {
             <div className="container py-xxs">
               <Row>
                 <ColumnOne>
-                  <Link to="/">
+                  <Link to={`${this.props.basename}`}>
                     <BrandName className="m-none">CalTrack</BrandName>
                   </Link>
                 </ColumnOne>
                 <ColumnTwo>
-                  <Link to="/signup">
+                  <Link to={`${this.props.basename}signup`}>
                     <Button
                       color="primary"
                       variant="contained"
@@ -88,7 +88,7 @@ class Header extends Component {
                       Sign Up
                     </Button>
                   </Link>
-                  <Link to="/login">
+                  <Link to={`${this.props.basename}login`}>
                     <Button
                       color="primary"
                       variant="contained"
@@ -107,7 +107,7 @@ class Header extends Component {
             <div className="container py-xxs">
               <Row>
                 <ColumnOne>
-                  <Link to="/">
+                  <Link to={`${this.props.basename}`}>
                     <BrandName className="m-none">CalTrack</BrandName>
                   </Link>
                 </ColumnOne>
@@ -118,57 +118,24 @@ class Header extends Component {
                         className="menu-item hidden-below-mobile-lg"
                         active={pathname === '/dashboard'}
                       >
-                        <Link to="/dashboard">
-                          {/* <Button
-                            color="primary"
-                            variant="contained"
-                            className="mx-none"
-                            classes={
-                              pathname === '/meals' ?
-                                { root: classes.navigationButtonActive } :
-                                { root: classes.navigationButton }
-                            }
-                            > */}
+                        <Link to={`${this.props.basename}dashboard`}>
                           Dashboard
-                          {/* </Button> */}
                         </Link>
                       </CustomMenuItem>
                       <CustomMenuItem
                         className="menu-item hidden-below-mobile-lg"
                         active={pathname === '/meals'}
                       >
-                        <Link to="/meals">
-                          {/* <Button
-                            color="primary"
-                            variant="contained"
-                            className="mx-none"
-                            classes={
-                              pathname === '/meals' ?
-                                { root: classes.navigationButtonActive } :
-                                { root: classes.navigationButton }
-                            }
-                            > */}
+                        <Link to={`${this.props.basename}meals`}>
                           Meals
-                          {/* </Button> */}
                         </Link>
                       </CustomMenuItem>
                       <CustomMenuItem
                         className="menu-item hidden-below-mobile-lg"
                         active={pathname === '/workouts'}
                       >
-                        <Link to="/workouts">
-                          {/* <Button
-                            color="primary"
-                            variant="contained"
-                            className="mx-none"
-                            classes={
-                              pathname === '/workouts' ?
-                                { root: classes.navigationButtonActive } :
-                                { root: classes.navigationButton }
-                            }
-                            > */}
+                        <Link to={`${this.props.basename}workouts`}>
                           Workouts
-                          {/* </Button> */}
                         </Link>
                       </CustomMenuItem>
                     </>
@@ -230,11 +197,12 @@ const CustomMenuItem = styled.li`
   // padding: 12px !important;
   border-bottom: 1px solid transparent;
   :hover {
-    border-bottom: ${props => (props.noBorderOnHover ? '1px solid transparent' : '1px solid white')};
+    border-bottom: ${(props) =>
+      props.noBorderOnHover ? '1px solid transparent' : '1px solid white'};
     background: #037dd0;
     transition-duration: 0.25s;
   }
-  font-weight: ${props => (props.active ? 'bold' : 400)};
+  font-weight: ${(props) => (props.active ? 'bold' : 400)};
 `;
 
 const Wrapper = styled.div`
@@ -274,7 +242,6 @@ const IconContainer = styled.div`
   }
 `;
 
-export default connect(
-  null,
-  { removeCurrentUser, deleteUser },
-)(withRouter(withStyles(styles)(Header)));
+export default connect(null, { removeCurrentUser, deleteUser })(
+  withRouter(withStyles(styles)(Header)),
+);
