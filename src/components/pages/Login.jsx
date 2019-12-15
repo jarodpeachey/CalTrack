@@ -11,7 +11,6 @@ import { setCurrentUser } from '../../actions/userActions';
 class Login extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    users: PropTypes.array,
     // currentUser: PropTypes.object,
     setCurrentUser: PropTypes.func,
   };

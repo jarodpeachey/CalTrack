@@ -13,6 +13,8 @@ const history = createBrowserHistory({
   // forceRefresh: true,
 });
 
+const apiURL = process.env.NODE_ENV === 'development' ? 'http://localhost/caltrack_db/api' : '';
+
 const renderApp = () => {
   ReactDOM.render(
     <>
@@ -23,6 +25,7 @@ const renderApp = () => {
               render={props => (
                 <Application
                   {...props}
+                  apiURL={apiURL}
                 />
               )}
             />

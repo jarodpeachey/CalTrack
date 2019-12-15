@@ -21,7 +21,7 @@ import Signup from './components/pages/Signup';
 import Dashboard from './components/pages/Dashboard';
 import Meals from './components/pages/Meals';
 import Workouts from './components/pages/Workouts';
-import { getUsers, getCurrentUser } from './actions/userActions';
+import { getCurrentUser } from './actions/userActions';
 import FooterBar from './components/FooterBar';
 import PageNotFound from './components/pages/PageNotFound';
 
@@ -29,14 +29,12 @@ library.add(faHamburger, faThLarge, faDumbbell);
 
 class Application extends Component {
   static propTypes = {
-    users: PropTypes.array,
-    getUsers: PropTypes.func,
     currentUser: PropTypes.object,
     getCurrentUser: PropTypes.func,
     history: PropTypes.object,
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       showFooterBar: false,
@@ -45,20 +43,19 @@ class Application extends Component {
     this.handleResize = this.handleResize.bind(this);
   }
 
-  componentDidMount () {
-    this.props.getUsers();
+  componentDidMount() {
     this.props.getCurrentUser();
 
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
   }
 
-  shouldComponentUpdate (nextState) {
+  shouldComponentUpdate(nextState) {
     if (this.state.showFooterBar !== nextState.showFooterBar) return true;
     return false;
   }
 
-  handleResize () {
+  handleResize() {
     if (window.innerWidth < 569) {
       this.setState({ showFooterBar: true });
     } else {
@@ -66,9 +63,8 @@ class Application extends Component {
     }
   }
 
-  render () {
-    const { users, currentUser } = this.props;
-    console.log('Users: ', users);
+  render() {
+    const { currentUser, apiURL } = this.props;
     console.log('Current user: ', currentUser);
     console.log('showFooterBar: ', this.state.showFooterBar);
 
@@ -86,21 +82,27 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
-                    <Main {...props} users={users} currentUser={currentUser} />
+                    <Main
+                      {...props}
+                      currentUser={currentUser}
+                      apiURL={apiURL}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                      apiURL={apiURL}
+                    />
+                  )}
                 </>
               )}
             />
@@ -114,21 +116,27 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
-                    <Main {...props} users={users} currentUser={currentUser} />
+                    <Main
+                      {...props}
+                      currentUser={currentUser}
+                      apiURL={apiURL}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                      apiURL={apiURL}
+                    />
+                  )}
                 </>
               )}
             />
@@ -142,21 +150,27 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
-                    <Login {...props} users={users} currentUser={currentUser} />
+                    <Login
+                      {...props}
+                      currentUser={currentUser}
+                      apiURL={apiURL}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                      apiURL={apiURL}
+                    />
+                  )}
                 </>
               )}
             />
@@ -170,25 +184,27 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
                     <Signup
                       {...props}
-                      users={users}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                     />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                      apiURL={apiURL}
+                    />
+                  )}
                 </>
               )}
             />
@@ -202,25 +218,27 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
                     <Dashboard
                       {...props}
-                      users={users}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                     />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                      apiURL={apiURL}
+                    />
+                  )}
                 </>
               )}
             />
@@ -234,21 +252,27 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
-                    <Meals {...props} users={users} currentUser={currentUser} />
+                    <Meals
+                      {...props}
+                      currentUser={currentUser}
+                      apiURL={apiURL}
+                    />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                      apiURL={apiURL}
+                    />
+                  )}
                 </>
               )}
             />
@@ -262,25 +286,27 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
                     <Workouts
                       {...props}
-                      users={users}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                     />
                   </Wrapper>
                   {!this.state.showFooterBar ||
                   (Object.keys(currentUser).length === 0 &&
                     currentUser.constructor === Object) ? null : (
-                      <FooterBar
+                    <FooterBar
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
-                      />
-                    )}
+                      apiURL={apiURL}
+                    />
+                  )}
                 </>
               )}
             />
@@ -292,14 +318,15 @@ class Application extends Component {
                       {...props}
                       pathname={location.pathname}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                       showFooterBar={this.state.showFooterBar}
                     />
                   }
                   <Wrapper>
                     <PageNotFound
                       {...props}
-                      users={users}
                       currentUser={currentUser}
+                      apiURL={apiURL}
                     />
                   </Wrapper>
                 </>
@@ -323,7 +350,4 @@ const mapStateToProps = state => ({
   currentUser: state.userReducer.currentUser,
 });
 
-export default connect(
-  mapStateToProps,
-  { getUsers, getCurrentUser },
-)(Application);
+export default connect(mapStateToProps, { getCurrentUser })(Application);

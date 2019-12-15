@@ -6,118 +6,124 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { addUser, setCurrentUser } from '../../actions/userActions';
+import axios from 'axios';
+import { setCurrentUser } from '../../actions/userActions';
 import { sortByUserId } from '../../utils/arrayFormat';
 
 class Signup extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    users: PropTypes.array,
     currentUser: PropTypes.object,
-    addUser: PropTypes.func,
     setCurrentUser: PropTypes.func,
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       nameValue: undefined,
-      userNameValue: undefined,
+      emailValue: undefined,
       passwordValue: undefined,
       confirmValue: undefined,
+      mainMessage: "",
     };
     this.onNameInputChange = this.onNameInputChange.bind(this);
-    this.onUsernameInputChange = this.onUsernameInputChange.bind(this);
+    this.onEmailInputChange = this.onEmailInputChange.bind(this);
     this.onPasswordInputChange = this.onPasswordInputChange.bind(this);
     this.onConfirmInputChange = this.onConfirmInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setState({
       nameValue: 'Name',
-      userNameValue: 'Username',
+      emailValue: 'Email',
       passwordValue: 'Password',
       confirmValue: 'Confirm',
     });
   }
 
-  shouldComponentUpdate () {
+  shouldComponentUpdate(nextState) {
+    if (this.state.mainMessage !== nextState.mainMessage) return true;
     return false;
   }
 
-  onNameInputChange (e) {
+  onNameInputChange(e) {
     this.setState({ nameValue: e.target.value });
   }
 
-  onUsernameInputChange (e) {
-    this.setState({ userNameValue: e.target.value });
+  onEmailInputChange(e) {
+    this.setState({ emailValue: e.target.value });
   }
 
-  onPasswordInputChange (e) {
+  onPasswordInputChange(e) {
     this.setState({ passwordValue: e.target.value });
   }
 
-  onConfirmInputChange (e) {
+  onConfirmInputChange(e) {
     this.setState({ confirmValue: e.target.value });
   }
 
-  onFormSubmit (e) {
+  onFormSubmit(e) {
     e.preventDefault();
-
-    let userNameTaken = false;
-
-    this.props.users.forEach((user) => {
-      if (user.username === this.state.userNameValue) {
-        userNameTaken = true;
-      } else {
-        userNameTaken = false;
-      }
-    });
 
     if (
       this.state.nameValue !== '' &&
-      this.state.userNameValue !== '' &&
-      this.state.passwordValue === this.state.confirmValue &&
-      !userNameTaken
+      this.state.emailValue !== '' &&
+      this.state.passwordValue === this.state.confirmValue
     ) {
-      let id = 0;
-      if (this.props.users.length) {
-        const sortedUsers = sortByUserId(this.props.users);
-        id = sortedUsers[sortedUsers.length - 1].id + 1;
-      }
+      const userFormData = new FormData();
+      userFormData.set('name', this.state.nameValue);
+      userFormData.set('email', this.state.emailValue);
+      userFormData.set('password', this.state.passwordValue);
 
-      const user = {
-        id,
-        name: this.state.nameValue,
-        username: this.state.userNameValue,
-        password: this.state.passwordValue,
-        meals: [],
-        workouts: [],
-        calories: {
-          lost: 0,
-          gained: 0,
-          net: 0,
+      console.log(this.props.apiURL);
+
+      axios({
+        method: 'POST',
+        url: `${this.props.apiURL}/users/create.php`,
+        config: {
+          headers: { 'Content-Type': 'multipart/form-data' },
         },
-      };
-
-      this.props.addUser(user);
-      this.props.setCurrentUser(user);
-
-      // this.setState({ redirect: true });
-      window.location.href = '/dashboard';
-    } else if (userNameTaken) {
-      alert('Please choose a different username');
-    } else {
-      alert('Please fill in all the fields');
+        data: userFormData,
+      })
+        .then((res) => {
+          console.log('Sent! Response: ', res);
+          if (res.data.email_used) {
+            this.setState({
+              mainMessageType: 'error',
+              mainMessage: (
+                <span>
+                  This email is already connected to an account. You can log in{' '}
+                  <Link to="/login">here.</Link>
+                </span>
+              ),
+            });
+          } else if (res.data.success) {
+            this.setState({
+              mainMessageType: 'success',
+              mainMessage: 'Success! You are now registered.',
+            });
+          } else {
+            this.setState({
+              mainMessageType: 'error',
+              mainMessage: 'There was a problem adding you. Please try again',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log('Error.', err);
+        });
     }
   }
 
-  render () {
+  render() {
     const { classes } = this.props;
 
     return (
       <div>
+        <div>
+          {this.state.mainMessage}
+        </div>
         <FormWrapper>
           <Heading className="mb-sm">Sign Up</Heading>
           <form onSubmit={this.onFormSubmit}>
@@ -132,14 +138,14 @@ class Signup extends Component {
               onChange={this.onNameInputChange}
             />
             <TextField
-              id="username"
+              id="email"
               type="text"
               fullWidth
-              placeholder="Username"
+              placeholder="Email"
               variant="outlined"
               margin="dense"
-              label="Username"
-              onChange={this.onUsernameInputChange}
+              label="Email"
+              onChange={this.onEmailInputChange}
             />
             <TextField
               id="password"
@@ -172,9 +178,7 @@ class Signup extends Component {
             </Button>
           </form>
           <div className="mt-xs">
-            Already have an account?
-            {' '}
-            <Link to="/login">Login</Link>
+            Already have an account? <Link to="/login">Login</Link>
           </div>
         </FormWrapper>
       </div>
@@ -203,8 +207,5 @@ const Heading = styled.h1`
 `;
 
 export default withRouter(
-  connect(
-    null,
-    { addUser, setCurrentUser },
-  )(withStyles(styles)(Signup)),
+  connect(null, { setCurrentUser })(withStyles(styles)(Signup)),
 );
