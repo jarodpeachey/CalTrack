@@ -7,42 +7,42 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../../actions/userActions';
+import axios from 'axios';
 
 class Login extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    // currentUser: PropTypes.object,
     setCurrentUser: PropTypes.func,
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
-      userNameValue: undefined,
+      emailValue: undefined,
       passwordValue: undefined,
-      userNameError: false,
+      emailError: false,
       passwordError: false,
     };
-    this.onUsernameInputChange = this.onUsernameInputChange.bind(this);
+    this.onemailInputChange = this.onemailInputChange.bind(this);
     this.onPasswordInputChange = this.onPasswordInputChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setState({
-      userNameValue: 'Username',
+      emailValue: 'Email',
       passwordValue: 'Password',
     });
   }
 
-  shouldComponentUpdate (nextState) {
+  shouldComponentUpdate(nextState) {
     if (this.state.passwordError !== nextState.passwordError) {
       return true;
     }
-    if (this.state.userNameError !== nextState.userNameError) {
+    if (this.state.emailError !== nextState.emailError) {
       return true;
     }
-    if (this.state.userNameValue !== nextState.userNameValue) {
+    if (this.state.emailValue !== nextState.emailValue) {
       return true;
     }
     if (this.state.passwordValue !== nextState.passwordValue) {
@@ -51,47 +51,65 @@ class Login extends Component {
     return false;
   }
 
-  onUsernameInputChange (e) {
-    this.setState({ userNameValue: e.target.value });
+  onemailInputChange(e) {
+    this.setState({ emailValue: e.target.value });
   }
 
-  onPasswordInputChange (e) {
+  onPasswordInputChange(e) {
     this.setState({ passwordValue: e.target.value });
   }
 
-  onFormSubmit (e) {
+  onFormSubmit(e) {
     e.preventDefault();
 
-    const usersWithSameUsername = this.props.users.filter(
-      user => user.username === this.state.userNameValue,
-    );
+    if (
+      this.state.emailValue === '' ||
+      this.state.passwordValue === ''
+    ) {
+      alert('Please fill in all the fields');
+    } else {
+      const bodyFormData = new FormData();
+      bodyFormData.set('email', this.state.emailValue);
+      bodyFormData.set('password', this.state.passwordValue);
 
-    const usersWithSamePassword = this.props.users.filter(
-      user => user.password === this.state.passwordValue,
-    );
+      axios({
+        method: 'POST',
+        url: `${this.props.apiURL}/users/verify.php`,
+        config: {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        },
+        data: bodyFormData,
+      })
+        .then((res) => {
+          console.log('Sent! Response: ', res);
+          if (res.data.match) {
+            this.setState({
+              mainMessageType: 'success',
+              mainMessage:
+                'Success! You are now being redirected to the welcome page.',
+            });
 
-    if (!usersWithSameUsername.length) {
-      this.setState({ userNameError: true });
+            this.props.setCurrentUser(res.data.user);
+
+            setTimeout(() => {
+              this.props.history.push('/dashboard');
+            }, 1000);
+          } else {
+            this.setState({
+              mainMessageType: 'error',
+              mainMessage: 'Your email/password is incorrect.',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log('Error: ', err);
+        });
     }
-
-    if (!usersWithSamePassword.length) {
-      this.setState({ passwordError: true });
-    }
-
-    this.props.users.forEach((user) => {
-      if (
-        user.username === this.state.userNameValue &&
-        user.password === this.state.passwordValue
-      ) {
-        this.props.setCurrentUser(user);
-        window.location.href = '/dashboard';
-      }
-    });
   }
 
-  render () {
+  render() {
     const { classes } = this.props;
-    const { userNameError, passwordError } = this.state;
+    const { emailError, passwordError } = this.state;
 
     return (
       <div>
@@ -99,15 +117,15 @@ class Login extends Component {
           <Heading className="mb-sm">Log In</Heading>
           <form onSubmit={this.onFormSubmit}>
             <TextField
-              error={userNameError}
-              id="username"
+              error={emailError}
+              id="email"
               type="text"
               fullWidth
-              placeholder="Username"
+              placeholder="Email"
               variant="outlined"
               margin="dense"
-              label="Username"
-              onChange={this.onUsernameInputChange}
+              label="Email"
+              onChange={this.onemailInputChange}
             />
             <TextField
               error={passwordError}
@@ -131,9 +149,7 @@ class Login extends Component {
             </Button>
           </form>
           <div className="mt-xs">
-            Don't have an account?
-            {' '}
-            <Link to="/signup">Signup</Link>
+            Don't have an account? <Link to="/signup">Signup</Link>
           </div>
         </FormWrapper>
       </div>
@@ -162,8 +178,5 @@ const Heading = styled.h1`
 `;
 
 export default withRouter(
-  connect(
-    null,
-    { setCurrentUser },
-  )(withStyles(styles)(Login)),
+  connect(null, { setCurrentUser })(withStyles(styles)(Login)),
 );

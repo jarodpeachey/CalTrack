@@ -8,13 +8,13 @@ import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { setCurrentUser } from '../../actions/userActions';
-import { sortByUserId } from '../../utils/arrayFormat';
 
 class Signup extends Component {
   static propTypes = {
     classes: PropTypes.object,
     currentUser: PropTypes.object,
     setCurrentUser: PropTypes.func,
+    apiURL: PropTypes.string,
   };
 
   constructor(props) {
@@ -24,7 +24,7 @@ class Signup extends Component {
       emailValue: undefined,
       passwordValue: undefined,
       confirmValue: undefined,
-      mainMessage: "",
+      mainMessage: '',
     };
     this.onNameInputChange = this.onNameInputChange.bind(this);
     this.onEmailInputChange = this.onEmailInputChange.bind(this);
@@ -87,7 +87,7 @@ class Signup extends Component {
         data: userFormData,
       })
         .then((res) => {
-          console.log('Sent! Response: ', res);
+          console.log('Sent! Response: ', res.data);
           if (res.data.email_used) {
             this.setState({
               mainMessageType: 'error',
@@ -121,9 +121,7 @@ class Signup extends Component {
 
     return (
       <div>
-        <div>
-          {this.state.mainMessage}
-        </div>
+        <div>{this.state.mainMessage}</div>
         <FormWrapper>
           <Heading className="mb-sm">Sign Up</Heading>
           <form onSubmit={this.onFormSubmit}>
