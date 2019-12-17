@@ -65,8 +65,8 @@ class Application extends Component {
 
   render() {
     const { currentUser, apiURL } = this.props;
-    console.log('Current user: ', currentUser);
-    console.log('showFooterBar: ', this.state.showFooterBar);
+    // console.log('Current user: ', currentUser);
+    // console.log('showFooterBar: ', this.state.showFooterBar);
 
     return (
       <MuiThemeProvider theme={theme}>

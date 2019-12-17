@@ -61,7 +61,7 @@ class MealItemCompressed extends Component {
         onMouseEnter={this.setHoverTrue}
         onMouseLeave={this.setHoverFalse}
       >
-        <strong>{meal.name}</strong>
+        <strong>{meal.mealName}</strong>
         <div className="float-right">
           {hover ? (
             <Link
@@ -86,7 +86,7 @@ class MealItemCompressed extends Component {
               }}
             >
               <CaloriesCount>
-                {meal.calories}
+                {meal.mealCalories}
                 {' '}
 calories
               </CaloriesCount>

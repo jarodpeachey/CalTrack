@@ -73,13 +73,13 @@ class WorkoutItem extends Component {
           <>
             <WorkoutContainer>
               <FlexContainer>
-                <Name>{workout.name}</Name>
+                <Name>{workout.workoutName}</Name>
                 <CaloriesCount>
-                  {workout.calories}
+                  {workout.workoutCalories}
                   {' '}
 calories
                 </CaloriesCount>
-                {workout.description !== '' ? (
+                {workout.workoutDescription !== '' ? (
                   <IconButton
                     onClick={this.toggleWorkoutInformation}
                     classes={{ root: classes.iconButtonSmall }}
@@ -97,10 +97,10 @@ calories
                 </CloseIcon>
               </FlexContainer>
             </WorkoutContainer>
-            {workout.description !== '' ? (
+            {workout.workoutDescription !== '' ? (
               <InformationWrapper>
                 <Seperator />
-                <CollectionItem>{workout.description}</CollectionItem>
+                <CollectionItem>{workout.workoutDescription}</CollectionItem>
               </InformationWrapper>
             ) : null}
           </>
@@ -108,13 +108,13 @@ calories
           <>
             <WorkoutContainerOutlined>
               <FlexContainer>
-                <Name>{workout.name}</Name>
+                <Name>{workout.workoutName}</Name>
                 <CaloriesCount>
-                  {workout.calories}
+                  {workout.workoutCalories}
                   {' '}
 calories
                 </CaloriesCount>
-                {workout.description !== '' ? (
+                {workout.workoutDescription !== '' ? (
                   <IconButton
                     onClick={this.toggleWorkoutInformation}
                     classes={{ root: classes.iconButtonSmall }}
@@ -132,10 +132,10 @@ calories
                 </CloseIcon>
               </FlexContainer>
             </WorkoutContainerOutlined>
-            {hasBeenOpened && workout.description !== '' ? (
+            {hasBeenOpened && workout.workoutDescription !== '' ? (
               <InformationWrapperGhost>
                 <Seperator />
-                <CollectionItem>{workout.description}</CollectionItem>
+                <CollectionItem>{workout.workoutDescription}</CollectionItem>
               </InformationWrapperGhost>
             ) : (
               <Outline />

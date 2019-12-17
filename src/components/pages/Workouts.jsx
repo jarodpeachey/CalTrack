@@ -146,7 +146,7 @@ class Workouts extends Component {
 
     if (workoutName !== '' && workoutCalories !== '') {
       this.props.addWorkout(workout);
-      // this.props.updateCalories('add', workout.calories);
+      // this.props.updateCalories('add', workout.workoutCalories);
 
       this.setState({
         workoutName: '',

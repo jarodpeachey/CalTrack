@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import { Link, withRouter, Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { withStyles, MenuItem, Menu } from '@material-ui/core';
 import Person from '@material-ui/icons/Person';
 import { connect } from 'react-redux';
-import { removeCurrentUser, deleteUser } from '../actions/userActions';
+import { removeCurrentUser } from '../actions/userActions';
 
 class Header extends Component {
   static propTypes = {
@@ -57,8 +57,6 @@ class Header extends Component {
   }
 
   deleteAccount () {
-    this.props.deleteUser(this.props.currentUser.id);
-
     window.location.href = '/signup';
   }
 
@@ -68,7 +66,7 @@ class Header extends Component {
 
     return (
       <span>
-        {!this.props.currentUser.username ? (
+        {!this.props.currentUser.email ? (
           <Wrapper>
             <div className="container py-xxs">
               <Row>
@@ -276,5 +274,5 @@ const IconContainer = styled.div`
 
 export default connect(
   null,
-  { removeCurrentUser, deleteUser },
+  { removeCurrentUser },
 )(withRouter(withStyles(styles)(Header)));

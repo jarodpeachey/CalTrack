@@ -73,13 +73,13 @@ class MealItem extends Component {
           <>
             <MealContainer>
               <FlexContainer>
-                <Name>{meal.name}</Name>
+                <Name>{meal.mealName}</Name>
                 <CaloriesCount>
-                  {meal.calories}
+                  {meal.mealCalories}
                   {' '}
 calories
                 </CaloriesCount>
-                {meal.description !== '' ? (
+                {meal.mealDescription !== '' ? (
                   <IconButton
                     onClick={this.toggleMealInformation}
                     classes={{ root: classes.iconButtonSmall }}
@@ -97,10 +97,10 @@ calories
                 </CloseIcon>
               </FlexContainer>
             </MealContainer>
-            {meal.description !== '' ? (
+            {meal.mealDescription !== '' ? (
               <InformationWrapper>
                 <Seperator />
-                <CollectionItem>{meal.description}</CollectionItem>
+                <CollectionItem>{meal.mealDescription}</CollectionItem>
               </InformationWrapper>
             ) : null}
           </>
@@ -108,13 +108,13 @@ calories
           <>
             <MealContainerOutlined>
               <FlexContainer>
-                <Name>{meal.name}</Name>
+                <Name>{meal.mealName}</Name>
                 <CaloriesCount>
-                  {meal.calories}
+                  {meal.mealCalories}
                   {' '}
 calories
                 </CaloriesCount>
-                {meal.description !== '' ? (
+                {meal.mealDescription !== '' ? (
                   <IconButton
                     onClick={this.toggleMealInformation}
                     classes={{ root: classes.iconButtonSmall }}
@@ -132,10 +132,10 @@ calories
                 </CloseIcon>
               </FlexContainer>
             </MealContainerOutlined>
-            {hasBeenOpened && meal.description !== '' ? (
+            {hasBeenOpened && meal.mealDescription !== '' ? (
               <InformationWrapperGhost>
                 <Seperator />
-                <CollectionItem>{meal.description}</CollectionItem>
+                <CollectionItem>{meal.mealDescription}</CollectionItem>
               </InformationWrapperGhost>
             ) : (
               <Outline />

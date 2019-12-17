@@ -62,10 +62,7 @@ class Login extends Component {
   onFormSubmit(e) {
     e.preventDefault();
 
-    if (
-      this.state.emailValue === '' ||
-      this.state.passwordValue === ''
-    ) {
+    if (this.state.emailValue === '' || this.state.passwordValue === '') {
       alert('Please fill in all the fields');
     } else {
       const bodyFormData = new FormData();

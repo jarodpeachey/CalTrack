@@ -11,8 +11,9 @@ import {
 import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
+import axios from 'axios';
 import { addMeal, editMeal, deleteMeal } from '../../actions/userActions';
-import { sortByUserId, sortByDate } from '../../utils/arrayFormat';
+// import { sortByDate } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import MealItem from '../MealItem';
 
@@ -58,18 +59,21 @@ class Meals extends Component {
   }
 
   componentDidMount () {
-    if (Object.keys(this.props.currentUser).length === 0 && this.props.currentUser.constructor === Object) {
+    if (
+      Object.keys(this.props.currentUser).length === 0 &&
+      this.props.currentUser.constructor === Object
+    ) {
       this.setState({ meals: []});
     } else {
-      this.setState({ meals: sortByDate(this.props.currentUser.meals) });
+      this.setState({ meals: this.props.currentUser.meals });
     }
 
     if (this.props.location.state) {
       const { mealToEdit } = this.props.location.state;
       this.setState({
-        mealName: mealToEdit.name,
-        mealCalories: mealToEdit.calories,
-        mealDescription: mealToEdit.description,
+        mealName: mealToEdit.mealName,
+        mealCalories: mealToEdit.mealCalories,
+        mealDescription: mealToEdit.mealDescription,
         mode: 'editMealMode',
         mealToEdit,
       });
@@ -119,35 +123,49 @@ class Meals extends Component {
   }
 
   submitForm () {
-    const { mealName, mealCalories, mealDescription, meals } = this.state;
-    let date = new Date();
-    date = {
-      month: date.getMonth(),
-      day: date.getDay(),
-      date: date.getDate(),
-      year: date.getFullYear(),
-      UTC: date.getTime(),
-    };
-
-    let id = 0;
-    if (meals.length) {
-      const sortedMeals = sortByUserId(meals);
-
-      id = sortedMeals[sortedMeals.length - 1].id + 1;
-    }
-
-    const meal = {
-      id,
-      name: mealName,
-      calories: JSON.parse(mealCalories),
-      description: mealDescription,
-      date,
-    };
+    const { mealName, mealCalories, mealDescription } = this.state;
 
     if (mealName !== '' && mealCalories !== '') {
-      this.props.addMeal(meal);
-      // this.props.updateCalories('add', meal.calories);
+      const bodyFormData = new FormData();
+      bodyFormData.set('mealName', mealName);
+      bodyFormData.set('mealCalories', mealCalories);
+      bodyFormData.set('mealDescription', mealDescription);
+      bodyFormData.set('userID', this.props.currentUser.userID);
 
+      const meal = {
+        mealName,
+        mealCalories,
+        mealDescription,
+      };
+
+      axios({
+        method: 'POST',
+        url: `${this.props.apiURL}/meals/add.php`,
+        config: {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        },
+        data: bodyFormData,
+      })
+        .then((res) => {
+          console.log('Sent! Response: ', res);
+          if (res.data.success) {
+            this.setState({
+              mainMessageType: 'success',
+              mainMessage:
+                'Success! Your meal has been added.',
+            });
+
+            this.props.addMeal(meal);
+          } else {
+            this.setState({
+              mainMessageType: 'error',
+              mainMessage: 'There was an error adding your meal. Check your internet connection.',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log('Error: ', err);
+        });
       this.setState({
         mealName: '',
         mealCalories: '',
@@ -162,19 +180,19 @@ class Meals extends Component {
     this.setState({ displayNoMealsNotif: false });
   }
 
-  switchToEditMealMode (id) {
+  switchToEditMealMode (mealName, mealCalories) {
     let mealToEdit = {};
 
     this.state.meals.forEach((meal) => {
-      if (meal.id === id) {
+      if (meal.mealName === mealName && meal.mealCalories === mealCalories) {
         mealToEdit = meal;
       }
     });
 
     this.setState({
-      mealName: mealToEdit.name,
-      mealCalories: mealToEdit.calories,
-      mealDescription: mealToEdit.description,
+      mealName: mealToEdit.mealName,
+      mealCalories: mealToEdit.mealCalories,
+      mealDescription: mealToEdit.mealDescription,
       mode: 'editMealMode',
       mealToEdit,
     });
@@ -419,7 +437,7 @@ class Meals extends Component {
                       <MealItem
                       key={`mealItem-${meal.id}`}
                       meal={meal}
-                      switchToEditMealMode={this.switchToEditMealMode}
+                      switchToEditMealMode={() => this.switchToEditMealMode(meal.mealName, meal.mealCalories)}
                       />
                     ))}
                   </ul>
@@ -493,7 +511,6 @@ const MobileUpdateButton = styled.span`
   height: 24px !important;
 `;
 
-export default connect(
-  null,
-  { addMeal, editMeal, deleteMeal },
-)(withStyles(styles)(Meals));
+export default connect(null, { addMeal, editMeal, deleteMeal })(
+  withStyles(styles)(Meals),
+);

@@ -30,7 +30,7 @@ const updateCalories = (state, type, actionPayload) => {
     case 'editMeal':
       currentUserMeals.forEach((meal) => {
         if (meal.id === actionPayload.id) {
-          gained -= meal.calories;
+          gained -= meal.mealCalories;
         }
       });
       gained += actionPayload.calories;
@@ -38,7 +38,7 @@ const updateCalories = (state, type, actionPayload) => {
     case 'deleteMeal':
       currentUserMeals.forEach((meal) => {
         if (meal.id === actionPayload.id) {
-          gained -= meal.calories;
+          gained -= meal.mealCalories;
         }
       });
       break;
@@ -48,7 +48,7 @@ const updateCalories = (state, type, actionPayload) => {
     case 'editWorkout':
       currentUserWorkouts.forEach((workout) => {
         if (workout.id === actionPayload.id) {
-          lost -= workout.calories;
+          lost -= workout.workoutCalories;
         }
       });
       lost += actionPayload.calories;
@@ -56,7 +56,7 @@ const updateCalories = (state, type, actionPayload) => {
     case 'deleteWorkout':
       currentUserWorkouts.forEach((workout) => {
         if (workout.id === actionPayload.id) {
-          lost -= workout.calories;
+          lost -= workout.workoutCalories;
         }
       });
       break;
@@ -146,31 +146,46 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentUser: {
           ...state.currentUser,
-          meals: removeArrayItem([...state.currentUser.meals], action.payload.id),
+          meals: removeArrayItem(
+            [...state.currentUser.meals],
+            action.payload.id,
+          ),
           calories: updateCalories(state, 'deleteMeal', action.payload),
-        },      };
+        },
+      };
     case ADD_WORKOUT:
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          workouts: addArrayItem([...state.currentUser.workouts], action.payload),
+          workouts: addArrayItem(
+            [...state.currentUser.workouts],
+            action.payload,
+          ),
           calories: updateCalories(state, 'addWorkout', action.payload),
-        },      };
+        },
+      };
     case EDIT_WORKOUT:
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          workouts: updateArrayItem([...state.currentUser.workouts], action.payload),
+          workouts: updateArrayItem(
+            [...state.currentUser.workouts],
+            action.payload,
+          ),
           calories: updateCalories(state, 'editWorkout', action.payload),
-        },      };
+        },
+      };
     case DELETE_WORKOUT:
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          workouts: removeArrayItem([...state.currentUser.workouts], action.payload.id),
+          workouts: removeArrayItem(
+            [...state.currentUser.workouts],
+            action.payload.id,
+          ),
           calories: updateCalories(state, 'deleteWorkout', action.payload),
         },
       };
