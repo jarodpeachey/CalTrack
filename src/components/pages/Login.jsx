@@ -89,7 +89,20 @@ class Login extends Component {
                 'Success! You are now being redirected to the welcome page.',
             });
 
-            this.props.setCurrentUser(res.data.user);
+            const user = { ...res.data.user };
+
+            if (res.data.user.meals && res.data.user.workouts) {
+              // Nothing
+            } else if (res.data.user.workouts) {
+              user.meals = [];
+            } else if (res.data.user.meals) {
+              user.workouts = [];
+            } else {
+              user.workouts = [];
+              user.meals = [];
+            }
+
+            this.props.setCurrentUser(user);
 
             setTimeout(() => {
               this.props.history.push('/dashboard');
