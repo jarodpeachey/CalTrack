@@ -12,7 +12,7 @@ import MealItemCompressed from '../MealItemCompressed';
 
 class Dashboard extends Component {
   static propTypes = {
-    currentUser: PropTypes.object,
+    user: PropTypes.object,
     classes: PropTypes.object,
   };
 
@@ -25,7 +25,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount () {
-    const { caloriesGained, caloriesLost, netCalories, meals, workouts } = this.props.currentUser;
+    const { caloriesGained, caloriesLost, netCalories, meals, workouts } = this.props.user;
     this.setState({
       meals,
       workouts,
@@ -36,11 +36,11 @@ class Dashboard extends Component {
   }
 
   componentWillReceiveProps (prevProps) {
-    if (prevProps.currentUser.meals !== this.props.currentUser.meals) {
-      this.setState({ meals: this.props.currentUser.meals });
+    if (prevProps.user.meals !== this.props.user.meals) {
+      this.setState({ meals: this.props.user.meals });
     }
-    if (prevProps.currentUser.workouts !== this.props.currentUser.workouts) {
-      this.setState({ workouts: this.props.currentUser.workouts });
+    if (prevProps.user.workouts !== this.props.user.workouts) {
+      this.setState({ workouts: this.props.user.workouts });
     }
   }
 
@@ -49,12 +49,12 @@ class Dashboard extends Component {
   }
 
   render () {
-    const { classes, currentUser } = this.props;
+    const { classes, user } = this.props;
     const { meals, workouts, caloriesGained, caloriesLost, netCalories } = this.state;
 
     return (
       <>
-        {Object.keys(currentUser).length === 0 && currentUser.constructor === Object ? (
+        {Object.keys(user).length === 0 && user.constructor === Object ? (
           <div className="container">
             <div className="center-text">
               <Card className="card border no-shadow px-sm py-sm mb-sm">
@@ -75,7 +75,7 @@ class Dashboard extends Component {
                 <Card className="card border no-shadow px-sm py-sm mb-sm">
                   <h4 className="m-none mb-xs">
                     Welcome,
-                    {` ${currentUser.name}!`}
+                    {` ${user.name}!`}
                   </h4>
                   <p className="m-none">
                     Get started with CalTrack by adding a meal or a workout!

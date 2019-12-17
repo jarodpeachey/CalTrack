@@ -12,23 +12,23 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  currentUser: {},
+  user: {},
 };
 
 const updateCalories = (state, type, actionPayload) => {
-  let currentUserCalories = { ...state.currentUser.calories };
+  let userCalories = { ...state.user.calories };
 
-  const currentUserMeals = [...state.currentUser.meals];
-  const currentUserWorkouts = [...state.currentUser.workouts];
+  const userMeals = [...state.user.meals];
+  const userWorkouts = [...state.user.workouts];
 
-  let { gained, lost, net } = currentUserCalories;
+  let { gained, lost, net } = userCalories;
 
   switch (type) {
     case 'addMeal':
       gained += actionPayload.calories;
       break;
     case 'editMeal':
-      currentUserMeals.forEach((meal) => {
+      userMeals.forEach((meal) => {
         if (meal.id === actionPayload.id) {
           gained -= meal.mealCalories;
         }
@@ -36,7 +36,7 @@ const updateCalories = (state, type, actionPayload) => {
       gained += actionPayload.calories;
       break;
     case 'deleteMeal':
-      currentUserMeals.forEach((meal) => {
+      userMeals.forEach((meal) => {
         if (meal.id === actionPayload.id) {
           gained -= meal.mealCalories;
         }
@@ -46,7 +46,7 @@ const updateCalories = (state, type, actionPayload) => {
       lost += actionPayload.calories;
       break;
     case 'editWorkout':
-      currentUserWorkouts.forEach((workout) => {
+      userWorkouts.forEach((workout) => {
         if (workout.id === actionPayload.id) {
           lost -= workout.workoutCalories;
         }
@@ -54,7 +54,7 @@ const updateCalories = (state, type, actionPayload) => {
       lost += actionPayload.calories;
       break;
     case 'deleteWorkout':
-      currentUserWorkouts.forEach((workout) => {
+      userWorkouts.forEach((workout) => {
         if (workout.id === actionPayload.id) {
           lost -= workout.workoutCalories;
         }
@@ -66,14 +66,14 @@ const updateCalories = (state, type, actionPayload) => {
 
   net = gained - lost;
 
-  currentUserCalories = {
+  userCalories = {
     net,
     gained,
     lost,
   };
 
   return {
-    ...currentUserCalories,
+    ...userCalories,
   };
 };
 
@@ -111,43 +111,43 @@ const userReducer = (state = initialState, action) => {
     case GET_CURRENT_USER:
       return {
         ...state,
-        currentUser: state.currentUser,
+        user: state.user,
       };
     case SET_CURRENT_USER:
       return {
         ...state,
-        currentUser: action.payload,
+        user: action.payload,
       };
     case REMOVE_CURRENT_USER:
       return {
         ...state,
-        currentUser: {},
+        user: {},
       };
     case ADD_MEAL:
       return {
         ...state,
-        currentUser: {
-          ...state.currentUser,
-          meals: addArrayItem([...state.currentUser.meals], action.payload),
+        user: {
+          ...state.user,
+          meals: addArrayItem([...state.user.meals], action.payload),
           calories: updateCalories(state, 'addMeal', action.payload),
         },
       };
     case EDIT_MEAL:
       return {
         ...state,
-        currentUser: {
-          ...state.currentUser,
-          meals: updateArrayItem([...state.currentUser.meals], action.payload),
+        user: {
+          ...state.user,
+          meals: updateArrayItem([...state.user.meals], action.payload),
           calories: updateCalories(state, 'editMeal', action.payload),
         },
       };
     case DELETE_MEAL:
       return {
         ...state,
-        currentUser: {
-          ...state.currentUser,
+        user: {
+          ...state.user,
           meals: removeArrayItem(
-            [...state.currentUser.meals],
+            [...state.user.meals],
             action.payload.id,
           ),
           calories: updateCalories(state, 'deleteMeal', action.payload),
@@ -156,10 +156,10 @@ const userReducer = (state = initialState, action) => {
     case ADD_WORKOUT:
       return {
         ...state,
-        currentUser: {
-          ...state.currentUser,
+        user: {
+          ...state.user,
           workouts: addArrayItem(
-            [...state.currentUser.workouts],
+            [...state.user.workouts],
             action.payload,
           ),
           calories: updateCalories(state, 'addWorkout', action.payload),
@@ -168,10 +168,10 @@ const userReducer = (state = initialState, action) => {
     case EDIT_WORKOUT:
       return {
         ...state,
-        currentUser: {
-          ...state.currentUser,
+        user: {
+          ...state.user,
           workouts: updateArrayItem(
-            [...state.currentUser.workouts],
+            [...state.user.workouts],
             action.payload,
           ),
           calories: updateCalories(state, 'editWorkout', action.payload),
@@ -180,10 +180,10 @@ const userReducer = (state = initialState, action) => {
     case DELETE_WORKOUT:
       return {
         ...state,
-        currentUser: {
-          ...state.currentUser,
+        user: {
+          ...state.user,
           workouts: removeArrayItem(
-            [...state.currentUser.workouts],
+            [...state.user.workouts],
             action.payload.id,
           ),
           calories: updateCalories(state, 'deleteWorkout', action.payload),

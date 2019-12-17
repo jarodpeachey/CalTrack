@@ -7,13 +7,13 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setCurrentUser } from '../../actions/userActions';
+import { setUser } from '../../actions/userActions';
 
 class Signup extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    currentUser: PropTypes.object,
-    setCurrentUser: PropTypes.func,
+    user: PropTypes.object,
+    setUser: PropTypes.func,
     apiURL: PropTypes.string,
   };
 
@@ -205,5 +205,5 @@ const Heading = styled.h1`
 `;
 
 export default withRouter(
-  connect(null, { setCurrentUser })(withStyles(styles)(Signup)),
+  connect(null, { setUser })(withStyles(styles)(Signup)),
 );

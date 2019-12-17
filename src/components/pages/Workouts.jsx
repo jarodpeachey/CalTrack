@@ -26,7 +26,7 @@ const errorTheme = createMuiTheme({
 
 class Workouts extends Component {
   static propTypes = {
-    currentUser: PropTypes.object,
+    user: PropTypes.object,
     classes: PropTypes.object,
     addWorkout: PropTypes.func,
     editWorkout: PropTypes.func,
@@ -58,10 +58,10 @@ class Workouts extends Component {
   }
 
   componentDidMount () {
-    if (Object.keys(this.props.currentUser).length === 0 && this.props.currentUser.constructor === Object) {
+    if (Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object) {
       this.setState({ workouts: []});
     } else {
-      this.setState({ workouts: sortByDate(this.props.currentUser.workouts) });
+      this.setState({ workouts: sortByDate(this.props.user.workouts) });
     }
 
     if (this.props.location.state) {
@@ -77,7 +77,7 @@ class Workouts extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.setState({ workouts: nextProps.currentUser.workouts });
+    this.setState({ workouts: nextProps.user.workouts });
   }
 
   shouldComponentUpdate (nextState) {
@@ -249,7 +249,7 @@ class Workouts extends Component {
       workouts,
       submitButtonActive,
     } = this.state;
-    const { classes, currentUser } = this.props;
+    const { classes, user } = this.props;
 
     let buttonsGroup = '';
 
@@ -331,8 +331,8 @@ class Workouts extends Component {
 
     return (
       <>
-        {Object.keys(currentUser).length === 0 &&
-        currentUser.constructor === Object ? (
+        {Object.keys(user).length === 0 &&
+        user.constructor === Object ? (
           <div className="container">
             <div className="center-text">
               <Card className="card border no-shadow px-sm py-sm mb-sm">

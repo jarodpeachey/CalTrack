@@ -1,35 +1,42 @@
 import axios from 'axios';
 import 'babel-polyfill';
 import {
-  GET_CURRENT_USER,
-  SET_CURRENT_USER,
+  GET_USER,
+  SET_USER,
   ADD_MEAL,
   EDIT_MEAL,
   DELETE_MEAL,
   ADD_WORKOUT,
   EDIT_WORKOUT,
   DELETE_WORKOUT,
-  REMOVE_CURRENT_USER,
+  REMOVE_USER,
+  UPDATE_USER,
   // UPDATE_CALORIES,
 } from './types';
 // import { persistor } from '../Store';
 
-export const getCurrentUser = () => (dispatch) => {
+export const getUser = () => (dispatch) => {
   dispatch({
-    type: GET_CURRENT_USER,
+    type: GET_USER,
   });
 };
 
-export const setCurrentUser = user => (dispatch) => {
+export const setUser = user => (dispatch) => {
   dispatch({
-    type: SET_CURRENT_USER,
+    type: SET_USER,
     payload: user,
   });
 };
 
-export const removeCurrentUser = () => (dispatch) => {
+export const removeUser = () => (dispatch) => {
   dispatch({
-    type: REMOVE_CURRENT_USER,
+    type: REMOVE_USER,
+  });
+};
+
+export const updateUser = () => (dispatch) => {
+  dispatch({
+    type: REMOVE_USER,
   });
 };
 

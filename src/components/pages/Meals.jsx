@@ -12,7 +12,7 @@ import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
 import axios from 'axios';
-import { addMeal, editMeal, deleteMeal } from '../../actions/userActions';
+import { addMeal, editMeal, deleteMeal, updateUser } from '../../actions/userActions';
 // import { sortByDate } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import MealItem from '../MealItem';
@@ -27,7 +27,7 @@ const errorTheme = createMuiTheme({
 
 class Meals extends Component {
   static propTypes = {
-    currentUser: PropTypes.object,
+    user: PropTypes.object,
     classes: PropTypes.object,
     addMeal: PropTypes.func,
     editMeal: PropTypes.func,
@@ -60,12 +60,12 @@ class Meals extends Component {
 
   componentDidMount () {
     if (
-      Object.keys(this.props.currentUser).length === 0 &&
-      this.props.currentUser.constructor === Object
+      Object.keys(this.props.user).length === 0 &&
+      this.props.user.constructor === Object
     ) {
       this.setState({ meals: []});
     } else {
-      this.setState({ meals: this.props.currentUser.meals });
+      this.setState({ meals: this.props.user.meals });
     }
 
     if (this.props.location.state) {
@@ -81,7 +81,7 @@ class Meals extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.setState({ meals: nextProps.currentUser.meals });
+    this.setState({ meals: nextProps.user.meals });
   }
 
   shouldComponentUpdate (nextState) {
@@ -130,7 +130,7 @@ class Meals extends Component {
       bodyFormData.set('mealName', mealName);
       bodyFormData.set('mealCalories', mealCalories);
       bodyFormData.set('mealDescription', mealDescription);
-      bodyFormData.set('userID', this.props.currentUser.userID);
+      bodyFormData.set('userID', this.props.user.userID);
 
       const meal = {
         mealName,
@@ -156,6 +156,7 @@ class Meals extends Component {
             });
 
             this.props.addMeal(meal);
+            this.props.updateUser();
           } else {
             this.setState({
               mainMessageType: 'error',
@@ -267,7 +268,7 @@ class Meals extends Component {
       meals,
       submitButtonActive,
     } = this.state;
-    const { classes, currentUser } = this.props;
+    const { classes, user } = this.props;
 
     let buttonsGroup = '';
 
@@ -349,8 +350,8 @@ class Meals extends Component {
 
     return (
       <>
-        {Object.keys(currentUser).length === 0 &&
-        currentUser.constructor === Object ? (
+        {Object.keys(user).length === 0 &&
+        user.constructor === Object ? (
           <div className="container">
             <div className="center-text">
               <Card className="card border no-shadow px-sm py-sm mb-sm">
@@ -511,6 +512,6 @@ const MobileUpdateButton = styled.span`
   height: 24px !important;
 `;
 
-export default connect(null, { addMeal, editMeal, deleteMeal })(
+export default connect(null, { addMeal, editMeal, deleteMeal, updateUser })(
   withStyles(styles)(Meals),
 );

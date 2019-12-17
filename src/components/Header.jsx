@@ -6,7 +6,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { withStyles, MenuItem, Menu } from '@material-ui/core';
 import Person from '@material-ui/icons/Person';
 import { connect } from 'react-redux';
-import { removeCurrentUser } from '../actions/userActions';
+import { removeUser } from '../actions/userActions';
 
 class Header extends Component {
   static propTypes = {
@@ -51,7 +51,7 @@ class Header extends Component {
   }
 
   logout () {
-    this.props.removeCurrentUser();
+    this.props.removeUser();
 
     window.location.href = '/login';
   }
@@ -66,7 +66,7 @@ class Header extends Component {
 
     return (
       <span>
-        {!this.props.currentUser.email ? (
+        {!this.props.user.email ? (
           <Wrapper>
             <div className="container py-xxs">
               <Row>
@@ -274,5 +274,5 @@ const IconContainer = styled.div`
 
 export default connect(
   null,
-  { removeCurrentUser },
+  { removeUser },
 )(withRouter(withStyles(styles)(Header)));

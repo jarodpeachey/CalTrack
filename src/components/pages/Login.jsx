@@ -6,13 +6,13 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { setCurrentUser } from '../../actions/userActions';
+import { setUser } from '../../actions/userActions';
 import axios from 'axios';
 
 class Login extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    setCurrentUser: PropTypes.func,
+    setUser: PropTypes.func,
   };
 
   constructor(props) {
@@ -99,7 +99,7 @@ class Login extends Component {
               user.meals = [];
             }
 
-            this.props.setCurrentUser(user);
+            this.props.setUser(user);
 
             setTimeout(() => {
               this.props.history.push('/dashboard');
@@ -188,5 +188,5 @@ const Heading = styled.h1`
 `;
 
 export default withRouter(
-  connect(null, { setCurrentUser })(withStyles(styles)(Login)),
+  connect(null, { setUser })(withStyles(styles)(Login)),
 );
