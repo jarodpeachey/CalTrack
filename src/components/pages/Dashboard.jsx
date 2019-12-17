@@ -25,10 +25,13 @@ class Dashboard extends Component {
   }
 
   componentDidMount () {
+    const { caloriesGained, caloriesLost, netCalories, meals, workouts } = this.props.currentUser;
     this.setState({
-      meals: this.props.currentUser.meals,
-      workouts: this.props.currentUser.workouts,
-      calories: this.props.currentUser.calories,
+      meals,
+      workouts,
+      caloriesGained,
+      caloriesLost,
+      netCalories,
     });
   }
 
@@ -47,7 +50,7 @@ class Dashboard extends Component {
 
   render () {
     const { classes, currentUser } = this.props;
-    const { meals, workouts, calories } = this.state;
+    const { meals, workouts, caloriesGained, caloriesLost, netCalories } = this.state;
 
     return (
       <>
@@ -106,7 +109,7 @@ class Dashboard extends Component {
                 </Card>
               ) : (
                 <div className="row">
-                  {calories && (
+                  {netCalories && (
                     <div className="col col-12">
                       <Card className="card border px-sm pt-lg pb-xxs mb-sm no-shadow position-relative">
                         <Title fullWidth className="title mb-none">
@@ -115,19 +118,19 @@ class Dashboard extends Component {
                         <div className="mt-sm row mobile-lg collection">
                           <div className="col col-4">
                             <CollectionItem>
-                              <CalorieNumber>{calories.gained}</CalorieNumber>
+                              <CalorieNumber>{caloriesGained}</CalorieNumber>
                               <CalorieTitle>Calories Gained</CalorieTitle>
                             </CollectionItem>
                           </div>
                           <div className="col col-4">
                             <CollectionItem>
-                              <CalorieNumber>{calories.lost}</CalorieNumber>
+                              <CalorieNumber>{caloriesLost}</CalorieNumber>
                               <CalorieTitle>Calories Lost</CalorieTitle>
                             </CollectionItem>
                           </div>
                           <div className="col col-4">
                             <CollectionItem>
-                              <CalorieNumber>{calories.net}</CalorieNumber>
+                              <CalorieNumber>{netCalories}</CalorieNumber>
                               <CalorieTitle>Net Calories</CalorieTitle>
                             </CollectionItem>
                           </div>
@@ -233,7 +236,6 @@ class Dashboard extends Component {
           </Wrapper>
         )}
       </>
-
     );
   }
 }
