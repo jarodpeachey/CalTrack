@@ -80,14 +80,14 @@ class Signup extends Component {
 
       axios({
         method: 'POST',
-        url: `${this.props.apiURL}/users/create.php`,
+        url: `${this.props.apiURL}/signup.php`,
         config: {
           headers: { 'Content-Type': 'multipart/form-data' },
         },
         data: userFormData,
       })
         .then((res) => {
-          console.log('Sent! Response: ', res.data);
+          console.log('Sent! Response: ', res);
           if (res.data.email_used) {
             this.setState({
               mainMessageType: 'error',

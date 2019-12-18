@@ -1,6 +1,7 @@
-export const GET_CURRENT_USER = 'GET_CURRENT_USER';
-export const SET_CURRENT_USER = 'SET_CURRENT_USER';
-export const REMOVE_CURRENT_USER = 'REMOVE_CURRENT_USER';
+export const GET_USER = 'GET_USER';
+export const SET_USER = 'SET_USER';
+export const REMOVE_USER = 'REMOVE_USER';
+export const UPDATE_USER = 'UPDATE_USER';
 export const ADD_MEAL = 'ADD_MEAL';
 export const EDIT_MEAL = 'EDIT_MEAL';
 export const DELETE_MEAL = 'DELETE_MEAL';

@@ -36,7 +36,7 @@ export const removeUser = () => (dispatch) => {
 
 export const updateUser = () => (dispatch) => {
   dispatch({
-    type: REMOVE_USER,
+    type: UPDATE_USER,
   });
 };
 

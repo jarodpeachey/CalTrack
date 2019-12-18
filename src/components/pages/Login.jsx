@@ -71,7 +71,7 @@ class Login extends Component {
 
       axios({
         method: 'POST',
-        url: `${this.props.apiURL}/users/verify.php`,
+        url: `${this.props.apiURL}/login.php`,
         config: {
           headers: { 'Content-Type': 'multipart/form-data' },
         },
@@ -87,6 +87,8 @@ class Login extends Component {
             });
 
             const user = { ...res.data.user };
+
+            console.log(user);
 
             if (res.data.user.meals && res.data.user.workouts) {
               // Nothing

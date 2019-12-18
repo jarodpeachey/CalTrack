@@ -1,13 +1,15 @@
+import axios from 'axios';
 import {
-  GET_CURRENT_USER,
-  SET_CURRENT_USER,
+  GET_USER,
+  SET_USER,
+  UPDATE_USER,
   ADD_MEAL,
   EDIT_MEAL,
   DELETE_MEAL,
   ADD_WORKOUT,
   EDIT_WORKOUT,
   DELETE_WORKOUT,
-  REMOVE_CURRENT_USER,
+  REMOVE_USER,
   // UPDATE_CALORIES,
 } from '../actions/types';
 
@@ -106,22 +108,47 @@ const removeArrayItem = (array, id) => {
   return newArray.filter(item => item.id !== id);
 };
 
+const getUpdatedUserFromAPI = (userID) => {
+  let user = {};
+
+  axios({
+    method: 'GET',
+    url: `${this.props.apiURL}/users/get.php`,
+    config: {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    },
+  })
+    .then((res) => {
+      user = res.data.user;
+    })
+    .catch((err) => {
+      console.log('Error.', err);
+    });
+
+  return user;
+};
+
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_CURRENT_USER:
+    case GET_USER:
       return {
         ...state,
         user: state.user,
       };
-    case SET_CURRENT_USER:
+    case SET_USER:
       return {
         ...state,
         user: action.payload,
       };
-    case REMOVE_CURRENT_USER:
+    case REMOVE_USER:
       return {
         ...state,
         user: {},
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        user: getUpdatedUserFromAPI(),
       };
     case ADD_MEAL:
       return {
