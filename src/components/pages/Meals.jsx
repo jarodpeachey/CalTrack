@@ -139,7 +139,7 @@ class Meals extends Component {
       };
 
       axios({
-        method: 'POST',
+        method: 'DELETE',
         url: `${this.props.apiURL}/meals`,
         config: {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -181,14 +181,8 @@ class Meals extends Component {
     this.setState({ displayNoMealsNotif: false });
   }
 
-  switchToEditMealMode (mealName, mealCalories) {
-    let mealToEdit = {};
-
-    this.state.meals.forEach((meal) => {
-      if (meal.mealName === mealName && meal.mealCalories === mealCalories) {
-        mealToEdit = meal;
-      }
-    });
+  switchToEditMealMode (mealToEdit) {
+    console.log("Meal to edit - Meals.jsx:", mealToEdit);
 
     this.setState({
       mealName: mealToEdit.mealName,
@@ -211,21 +205,17 @@ class Meals extends Component {
 
   updateMeal () {
     const {
-      mealName: newMealName,
-      mealCalories: newMealCalories,
-      mealDescription: newMealDescription,
-      mealToEdit,
+      mealName, mealDescription, mealCalories, mealToEdit,
     } = this.state;
 
     const newMeal = {
-      id: mealToEdit.id,
-      name: newMealName,
-      calories: JSON.parse(newMealCalories),
-      description: newMealDescription,
-      date: mealToEdit.date,
+      mealID: mealToEdit.mealID,
+      mealName,
+      mealCalories: JSON.parse(mealCalories),
+      mealDescription,
     };
 
-    if (newMealName !== '' && newMealCalories !== '') {
+    if (mealName !== '' && mealCalories !== '') {
       this.props.editMeal(newMeal);
 
       this.setState({
@@ -436,9 +426,9 @@ class Meals extends Component {
                   <ul>
                     {meals.map(meal => (
                       <MealItem
-                      key={`mealItem-${meal.id}`}
+                      key={`mealItem-${meal.mealID}`}
                       meal={meal}
-                      switchToEditMealMode={() => this.switchToEditMealMode(meal.mealName, meal.mealCalories)}
+                      switchToEditMealMode={mealToEdit => this.switchToEditMealMode(mealToEdit)}
                       />
                     ))}
                   </ul>

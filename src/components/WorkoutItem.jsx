@@ -52,7 +52,7 @@ class WorkoutItem extends Component {
     const { workout } = this.state;
 
     this.setState({
-      showInformation: informationBool === null ? workout.id : null,
+      showInformation: informationBool === null ? workout.workoutID : null,
       hasBeenOpened: true,
     });
   }
@@ -60,7 +60,9 @@ class WorkoutItem extends Component {
   switchToEditWorkoutMode () {
     const { workout } = this.props;
 
-    this.props.switchToEditWorkoutMode(workout.id);
+    console.log("Workout to edit - WorkoutItem.jsx:", workout);
+
+    this.props.switchToEditWorkoutMode(workout);
   }
 
   render () {
@@ -69,7 +71,7 @@ class WorkoutItem extends Component {
 
     return (
       <>
-        {showInformation === workout.id ? (
+        {showInformation === workout.workoutID ? (
           <>
             <WorkoutContainer>
               <FlexContainer>
@@ -79,7 +81,7 @@ class WorkoutItem extends Component {
                   {' '}
 calories
                 </CaloriesCount>
-                {workout.workoutDescription !== '' ? (
+                {workout.workoutDescription ? (
                   <IconButton
                     onClick={this.toggleWorkoutInformation}
                     classes={{ root: classes.iconButtonSmall }}
@@ -97,7 +99,7 @@ calories
                 </CloseIcon>
               </FlexContainer>
             </WorkoutContainer>
-            {workout.workoutDescription !== '' ? (
+            {workout.workoutDescription ? (
               <InformationWrapper>
                 <Seperator />
                 <CollectionItem>{workout.workoutDescription}</CollectionItem>
@@ -114,7 +116,7 @@ calories
                   {' '}
 calories
                 </CaloriesCount>
-                {workout.workoutDescription !== '' ? (
+                {workout.workoutDescription ? (
                   <IconButton
                     onClick={this.toggleWorkoutInformation}
                     classes={{ root: classes.iconButtonSmall }}
@@ -132,7 +134,7 @@ calories
                 </CloseIcon>
               </FlexContainer>
             </WorkoutContainerOutlined>
-            {hasBeenOpened && workout.workoutDescription !== '' ? (
+            {hasBeenOpened && workout.workoutDescription ? (
               <InformationWrapperGhost>
                 <Seperator />
                 <CollectionItem>{workout.workoutDescription}</CollectionItem>

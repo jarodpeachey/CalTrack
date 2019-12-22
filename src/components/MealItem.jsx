@@ -52,7 +52,7 @@ class MealItem extends Component {
     const { meal } = this.state;
 
     this.setState({
-      showInformation: informationBool === null ? meal.id : null,
+      showInformation: informationBool === null ? meal.mealID : null,
       hasBeenOpened: true,
     });
   }
@@ -60,7 +60,9 @@ class MealItem extends Component {
   switchToEditMealMode () {
     const { meal } = this.props;
 
-    this.props.switchToEditMealMode(meal.id);
+    console.log("Meal to edit - MealItem.jsx:", meal);
+
+    this.props.switchToEditMealMode(meal);
   }
 
   render () {
@@ -69,7 +71,7 @@ class MealItem extends Component {
 
     return (
       <>
-        {showInformation === meal.id ? (
+        {showInformation === meal.mealID ? (
           <>
             <MealContainer>
               <FlexContainer>
@@ -79,7 +81,7 @@ class MealItem extends Component {
                   {' '}
 calories
                 </CaloriesCount>
-                {meal.mealDescription !== '' ? (
+                {meal.mealDescription ? (
                   <IconButton
                     onClick={this.toggleMealInformation}
                     classes={{ root: classes.iconButtonSmall }}
@@ -97,7 +99,7 @@ calories
                 </CloseIcon>
               </FlexContainer>
             </MealContainer>
-            {meal.mealDescription !== '' ? (
+            {meal.mealDescription ? (
               <InformationWrapper>
                 <Seperator />
                 <CollectionItem>{meal.mealDescription}</CollectionItem>
@@ -114,7 +116,7 @@ calories
                   {' '}
 calories
                 </CaloriesCount>
-                {meal.mealDescription !== '' ? (
+                {meal.mealDescription ? (
                   <IconButton
                     onClick={this.toggleMealInformation}
                     classes={{ root: classes.iconButtonSmall }}
@@ -132,7 +134,7 @@ calories
                 </CloseIcon>
               </FlexContainer>
             </MealContainerOutlined>
-            {hasBeenOpened && meal.mealDescription !== '' ? (
+            {hasBeenOpened && meal.mealDescription ? (
               <InformationWrapperGhost>
                 <Seperator />
                 <CollectionItem>{meal.mealDescription}</CollectionItem>

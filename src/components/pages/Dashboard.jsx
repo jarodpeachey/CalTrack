@@ -150,7 +150,7 @@ class Dashboard extends Component {
                               if (index <= 2) {
                                 return (
                                   <MealItemCompressed
-                                    key={`mealItem-${meal.id}`}
+                                    key={`mealItem-${meal.mealID}`}
                                     meal={meal}
                                   />
                                 );
@@ -195,7 +195,7 @@ class Dashboard extends Component {
                               if (index <= 2) {
                                 return (
                                   <WorkoutItemCompressed
-                                    key={`workoutItem-${workout.id}`}
+                                    key={`workoutItem-${workout.workoutID}`}
                                     workout={workout}
                                   />
                                 );

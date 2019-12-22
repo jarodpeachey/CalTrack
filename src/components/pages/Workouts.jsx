@@ -181,14 +181,8 @@ class Workouts extends Component {
     this.setState({ displayNoWorkoutsNotif: false });
   }
 
-  switchToEditWorkoutMode (workoutName, workoutCalories) {
-    let workoutToEdit = {};
-
-    this.state.workouts.forEach((workout) => {
-      if (workout.workoutName === workoutName && workout.workoutCalories === workoutCalories) {
-        workoutToEdit = workout;
-      }
-    });
+  switchToEditWorkoutMode (workoutToEdit) {
+    console.log("Workout to edit - Workouts.jsx:", workoutToEdit);
 
     this.setState({
       workoutName: workoutToEdit.workoutName,
@@ -211,21 +205,17 @@ class Workouts extends Component {
 
   updateWorkout () {
     const {
-      workoutName: newWorkoutName,
-      workoutCalories: newWorkoutCalories,
-      workoutDescription: newWorkoutDescription,
-      workoutToEdit,
+      workoutName, workoutDescription, workoutCalories, workoutToEdit,
     } = this.state;
 
     const newWorkout = {
-      id: workoutToEdit.id,
-      name: newWorkoutName,
-      calories: JSON.parse(newWorkoutCalories),
-      description: newWorkoutDescription,
-      date: workoutToEdit.date,
+      workoutID: workoutToEdit.workoutID,
+      workoutName,
+      workoutCalories: JSON.parse(workoutCalories),
+      workoutDescription,
     };
 
-    if (newWorkoutName !== '' && newWorkoutCalories !== '') {
+    if (workoutName !== '' && workoutCalories !== '') {
       this.props.editWorkout(newWorkout);
 
       this.setState({
@@ -436,9 +426,9 @@ class Workouts extends Component {
                   <ul>
                     {workouts.map(workout => (
                       <WorkoutItem
-                      key={`workoutItem-${workout.id}`}
+                      key={`workoutItem-${workout.workoutID}`}
                       workout={workout}
-                      switchToEditWorkoutMode={() => this.switchToEditWorkoutMode(workout.workoutName, workout.workoutCalories)}
+                      switchToEditWorkoutMode={workoutToEdit => this.switchToEditWorkoutMode(workoutToEdit)}
                       />
                     ))}
                   </ul>
