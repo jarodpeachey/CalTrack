@@ -132,15 +132,9 @@ class Meals extends Component {
       bodyFormData.set('mealDescription', mealDescription);
       bodyFormData.set('userID', this.props.user.userID);
 
-      const meal = {
-        mealName,
-        mealCalories,
-        mealDescription,
-      };
-
       axios({
-        method: 'DELETE',
-        url: `${this.props.apiURL}/meals`,
+        method: 'POST',
+        url: `${this.props.apiURL}/users/${this.props.user.userID}/meals/9`,
         config: {
           headers: { 'Content-Type': 'multipart/form-data' },
         },
@@ -155,7 +149,7 @@ class Meals extends Component {
                 'Success! Your meal has been added.',
             });
 
-            this.props.addMeal(meal);
+            this.props.addMeal(res.data.meal);
             // this.props.updateUser();
           } else {
             this.setState({
