@@ -140,7 +140,7 @@ class Meals extends Component {
 
       axios({
         method: 'POST',
-        url: `${this.props.apiURL}/meals/add.php`,
+        url: `${this.props.apiURL}/meals`,
         config: {
           headers: { 'Content-Type': 'multipart/form-data' },
         },
@@ -156,7 +156,7 @@ class Meals extends Component {
             });
 
             this.props.addMeal(meal);
-            this.props.updateUser();
+            // this.props.updateUser();
           } else {
             this.setState({
               mainMessageType: 'error',

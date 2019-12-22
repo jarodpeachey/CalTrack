@@ -6,8 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { setUser } from '../../actions/userActions';
 import axios from 'axios';
+import { setUser } from '../../actions/userActions';
 
 class Login extends Component {
   static propTypes = {
@@ -15,7 +15,7 @@ class Login extends Component {
     setUser: PropTypes.func,
   };
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       emailValue: undefined,
@@ -28,14 +28,14 @@ class Login extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.setState({
       emailValue: 'Email',
       passwordValue: 'Password',
     });
   }
 
-  shouldComponentUpdate(nextState) {
+  shouldComponentUpdate (nextState) {
     if (this.state.passwordError !== nextState.passwordError) {
       return true;
     }
@@ -51,15 +51,15 @@ class Login extends Component {
     return false;
   }
 
-  onemailInputChange(e) {
+  onemailInputChange (e) {
     this.setState({ emailValue: e.target.value });
   }
 
-  onPasswordInputChange(e) {
+  onPasswordInputChange (e) {
     this.setState({ passwordValue: e.target.value });
   }
 
-  onFormSubmit(e) {
+  onFormSubmit (e) {
     e.preventDefault();
 
     if (this.state.emailValue === '' || this.state.passwordValue === '') {
@@ -86,22 +86,7 @@ class Login extends Component {
                 'Success! You are now being redirected to the welcome page.',
             });
 
-            const user = { ...res.data.user };
-
-            console.log(user);
-
-            if (res.data.user.meals && res.data.user.workouts) {
-              // Nothing
-            } else if (res.data.user.workouts) {
-              user.meals = [];
-            } else if (res.data.user.meals) {
-              user.workouts = [];
-            } else {
-              user.workouts = [];
-              user.meals = [];
-            }
-
-            this.props.setUser(user);
+            this.props.setUser(res.data.user);
 
             setTimeout(() => {
               this.props.history.push('/dashboard');
@@ -119,7 +104,7 @@ class Login extends Component {
     }
   }
 
-  render() {
+  render () {
     const { classes } = this.props;
     const { emailError, passwordError } = this.state;
 
@@ -161,7 +146,9 @@ class Login extends Component {
             </Button>
           </form>
           <div className="mt-xs">
-            Don't have an account? <Link to="/signup">Signup</Link>
+            Don't have an account?
+            {' '}
+            <Link to="/signup">Signup</Link>
           </div>
         </FormWrapper>
       </div>

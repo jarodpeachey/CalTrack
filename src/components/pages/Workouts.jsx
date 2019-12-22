@@ -11,8 +11,9 @@ import {
 import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
-import { addWorkout, editWorkout, deleteWorkout } from '../../actions/userActions';
-import { sortByUserId, sortByDate } from '../../utils/arrayFormat';
+import axios from 'axios';
+import { addWorkout, editWorkout, deleteWorkout, updateUser } from '../../actions/userActions';
+// import { sortByDate } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import WorkoutItem from '../WorkoutItem';
 
@@ -58,18 +59,21 @@ class Workouts extends Component {
   }
 
   componentDidMount () {
-    if (Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object) {
+    if (
+      Object.keys(this.props.user).length === 0 &&
+      this.props.user.constructor === Object
+    ) {
       this.setState({ workouts: []});
     } else {
-      this.setState({ workouts: sortByDate(this.props.user.workouts) });
+      this.setState({ workouts: this.props.user.workouts });
     }
 
     if (this.props.location.state) {
       const { workoutToEdit } = this.props.location.state;
       this.setState({
-        workoutName: workoutToEdit.name,
-        workoutCalories: workoutToEdit.calories,
-        workoutDescription: workoutToEdit.description,
+        workoutName: workoutToEdit.workoutName,
+        workoutCalories: workoutToEdit.workoutCalories,
+        workoutDescription: workoutToEdit.workoutDescription,
         mode: 'editWorkoutMode',
         workoutToEdit,
       });
@@ -119,35 +123,50 @@ class Workouts extends Component {
   }
 
   submitForm () {
-    const { workoutName, workoutCalories, workoutDescription, workouts } = this.state;
-    let date = new Date();
-    date = {
-      month: date.getMonth(),
-      day: date.getDay(),
-      date: date.getDate(),
-      year: date.getFullYear(),
-      UTC: date.getTime(),
-    };
-
-    let id = 0;
-    if (workouts.length) {
-      const sortedWorkouts = sortByUserId(workouts);
-
-      id = sortedWorkouts[sortedWorkouts.length - 1].id + 1;
-    }
-
-    const workout = {
-      id,
-      name: workoutName,
-      calories: JSON.parse(workoutCalories),
-      description: workoutDescription,
-      date,
-    };
+    const { workoutName, workoutCalories, workoutDescription } = this.state;
 
     if (workoutName !== '' && workoutCalories !== '') {
-      this.props.addWorkout(workout);
-      // this.props.updateCalories('add', workout.workoutCalories);
+      const bodyFormData = new FormData();
+      bodyFormData.set('workoutName', workoutName);
+      bodyFormData.set('workoutCalories', workoutCalories);
+      bodyFormData.set('workoutDescription', workoutDescription);
+      bodyFormData.set('userID', this.props.user.userID);
 
+      const workout = {
+        workoutName,
+        workoutCalories,
+        workoutDescription,
+      };
+
+      axios({
+        method: 'POST',
+        url: `${this.props.apiURL}/workouts`,
+        config: {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        },
+        data: bodyFormData,
+      })
+        .then((res) => {
+          console.log('Sent! Response: ', res);
+          if (res.data.success) {
+            this.setState({
+              mainMessageType: 'success',
+              mainMessage:
+                'Success! Your workout has been added.',
+            });
+
+            this.props.addWorkout(workout);
+            // this.props.updateUser();
+          } else {
+            this.setState({
+              mainMessageType: 'error',
+              mainMessage: 'There was an error adding your workout. Check your internet connection.',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log('Error: ', err);
+        });
       this.setState({
         workoutName: '',
         workoutCalories: '',
@@ -162,19 +181,19 @@ class Workouts extends Component {
     this.setState({ displayNoWorkoutsNotif: false });
   }
 
-  switchToEditWorkoutMode (id) {
+  switchToEditWorkoutMode (workoutName, workoutCalories) {
     let workoutToEdit = {};
 
     this.state.workouts.forEach((workout) => {
-      if (workout.id === id) {
+      if (workout.workoutName === workoutName && workout.workoutCalories === workoutCalories) {
         workoutToEdit = workout;
       }
     });
 
     this.setState({
-      workoutName: workoutToEdit.name,
-      workoutCalories: workoutToEdit.calories,
-      workoutDescription: workoutToEdit.description,
+      workoutName: workoutToEdit.workoutName,
+      workoutCalories: workoutToEdit.workoutCalories,
+      workoutDescription: workoutToEdit.workoutDescription,
       mode: 'editWorkoutMode',
       workoutToEdit,
     });
@@ -419,7 +438,7 @@ class Workouts extends Component {
                       <WorkoutItem
                       key={`workoutItem-${workout.id}`}
                       workout={workout}
-                      switchToEditWorkoutMode={this.switchToEditWorkoutMode}
+                      switchToEditWorkoutMode={() => this.switchToEditWorkoutMode(workout.workoutName, workout.workoutCalories)}
                       />
                     ))}
                   </ul>
@@ -493,7 +512,6 @@ const MobileUpdateButton = styled.span`
   height: 24px !important;
 `;
 
-export default connect(
-  null,
-  { addWorkout, editWorkout, deleteWorkout },
-)(withStyles(styles)(Workouts));
+export default connect(null, { addWorkout, editWorkout, deleteWorkout, updateUser })(
+  withStyles(styles)(Workouts),
+);
