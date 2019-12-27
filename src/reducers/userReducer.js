@@ -17,65 +17,89 @@ const initialState = {
   user: {},
 };
 
-const updateCalories = (state, type, actionPayload) => {
-  let userCalories = { ...state.user.calories };
-
+const updateMealCalories = (state, type, actionPayload) => {
   const userMeals = [...state.user.meals];
-  const userWorkouts = [...state.user.workouts];
+  // const userWorkouts = [...state.user.workouts];
 
-  let { gained, lost, net } = userCalories;
+  let gained = parseInt(state.user.calories.gained);
+  let lost = parseInt(state.user.calories.lost);
+  let net = parseInt(state.user.calories.net);
 
   switch (type) {
-    case 'addMeal':
-      gained += actionPayload.calories;
+    case 'add':
+      console.log(actionPayload);
+      gained += parseInt(actionPayload.mealCalories);
       break;
-    case 'editMeal':
+    case 'edit':
       userMeals.forEach((meal) => {
-        if (meal.mealID === actionPayload.id) {
-          gained -= meal.mealCalories;
+        if (meal.mealID === actionPayload.mealID) {
+          gained -= parseInt(meal.mealCalories);
         }
       });
-      gained += actionPayload.calories;
+      gained += parseInt(actionPayload.mealCalories);
       break;
-    case 'deleteMeal':
+    case 'delete':
       userMeals.forEach((meal) => {
-        if (meal.mealID === actionPayload.id) {
-          gained -= meal.mealCalories;
+        if (meal.mealID === actionPayload.mealID) {
+          gained -= parseInt(meal.mealCalories);
         }
       });
       break;
-    case 'addWorkout':
-      lost += actionPayload.calories;
-      break;
-    case 'editWorkout':
-      userWorkouts.forEach((workout) => {
-        if (workout.workoutID === actionPayload.id) {
-          lost -= workout.workoutCalories;
-        }
-      });
-      lost += actionPayload.calories;
-      break;
-    case 'deleteWorkout':
-      userWorkouts.forEach((workout) => {
-        if (workout.workoutID === actionPayload.id) {
-          lost -= workout.workoutCalories;
-        }
-      });
-      break;
+    // case 'addWorkout':
+    //   lost += actionPayload.workoutCalories;
+    //   break;
+    // case 'editWorkout':
+    //   userWorkouts.forEach((workout) => {
+    //     if (workout.workoutID === actionPayload.workoutID) {
+    //       lost -= workout.workoutCalories;
+    //     }
+    //   });
+    //   lost += actionPayload.workoutCalories;
+    //   break;
+    // case 'deleteWorkout':
+    //   userWorkouts.forEach((workout) => {
+    //     if (workout.workoutID === actionPayload.workoutID) {
+    //       lost -= workout.workoutCalories;
+    //     }
+    //   });
+    //   break;
     default:
       gained = gained;
   }
 
   net = gained - lost;
 
-  userCalories = {
-    net,
-    gained,
-    lost,
+  const caloriesToSendToAPI = {
+    name: state.user.name,
+    email: state.user.email,
+    userID: state.user.userID,
+    caloriesGained: gained,
+    caloriesLost: lost,
+    netCalories: net,
   };
 
+  axios({
+    method: 'PUT',
+    url: `http://localhost/caltrack_db/api/users/${state.user.userID}`,
+    config: {
+      headers: { 'Content-Type': 'application/json' },
+    },
+    data: { ...caloriesToSendToAPI },
+  })
+    .then((res) => {
+      console.log('Sent! Response: ', res);
+      if (res.data.success) {
+        // this.props.updatseUser();
+      }
+    })
+    .catch((err) => {
+      console.log('Error: ', err);
+    });
+
   return {
-    ...userCalories,
+    gained,
+    lost,
+    net,
   };
 };
 
@@ -90,7 +114,7 @@ const addArrayItem = (array, newItem) => {
 const updateMealItem = (array, updatedItem) => {
   const newArray = [...array];
 
-  console.log("UpdatedItem: ", updatedItem);
+  console.log('UpdatedItem: ', updatedItem);
 
   return newArray.map((item) => {
     if (item.mealID !== updatedItem.mealID) {
@@ -173,7 +197,7 @@ const userReducer = (state = initialState, action) => {
         user: {
           ...state.user,
           meals: addArrayItem([...state.user.meals], action.payload),
-          // calories: updateCalories(state, 'addMeal', action.payload),
+          calories: updateMealCalories(state, 'add', action.payload),
         },
       };
     case EDIT_MEAL:
@@ -182,7 +206,7 @@ const userReducer = (state = initialState, action) => {
         user: {
           ...state.user,
           meals: updateMealItem([...state.user.meals], action.payload),
-          // calories: updateCalories(state, 'editMeal', action.payload),
+          calories: updateMealCalories(state, 'edit', action.payload),
         },
       };
     case DELETE_MEAL:
@@ -190,10 +214,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          meals: removeArrayItem(
-            [...state.user.meals],
-            action.payload.id,
-          ),
+          meals: removeArrayItem([...state.user.meals], action.payload.id),
           // calories: updateCalories(state, 'deleteMeal', action.payload),
         },
       };
@@ -202,10 +223,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          workouts: addArrayItem(
-            [...state.user.workouts],
-            action.payload,
-          ),
+          workouts: addArrayItem([...state.user.workouts], action.payload),
           // calories: updateCalories(state, 'addWorkout', action.payload),
         },
       };
@@ -214,10 +232,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          workouts: updateWorkoutItem(
-            [...state.user.workouts],
-            action.payload,
-          ),
+          workouts: updateWorkoutItem([...state.user.workouts], action.payload),
           // calories: updateCalories(state, 'editWorkout', action.payload),
         },
       };

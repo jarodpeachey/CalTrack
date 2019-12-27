@@ -86,7 +86,20 @@ class Login extends Component {
                 'Success! You are now being redirected to the welcome page.',
             });
 
-            this.props.setUser(res.data.user);
+            const newUser = {
+              userID: res.data.user.userID,
+              name: res.data.user.name,
+              email: res.data.user.email,
+              calories: {
+                gained: parseInt(res.data.user.caloriesGained),
+                lost: parseInt(res.data.user.caloriesLost),
+                net: parseInt(res.data.user.netCalories),
+              },
+              meals: res.data.user.meals,
+              workouts: res.data.user.workouts,
+            };
+
+            this.props.setUser(newUser);
 
             setTimeout(() => {
               this.props.history.push('/dashboard');

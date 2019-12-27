@@ -25,13 +25,11 @@ class Dashboard extends Component {
   }
 
   componentDidMount () {
-    const { caloriesGained, caloriesLost, netCalories, meals, workouts } = this.props.user;
+    const { calories, meals, workouts } = this.props.user;
     this.setState({
       meals,
       workouts,
-      caloriesGained,
-      caloriesLost,
-      netCalories,
+      calories,
     });
   }
 
@@ -50,7 +48,7 @@ class Dashboard extends Component {
 
   render () {
     const { classes, user } = this.props;
-    const { meals, workouts, caloriesGained, caloriesLost, netCalories } = this.state;
+    const { meals, workouts, calories } = this.state;
 
     return (
       <>
@@ -109,7 +107,7 @@ class Dashboard extends Component {
                 </Card>
               ) : (
                 <div className="row">
-                  {netCalories && (
+                  {calories.net && (
                     <div className="col col-12">
                       <Card className="card border px-sm pt-lg pb-xxs mb-sm no-shadow position-relative">
                         <Title fullWidth className="title mb-none">
@@ -118,19 +116,19 @@ class Dashboard extends Component {
                         <div className="mt-sm row mobile-lg collection">
                           <div className="col col-4">
                             <CollectionItem>
-                              <CalorieNumber>{caloriesGained}</CalorieNumber>
+                              <CalorieNumber>{calories.gained}</CalorieNumber>
                               <CalorieTitle>Calories Gained</CalorieTitle>
                             </CollectionItem>
                           </div>
                           <div className="col col-4">
                             <CollectionItem>
-                              <CalorieNumber>{caloriesLost}</CalorieNumber>
+                              <CalorieNumber>{calories.lost}</CalorieNumber>
                               <CalorieTitle>Calories Lost</CalorieTitle>
                             </CollectionItem>
                           </div>
                           <div className="col col-4">
                             <CollectionItem>
-                              <CalorieNumber>{netCalories}</CalorieNumber>
+                              <CalorieNumber>{calories.net}</CalorieNumber>
                               <CalorieTitle>Net Calories</CalorieTitle>
                             </CollectionItem>
                           </div>
