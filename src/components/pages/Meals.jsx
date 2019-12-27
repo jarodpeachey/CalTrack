@@ -130,11 +130,10 @@ class Meals extends Component {
       bodyFormData.set('mealName', mealName);
       bodyFormData.set('mealCalories', mealCalories);
       bodyFormData.set('mealDescription', mealDescription);
-      bodyFormData.set('userID', this.props.user.userID);
 
       axios({
         method: 'POST',
-        url: `${this.props.apiURL}/users/${this.props.user.userID}/meals/9`,
+        url: `${this.props.apiURL}/users/${this.props.user.userID}/meals`,
         config: {
           headers: { 'Content-Type': 'multipart/form-data' },
         },
@@ -203,14 +202,47 @@ class Meals extends Component {
     } = this.state;
 
     const newMeal = {
-      mealID: mealToEdit.mealID,
-      mealName,
-      mealCalories: JSON.parse(mealCalories),
-      mealDescription,
+      mealName: mealName,
+      mealCalories: mealCalories,
+      mealDescription: mealDescription,
     };
 
     if (mealName !== '' && mealCalories !== '') {
-      this.props.editMeal(newMeal);
+      const bodyFormData = new FormData();
+      bodyFormData.set('mealName', mealName);
+      bodyFormData.set('mealCalories', mealCalories);
+      bodyFormData.set('mealDescription', mealDescription);
+
+      axios({
+        method: 'PUT',
+        url: `${this.props.apiURL}/users/${this.props.user.userID}/meals/${mealToEdit.mealID}`,
+        config: {
+          headers: { 'Content-Type': 'application/json' },
+        },
+        data: { ...newMeal },
+      })
+        .then((res) => {
+          console.log('Sent! Response: ', res);
+          console.log("Data: ", JSON.parse(res.data));
+          if (res.data.success) {
+            this.setState({
+              mainMessageType: 'success',
+              mainMessage:
+                'Success! Your meal has been edited.',
+            });
+
+            this.props.editMeal(res.data.meal);
+            // this.props.updateUser();
+          } else {
+            this.setState({
+              mainMessageType: 'error',
+              mainMessage: 'There was an error updating your meal. Check your internet connection.',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log('Error: ', err);
+        });
 
       this.setState({
         mealName: '',
