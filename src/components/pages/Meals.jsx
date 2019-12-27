@@ -54,7 +54,7 @@ class Meals extends Component {
     this.clearNoMealsNotification = this.clearNoMealsNotification.bind(this);
     this.switchToEditMealMode = this.switchToEditMealMode.bind(this);
     this.clearEditMode = this.clearEditMode.bind(this);
-    this.updateMeal = this.updateMeal.bind(this);
+    this.editMeal = this.editMeal.bind(this);
     this.deleteMeal = this.deleteMeal.bind(this);
   }
 
@@ -175,7 +175,7 @@ class Meals extends Component {
   }
 
   switchToEditMealMode (mealToEdit) {
-    console.log("Meal to edit - Meals.jsx:", mealToEdit);
+    console.log('Meal to edit - Meals.jsx:', mealToEdit);
 
     this.setState({
       mealName: mealToEdit.mealName,
@@ -196,34 +196,34 @@ class Meals extends Component {
     });
   }
 
-  updateMeal () {
+  editMeal () {
     const {
       mealName, mealDescription, mealCalories, mealToEdit,
     } = this.state;
 
-    const newMeal = {
-      mealName: mealName,
-      mealCalories: mealCalories,
-      mealDescription: mealDescription,
+    const mealToSendToAPI = {
+      mealName,
+      mealCalories,
+      mealDescription,
+    };
+
+    const mealToUpdateStore = {
+      ...mealToSendToAPI,
+      mealID: mealToEdit.mealID,
+      userID: mealToEdit.userID,
     };
 
     if (mealName !== '' && mealCalories !== '') {
-      const bodyFormData = new FormData();
-      bodyFormData.set('mealName', mealName);
-      bodyFormData.set('mealCalories', mealCalories);
-      bodyFormData.set('mealDescription', mealDescription);
-
       axios({
         method: 'PUT',
         url: `${this.props.apiURL}/users/${this.props.user.userID}/meals/${mealToEdit.mealID}`,
         config: {
           headers: { 'Content-Type': 'application/json' },
         },
-        data: { ...newMeal },
+        data: { ...mealToSendToAPI },
       })
         .then((res) => {
           console.log('Sent! Response: ', res);
-          console.log("Data: ", JSON.parse(res.data));
           if (res.data.success) {
             this.setState({
               mainMessageType: 'success',
@@ -231,8 +231,8 @@ class Meals extends Component {
                 'Success! Your meal has been edited.',
             });
 
-            this.props.editMeal(res.data.meal);
-            // this.props.updateUser();
+            this.props.editMeal(mealToUpdateStore);
+            // this.props.updatseUser();
           } else {
             this.setState({
               mainMessageType: 'error',
@@ -313,7 +313,7 @@ class Meals extends Component {
               variant="contained"
               color="primary"
               className="m-none"
-              onClick={this.updateMeal}
+              onClick={this.editMeal}
             >
               <MobileUpdateButton className="hidden-above-mobile-lg m-none full-width">
                 <Check />

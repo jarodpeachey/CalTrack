@@ -90,6 +90,8 @@ const addArrayItem = (array, newItem) => {
 const updateMealItem = (array, updatedItem) => {
   const newArray = [...array];
 
+  console.log("UpdatedItem: ", updatedItem);
+
   return newArray.map((item) => {
     if (item.mealID !== updatedItem.mealID) {
       return item;
