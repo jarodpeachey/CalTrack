@@ -40,7 +40,7 @@ const updateMealCalories = (state, type, actionPayload) => {
       break;
     case 'delete':
       userMeals.forEach((meal) => {
-        if (meal.mealID === actionPayload.mealID) {
+        if (meal.mealID === actionPayload) {
           gained -= parseInt(meal.mealCalories);
         }
       });
@@ -203,7 +203,7 @@ const userReducer = (state = initialState, action) => {
         user: {
           ...state.user,
           meals: removeMeal([...state.user.meals], action.payload),
-          // calories: updateCalories(state, 'deleteMeal', action.payload),
+          calories: updateMealCalories(state, 'delete', action.payload),
         },
       };
     case ADD_WORKOUT:
