@@ -12,7 +12,12 @@ import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
 import axios from 'axios';
-import { addMeal, editMeal, deleteMeal, updateUser } from '../../actions/userActions';
+import {
+  addMeal,
+  editMeal,
+  deleteMeal,
+  updateUser,
+} from '../../actions/userActions';
 // import { sortByDate } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import MealItem from '../MealItem';
@@ -144,8 +149,7 @@ class Meals extends Component {
           if (res.data.success) {
             this.setState({
               mainMessageType: 'success',
-              mainMessage:
-                'Success! Your meal has been added.',
+              mainMessage: 'Success! Your meal has been added.',
             });
 
             this.props.addMeal(res.data.meal);
@@ -153,7 +157,8 @@ class Meals extends Component {
           } else {
             this.setState({
               mainMessageType: 'error',
-              mainMessage: 'There was an error adding your meal. Check your internet connection.',
+              mainMessage:
+                'There was an error adding your meal. Check your internet connection.',
             });
           }
         })
@@ -197,9 +202,7 @@ class Meals extends Component {
   }
 
   editMeal () {
-    const {
-      mealName, mealDescription, mealCalories, mealToEdit,
-    } = this.state;
+    const { mealName, mealDescription, mealCalories, mealToEdit } = this.state;
 
     const mealToSendToAPI = {
       mealName,
@@ -227,8 +230,7 @@ class Meals extends Component {
           if (res.data.success) {
             this.setState({
               mainMessageType: 'success',
-              mainMessage:
-                'Success! Your meal has been edited.',
+              mainMessage: 'Success! Your meal has been edited.',
             });
 
             this.props.editMeal(mealToUpdateStore);
@@ -236,7 +238,8 @@ class Meals extends Component {
           } else {
             this.setState({
               mainMessageType: 'error',
-              mainMessage: 'There was an error updating your meal. Check your internet connection.',
+              mainMessage:
+                'There was an error updating your meal. Check your internet connection.',
             });
           }
         })
@@ -257,9 +260,38 @@ class Meals extends Component {
   }
 
   deleteMeal () {
-    const { mealToEdit } = this.state;
+    const {
+      mealToEdit: { mealID },
+    } = this.state;
 
-    this.props.deleteMeal(mealToEdit);
+    axios({
+      method: 'DELETE',
+      url: `${this.props.apiURL}/meals/${mealID}`,
+      config: {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    })
+      .then((res) => {
+        console.log('Sent! Response: ', res);
+        if (res.data.success) {
+          this.setState({
+            mainMessageType: 'success',
+            mainMessage: 'Success! Your meal has been deleted.',
+          });
+
+          this.props.deleteMeal(mealID);
+          // this.props.updatseUser();
+        } else {
+          this.setState({
+            mainMessageType: 'error',
+            mainMessage:
+              'There was an error deleting your meal. Check your internet connection.',
+          });
+        }
+      })
+      .catch((err) => {
+        console.log('Error: ', err);
+      });
 
     this.setState({
       mealName: '',
@@ -366,8 +398,7 @@ class Meals extends Component {
 
     return (
       <>
-        {Object.keys(user).length === 0 &&
-        user.constructor === Object ? (
+        {Object.keys(user).length === 0 && user.constructor === Object ? (
           <div className="container">
             <div className="center-text">
               <Card className="card border no-shadow px-sm py-sm mb-sm">
@@ -389,16 +420,16 @@ class Meals extends Component {
               </Card>
             </div>
           </div>
-          ) : (
-            <div className="container p-none mt-md">
-              <div className="card p-md mb-md border no-shadow bg-white">
-                <h3 className="title m-none">
-                  {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
-                </h3>
-                <form action="">
-                  <div className="row">
-                    <div className="col col-6">
-                      <Input
+        ) : (
+          <div className="container p-none mt-md">
+            <div className="card p-md mb-md border no-shadow bg-white">
+              <h3 className="title m-none">
+                {mode === 'addMealMode' ? 'Add Meal' : 'Edit Meal'}
+              </h3>
+              <form action="">
+                <div className="row">
+                  <div className="col col-6">
+                    <Input
                       classes={{
                         root: classes.input,
                         focused: classes.focusedInput,
@@ -409,10 +440,10 @@ class Meals extends Component {
                       value={mealName}
                       onChange={this.handleNameChange}
                       placeholder="Meal name..."
-                      />
-                    </div>
-                    <div className="col col-6">
-                      <Input
+                    />
+                  </div>
+                  <div className="col col-6">
+                    <Input
                       classes={{
                         root: classes.input,
                         focused: classes.focusedInput,
@@ -424,10 +455,10 @@ class Meals extends Component {
                       onChange={this.handleCaloriesChange}
                       placeholder="Calories"
                       type="number"
-                      />
-                    </div>
-                    <div className="col col-12">
-                      <Input
+                    />
+                  </div>
+                  <div className="col col-12">
+                    <Input
                       classes={{
                         root: classes.textField,
                         focused: classes.focusedInput,
@@ -440,28 +471,29 @@ class Meals extends Component {
                       multiline
                       disableUnderline
                       rows="4"
-                      />
-                    </div>
+                    />
                   </div>
-                  {buttonsGroup}
-                </form>
-              </div>
-              {this.state.meals.length ? (
-                <div className="card p-md mb-md border no-shadow bg-white">
-                  <Title>Meals</Title>
-                  <ul>
-                    {meals.map(meal => (
-                      <MealItem
+                </div>
+                {buttonsGroup}
+              </form>
+            </div>
+            {this.state.meals.length ? (
+              <div className="card p-md mb-md border no-shadow bg-white">
+                <Title>Meals</Title>
+                <ul>
+                  {meals.map(meal => (
+                    <MealItem
                       key={`mealItem-${meal.mealID}`}
                       meal={meal}
-                      switchToEditMealMode={mealToEdit => this.switchToEditMealMode(mealToEdit)}
-                      />
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <>
-                  {this.state.displayNoMealsNotif && (
+                      switchToEditMealMode={mealToEdit => this.switchToEditMealMode(mealToEdit)
+                      }
+                    />
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <>
+                {this.state.displayNoMealsNotif && (
                   <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
                     <h4 className="m-none">
                       There are no meals yet, add a meal!
@@ -479,11 +511,11 @@ class Meals extends Component {
                       </IconButton>
                     </Tooltip>
                   </Card>
-                  )}
-                </>
-              )}
-            </div>
-          )}
+                )}
+              </>
+            )}
+          </div>
+        )}
       </>
     );
   }

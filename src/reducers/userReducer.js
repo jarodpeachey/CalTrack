@@ -45,24 +45,6 @@ const updateMealCalories = (state, type, actionPayload) => {
         }
       });
       break;
-    // case 'addWorkout':
-    //   lost += actionPayload.workoutCalories;
-    //   break;
-    // case 'editWorkout':
-    //   userWorkouts.forEach((workout) => {
-    //     if (workout.workoutID === actionPayload.workoutID) {
-    //       lost -= workout.workoutCalories;
-    //     }
-    //   });
-    //   lost += actionPayload.workoutCalories;
-    //   break;
-    // case 'deleteWorkout':
-    //   userWorkouts.forEach((workout) => {
-    //     if (workout.workoutID === actionPayload.workoutID) {
-    //       lost -= workout.workoutCalories;
-    //     }
-    //   });
-    //   break;
     default:
       gained = gained;
   }
@@ -143,10 +125,16 @@ const updateWorkoutItem = (array, updatedItem) => {
   });
 };
 
-const removeArrayItem = (array, id) => {
-  const newArray = [...array];
+const removeMeal = (meals, mealID) => {
+  const newArray = [...meals];
 
-  return newArray.filter(item => item.id !== id);
+  return newArray.filter(meal => meal.mealID !== mealID);
+};
+
+const removeWorkout = (workouts, workoutID) => {
+  const newArray = [...workouts];
+
+  return newArray.filter(workout => workout.workoutID !== workoutID);
 };
 
 const getUpdatedUserFromAPI = (userID) => {
@@ -214,7 +202,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          meals: removeArrayItem([...state.user.meals], action.payload.id),
+          meals: removeMeal([...state.user.meals], action.payload),
           // calories: updateCalories(state, 'deleteMeal', action.payload),
         },
       };
