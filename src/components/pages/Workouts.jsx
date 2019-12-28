@@ -12,7 +12,12 @@ import Close from '@material-ui/icons/Close';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/Check';
 import axios from 'axios';
-import { addWorkout, editWorkout, deleteWorkout, updateUser } from '../../actions/userActions';
+import {
+  addWorkout,
+  editWorkout,
+  deleteWorkout,
+  updateUser,
+} from '../../actions/userActions';
 // import { sortByDate } from '../../utils/arrayFormat';
 import { Title } from '../Layout/Title';
 import WorkoutItem from '../WorkoutItem';
@@ -54,7 +59,7 @@ class Workouts extends Component {
     this.clearNoWorkoutsNotification = this.clearNoWorkoutsNotification.bind(this);
     this.switchToEditWorkoutMode = this.switchToEditWorkoutMode.bind(this);
     this.clearEditMode = this.clearEditMode.bind(this);
-    this.updateWorkout = this.updateWorkout.bind(this);
+    this.editWorkout = this.editWorkout.bind(this);
     this.deleteWorkout = this.deleteWorkout.bind(this);
   }
 
@@ -130,17 +135,10 @@ class Workouts extends Component {
       bodyFormData.set('workoutName', workoutName);
       bodyFormData.set('workoutCalories', workoutCalories);
       bodyFormData.set('workoutDescription', workoutDescription);
-      bodyFormData.set('userID', this.props.user.userID);
-
-      const workout = {
-        workoutName,
-        workoutCalories,
-        workoutDescription,
-      };
 
       axios({
         method: 'POST',
-        url: `${this.props.apiURL}/workouts`,
+        url: `${this.props.apiURL}/users/${this.props.user.userID}/workouts`,
         config: {
           headers: { 'Content-Type': 'multipart/form-data' },
         },
@@ -151,16 +149,16 @@ class Workouts extends Component {
           if (res.data.success) {
             this.setState({
               mainMessageType: 'success',
-              mainMessage:
-                'Success! Your workout has been added.',
+              mainMessage: 'Success! Your workout has been added.',
             });
 
-            this.props.addWorkout(workout);
+            this.props.addWorkout(res.data.workout);
             // this.props.updateUser();
           } else {
             this.setState({
               mainMessageType: 'error',
-              mainMessage: 'There was an error adding your workout. Check your internet connection.',
+              mainMessage:
+                'There was an error adding your workout. Check your internet connection.',
             });
           }
         })
@@ -182,7 +180,7 @@ class Workouts extends Component {
   }
 
   switchToEditWorkoutMode (workoutToEdit) {
-    console.log("Workout to edit - Workouts.jsx:", workoutToEdit);
+    console.log('Workout to edit - Workouts.jsx:', workoutToEdit);
 
     this.setState({
       workoutName: workoutToEdit.workoutName,
@@ -203,20 +201,51 @@ class Workouts extends Component {
     });
   }
 
-  updateWorkout () {
-    const {
-      workoutName, workoutDescription, workoutCalories, workoutToEdit,
-    } = this.state;
+  editWorkout () {
+    const { workoutName, workoutDescription, workoutCalories, workoutToEdit } = this.state;
 
-    const newWorkout = {
-      workoutID: workoutToEdit.workoutID,
+    const workoutToSendToAPI = {
       workoutName,
-      workoutCalories: JSON.parse(workoutCalories),
+      workoutCalories,
       workoutDescription,
     };
 
+    const workoutToUpdateStore = {
+      ...workoutToSendToAPI,
+      workoutID: workoutToEdit.workoutID,
+      userID: workoutToEdit.userID,
+    };
+
     if (workoutName !== '' && workoutCalories !== '') {
-      this.props.editWorkout(newWorkout);
+      axios({
+        method: 'PUT',
+        url: `${this.props.apiURL}/users/${this.props.user.userID}/workouts/${workoutToEdit.workoutID}`,
+        config: {
+          headers: { 'Content-Type': 'application/json' },
+        },
+        data: { ...workoutToSendToAPI },
+      })
+        .then((res) => {
+          console.log('Sent! Response: ', res);
+          if (res.data.success) {
+            this.setState({
+              mainMessageType: 'success',
+              mainMessage: 'Success! Your workout has been edited.',
+            });
+
+            this.props.editWorkout(workoutToUpdateStore);
+            // this.props.updatseUser();
+          } else {
+            this.setState({
+              mainMessageType: 'error',
+              mainMessage:
+                'There was an error updating your workout. Check your internet connection.',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log('Error: ', err);
+        });
 
       this.setState({
         workoutName: '',
@@ -231,9 +260,38 @@ class Workouts extends Component {
   }
 
   deleteWorkout () {
-    const { workoutToEdit } = this.state;
+    const {
+      workoutToEdit: { workoutID },
+    } = this.state;
 
-    this.props.deleteWorkout(workoutToEdit);
+    axios({
+      method: 'DELETE',
+      url: `${this.props.apiURL}/workouts/${workoutID}`,
+      config: {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    })
+      .then((res) => {
+        console.log('Sent! Response: ', res);
+        if (res.data.success) {
+          this.setState({
+            mainMessageType: 'success',
+            mainMessage: 'Success! Your workout has been deleted.',
+          });
+
+          this.props.deleteWorkout(workoutID);
+          // this.props.updatseUser();
+        } else {
+          this.setState({
+            mainMessageType: 'error',
+            mainMessage:
+              'There was an error deleting your workout. Check your internet connection.',
+          });
+        }
+      })
+      .catch((err) => {
+        console.log('Error: ', err);
+      });
 
     this.setState({
       workoutName: '',
@@ -287,7 +345,7 @@ class Workouts extends Component {
               variant="contained"
               color="primary"
               className="m-none"
-              onClick={this.updateWorkout}
+              onClick={this.editWorkout}
             >
               <MobileUpdateButton className="hidden-above-mobile-lg m-none full-width">
                 <Check />
@@ -340,8 +398,7 @@ class Workouts extends Component {
 
     return (
       <>
-        {Object.keys(user).length === 0 &&
-        user.constructor === Object ? (
+        {Object.keys(user).length === 0 && user.constructor === Object ? (
           <div className="container">
             <div className="center-text">
               <Card className="card border no-shadow px-sm py-sm mb-sm">
@@ -363,16 +420,16 @@ class Workouts extends Component {
               </Card>
             </div>
           </div>
-          ) : (
-            <div className="container p-none mt-md">
-              <div className="card p-md mb-md border no-shadow bg-white">
-                <h3 className="title m-none">
-                  {mode === 'addWorkoutMode' ? 'Add Workout' : 'Edit Workout'}
-                </h3>
-                <form action="">
-                  <div className="row">
-                    <div className="col col-6">
-                      <Input
+        ) : (
+          <div className="container p-none mt-md">
+            <div className="card p-md mb-md border no-shadow bg-white">
+              <h3 className="title m-none">
+                {mode === 'addWorkoutMode' ? 'Add Workout' : 'Edit Workout'}
+              </h3>
+              <form action="">
+                <div className="row">
+                  <div className="col col-6">
+                    <Input
                       classes={{
                         root: classes.input,
                         focused: classes.focusedInput,
@@ -383,10 +440,10 @@ class Workouts extends Component {
                       value={workoutName}
                       onChange={this.handleNameChange}
                       placeholder="Workout name..."
-                      />
-                    </div>
-                    <div className="col col-6">
-                      <Input
+                    />
+                  </div>
+                  <div className="col col-6">
+                    <Input
                       classes={{
                         root: classes.input,
                         focused: classes.focusedInput,
@@ -398,10 +455,10 @@ class Workouts extends Component {
                       onChange={this.handleCaloriesChange}
                       placeholder="Calories"
                       type="number"
-                      />
-                    </div>
-                    <div className="col col-12">
-                      <Input
+                    />
+                  </div>
+                  <div className="col col-12">
+                    <Input
                       classes={{
                         root: classes.textField,
                         focused: classes.focusedInput,
@@ -414,28 +471,29 @@ class Workouts extends Component {
                       multiline
                       disableUnderline
                       rows="4"
-                      />
-                    </div>
+                    />
                   </div>
-                  {buttonsGroup}
-                </form>
-              </div>
-              {this.state.workouts.length ? (
-                <div className="card p-md mb-md border no-shadow bg-white">
-                  <Title>Workouts</Title>
-                  <ul>
-                    {workouts.map(workout => (
-                      <WorkoutItem
+                </div>
+                {buttonsGroup}
+              </form>
+            </div>
+            {this.state.workouts.length ? (
+              <div className="card p-md mb-md border no-shadow bg-white">
+                <Title>Workouts</Title>
+                <ul>
+                  {workouts.map(workout => (
+                    <WorkoutItem
                       key={`workoutItem-${workout.workoutID}`}
                       workout={workout}
-                      switchToEditWorkoutMode={workoutToEdit => this.switchToEditWorkoutMode(workoutToEdit)}
-                      />
-                    ))}
-                  </ul>
-                </div>
-              ) : (
-                <>
-                  {this.state.displayNoWorkoutsNotif && (
+                      switchToEditWorkoutMode={workoutToEdit => this.switchToEditWorkoutMode(workoutToEdit)
+                      }
+                    />
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <>
+                {this.state.displayNoWorkoutsNotif && (
                   <Card className="card no-shadow bg-white p-sm display-flex align-left v-align-center">
                     <h4 className="m-none">
                       There are no workouts yet, add a workout!
@@ -453,11 +511,11 @@ class Workouts extends Component {
                       </IconButton>
                     </Tooltip>
                   </Card>
-                  )}
-                </>
-              )}
-            </div>
-          )}
+                )}
+              </>
+            )}
+          </div>
+        )}
       </>
     );
   }

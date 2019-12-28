@@ -85,6 +85,74 @@ const updateMealCalories = (state, type, actionPayload) => {
   };
 };
 
+const updateWorkoutCalories = (state, type, actionPayload) => {
+  const userWorkouts = [...state.user.workouts];
+  // const userWorkouts = [...state.user.workouts];
+
+  let gained = parseInt(state.user.calories.gained);
+  let lost = parseInt(state.user.calories.lost);
+  let net = parseInt(state.user.calories.net);
+
+  switch (type) {
+    case 'add':
+      console.log(actionPayload);
+      lost += parseInt(actionPayload.workoutCalories);
+      break;
+    case 'edit':
+      userWorkouts.forEach((workout) => {
+        if (workout.workoutID === actionPayload.workoutID) {
+          lost -= parseInt(workout.workoutCalories);
+        }
+      });
+      lost += parseInt(actionPayload.workoutCalories);
+      break;
+    case 'delete':
+      userWorkouts.forEach((workout) => {
+        if (workout.workoutID === actionPayload) {
+          lost -= parseInt(workout.workoutCalories);
+        }
+      });
+      break;
+    default:
+      lost = lost;
+  }
+
+  net = gained - lost;
+
+  const caloriesToSendToAPI = {
+    name: state.user.name,
+    email: state.user.email,
+    userID: state.user.userID,
+    caloriesGained: gained,
+    caloriesLost: lost,
+    netCalories: net,
+  };
+
+  axios({
+    method: 'PUT',
+    url: `http://localhost/caltrack_db/api/users/${state.user.userID}`,
+    config: {
+      headers: { 'Content-Type': 'application/json' },
+    },
+    data: { ...caloriesToSendToAPI },
+  })
+    .then((res) => {
+      console.log('Sent! Response: ', res);
+      if (res.data.success) {
+        // this.props.updatseUser();
+      }
+    })
+    .catch((err) => {
+      console.log('Error: ', err);
+    });
+
+  return {
+    gained,
+    lost,
+    net,
+  };
+};
+
 const addArrayItem = (array, newItem) => {
   const newArray = [...array];
 
@@ -113,6 +181,8 @@ const updateMealItem = (array, updatedItem) => {
 const updateWorkoutItem = (array, updatedItem) => {
   const newArray = [...array];
 
+  console.log('UpdatedItem: ', updatedItem);
+
   return newArray.map((item) => {
     if (item.workoutID !== updatedItem.workoutID) {
       return item;
@@ -124,6 +194,7 @@ const updateWorkoutItem = (array, updatedItem) => {
     };
   });
 };
+
 
 const removeMeal = (meals, mealID) => {
   const newArray = [...meals];
@@ -212,7 +283,7 @@ const userReducer = (state = initialState, action) => {
         user: {
           ...state.user,
           workouts: addArrayItem([...state.user.workouts], action.payload),
-          // calories: updateCalories(state, 'addWorkout', action.payload),
+          calories: updateWorkoutCalories(state, 'add', action.payload),
         },
       };
     case EDIT_WORKOUT:
@@ -221,7 +292,7 @@ const userReducer = (state = initialState, action) => {
         user: {
           ...state.user,
           workouts: updateWorkoutItem([...state.user.workouts], action.payload),
-          // calories: updateCalories(state, 'editWorkout', action.payload),
+          calories: updateWorkoutCalories(state, 'edit', action.payload),
         },
       };
     case DELETE_WORKOUT:
@@ -229,11 +300,8 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          workouts: removeArrayItem(
-            [...state.user.workouts],
-            action.payload.id,
-          ),
-          // calories: updateCalories(state, 'deleteWorkout', action.payload),
+          workouts: removeWorkout([...state.user.workouts], action.payload),
+          calories: updateWorkoutCalories(state, 'delete', action.payload),
         },
       };
     default:
